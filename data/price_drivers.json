@@ -1,0 +1,96 @@
+{
+ "n": 599,
+ "r2": 0.7430956616737753,
+ "effects": [
+  {
+   "driver": "suburb:Southbank",
+   "effect_pct": "-1.1",
+   "se_pct": "2.5"
+  },
+  {
+   "driver": "suburb:Docklands",
+   "effect_pct": "8.7",
+   "se_pct": "2.4"
+  },
+  {
+   "driver": "suburb:St Kilda",
+   "effect_pct": "-0.7",
+   "se_pct": "3.2"
+  },
+  {
+   "driver": "suburb:South Yarra",
+   "effect_pct": "2.6",
+   "se_pct": "3.0"
+  },
+  {
+   "driver": "suburb:Port Melbourne",
+   "effect_pct": "21.9",
+   "se_pct": "3.1"
+  },
+  {
+   "driver": "2 bed (vs 1)",
+   "effect_pct": "30.3",
+   "se_pct": "2.1"
+  },
+  {
+   "driver": "3 bed (vs 1)",
+   "effect_pct": "100.0",
+   "se_pct": "4.1"
+  },
+  {
+   "driver": "2+ baths (vs 1)",
+   "effect_pct": "24.7",
+   "se_pct": "2.1"
+  },
+  {
+   "driver": "has car space",
+   "effect_pct": "23.7",
+   "se_pct": "2.1"
+  },
+  {
+   "driver": "floor 10-19 (vs 1-9)",
+   "effect_pct": "-2.9",
+   "se_pct": "2.1"
+  },
+  {
+   "driver": "floor 20-29",
+   "effect_pct": "-0.9",
+   "se_pct": "2.7"
+  },
+  {
+   "driver": "floor 30+",
+   "effect_pct": "6.7",
+   "se_pct": "2.8"
+  }
+ ],
+ "layouts": {
+  "2b 1ba car": {
+   "n": 127,
+   "median": 566000
+  },
+  "1b 1ba car": {
+   "n": 110,
+   "median": 414250
+  },
+  "1b 1ba no car": {
+   "n": 109,
+   "median": 355000
+  },
+  "2b 2+ba car": {
+   "n": 158,
+   "median": 670000
+  },
+  "2b 1ba no car": {
+   "n": 38,
+   "median": 435000
+  },
+  "2b 2+ba no car": {
+   "n": 20,
+   "median": 505000
+  },
+  "3b 2+ba car": {
+   "n": 37,
+   "median": 1010000
+  }
+ }
+}

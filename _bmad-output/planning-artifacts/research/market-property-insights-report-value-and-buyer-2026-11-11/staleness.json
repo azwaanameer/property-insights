@@ -1,0 +1,127 @@
+{
+  "today": "2026-11-11",
+  "claims": [
+    {
+      "claim": "Domain Building Profile shows same-building sales, growth, yield, tenure [1]",
+      "class": "feature",
+      "pub_date": "2026-11-11",
+      "recheck": "2027-02-11",
+      "stale": false
+    },
+    {
+      "claim": "ANZ free emailed property report [2]",
+      "class": "feature",
+      "pub_date": "2026-11-01",
+      "recheck": "2027-02-01",
+      "stale": false
+    },
+    {
+      "claim": "Cotality consumer Property Report $43 [4]",
+      "class": "pricing",
+      "pub_date": "2026-11-11",
+      "recheck": "2027-02-11",
+      "stale": false
+    },
+    {
+      "claim": "Cotality Digital Property Report for brokers [6]",
+      "class": "feature",
+      "pub_date": "2026-08-17",
+      "recheck": "2026-11-17",
+      "stale": false
+    },
+    {
+      "claim": "Cotality terms bar commercial reuse [7]",
+      "class": "licence",
+      "pub_date": "2025-07-08",
+      "recheck": "2026-07-08",
+      "stale": true
+    },
+    {
+      "claim": "Cotality display requirements v3 [8]",
+      "class": "licence",
+      "pub_date": "2026-08-01",
+      "recheck": "2027-08-01",
+      "stale": false
+    },
+    {
+      "claim": "OC certificate maximum fees 2026-27 [9]",
+      "class": "regulatory",
+      "pub_date": "2026-11-04",
+      "recheck": "2027-11-04",
+      "stale": false
+    },
+    {
+      "claim": "Cohabit 3 vs 14 items and Victorian expansion [11]",
+      "class": "pricing",
+      "pub_date": "2026-08-20",
+      "recheck": "2026-11-20",
+      "stale": false
+    },
+    {
+      "claim": "Brokers settled 81.6% of new loans [14]",
+      "class": "statistic",
+      "pub_date": "2026-09-03",
+      "recheck": "2028-03-03",
+      "stale": false
+    },
+    {
+      "claim": "About 24,116 brokers [15]",
+      "class": "statistic",
+      "pub_date": "2026-09-28",
+      "recheck": "2028-03-28",
+      "stale": false
+    },
+    {
+      "claim": "Microburbs pricing [12]",
+      "class": "pricing",
+      "pub_date": "2026-11-11",
+      "recheck": "2027-02-11",
+      "stale": false
+    },
+    {
+      "claim": "Valuer-General median unit by suburb CC BY 4.0, latest March 2026 [19]",
+      "class": "licence",
+      "pub_date": "2026-09-29",
+      "recheck": "2027-09-29",
+      "stale": false
+    },
+    {
+      "claim": "Homes Victoria Docklands 2-bed flat median rent [38]",
+      "class": "statistic",
+      "pub_date": "2026-10-01",
+      "recheck": "2028-04-01",
+      "stale": false
+    },
+    {
+      "claim": "AFSL position on direct real property [25]",
+      "class": "regulatory",
+      "pub_date": "2026-11-11",
+      "recheck": "2027-11-11",
+      "stale": false
+    },
+    {
+      "claim": "REA v Domain scraping action [27]",
+      "class": "regulatory",
+      "pub_date": "2024-12-03",
+      "recheck": "2025-12-03",
+      "stale": true
+    },
+    {
+      "claim": "OC Amendment Regulations 2026 [40]",
+      "class": "regulatory",
+      "pub_date": "2026-05-22",
+      "recheck": "2027-05-22",
+      "stale": false
+    },
+    {
+      "claim": "90% of buyers skip strata reports [30]",
+      "class": "behavior",
+      "pub_date": "2024-01-01",
+      "recheck": "2026-01-01",
+      "stale": true
+    }
+  ],
+  "stale_count": 3,
+  "earliest_recheck": "2025-12-03",
+  "no_window_classes": []
+}

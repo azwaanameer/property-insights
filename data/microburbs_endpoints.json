@@ -1,0 +1,814 @@
+[
+ [
+  "/v1/ping",
+  "?"
+ ],
+ [
+  "/v1/me",
+  "?"
+ ],
+ [
+  "/v1/properties/{gnaf_id}/valuation/avm",
+  "10¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/basics/bed-count",
+  "5¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/basics/bath-count",
+  "5¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/basics/parking-count",
+  "5¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/basics/dwelling-type",
+  "5¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/basics/land-area-sqm",
+  "3¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/profile",
+  "3¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/sale-history",
+  "30¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/sale-history-latest",
+  "10¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/rent-history",
+  "30¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/rent-history-latest",
+  "10¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/neighbours",
+  "30¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/comparables/cma-comp-set",
+  "60¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/comparables/cma-single-comp",
+  "10¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/comparables/recent-sales-nearby",
+  "4¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/development/zoning-code",
+  "3¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/development/zoning-overlays",
+  "5¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/schools/nearby",
+  "5¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/schools/ranking",
+  "100¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/amenities/nearby",
+  "10¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/transport/nearby",
+  "5¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/bushfire",
+  "15¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/flood",
+  "10¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/historical-flood",
+  "3¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/heritage",
+  "3¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/public-housing",
+  "4¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/landslide",
+  "3¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/erosion",
+  "3¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/environment",
+  "3¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/hv-power-line",
+  "2¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/mobile-black-spot",
+  "2¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/risks/all",
+  "48¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/valuation/all",
+  "10¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/basics/all",
+  "23¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/history/all",
+  "80¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/comparables/all",
+  "74¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/development/all",
+  "8¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/schools/all",
+  "105¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/profile",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/list",
+  "?"
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/median-sale-price",
+  "6¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/median-sale-price-series",
+  "15¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/median-rent",
+  "12¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/median-rent-series",
+  "30¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/price-growth-5y",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/price-growth",
+  "15¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/yield-pct",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/days-on-market",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/transaction-volume",
+  "30¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/forecast/sale",
+  "100¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/listings/for-sale",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/listings/for-rent",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/age",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/income",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/ethnicity/ancestry",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/ethnicity/birthplace",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/schools/catchment",
+  "200¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/schools/nearby",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/da-count",
+  "6¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/da-list",
+  "18¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/bushfire",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/flood",
+  "6¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/similar",
+  "60¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/all",
+  "108¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/all",
+  "6¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/ethnicity/all",
+  "6¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/schools/all",
+  "205¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/all",
+  "24¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/all",
+  "11¢ per call."
+ ],
+ [
+  "/v1/mbs/list",
+  "3¢ per call."
+ ],
+ [
+  "/v1/mbs/{mb_code}/profile",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/crime",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/rent",
+  "30¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/signals",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/business",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/building",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/parcels",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/tenure",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/income",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/hazard",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/stress",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/transport",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/condition",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/environment",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/mesh-blocks/forecast",
+  "20¢ per call."
+ ],
+ [
+  "/v1/lga/list",
+  "1¢ per call."
+ ],
+ [
+  "/v1/lga/{lga_name}/profile",
+  "3¢ per call."
+ ],
+ [
+  "/v1/lga/{lga_name}/population",
+  "5¢ per call."
+ ],
+ [
+  "/v1/sa4/list",
+  "1¢ per call."
+ ],
+ [
+  "/v1/sa4/{sa4_name}/profile",
+  "3¢ per call."
+ ],
+ [
+  "/v1/geocode/address",
+  "1¢ per call."
+ ],
+ [
+  "/v1/geocode/suburb",
+  "?"
+ ],
+ [
+  "/v1/area-stats/fields",
+  "?"
+ ],
+ [
+  "/v1/area-stats/regions",
+  "?"
+ ],
+ [
+  "/v1/area-stats/{region_level}/{region}/values",
+  "3¢ per call."
+ ],
+ [
+  "/v1/economics/series",
+  "1¢ per call."
+ ],
+ [
+  "/v1/economics/series/{series_id}",
+  "2¢ per call."
+ ],
+ [
+  "/v1/economics/cpi",
+  "2¢ per call."
+ ],
+ [
+  "/v1/economics/cpi/latest",
+  "1¢ per call."
+ ],
+ [
+  "/v1/economics/cpi/adjust",
+  "1¢ per call."
+ ],
+ [
+  "/v1/economics/cash-rate",
+  "1¢ per call."
+ ],
+ [
+  "/v1/economics/cash-rate/series",
+  "1¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/hero/summary",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/hero/neighbours",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/hero/price-growth-12mo",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/mortgage-stress",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/investor-concentration",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/built-year",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/vacancy-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/land-values",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/strata-levies",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/affordability",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/bedroom-stats",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/repeat-sales",
+  "15¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/supply-pressure",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/days-on-market-benchmark",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/comparable-suburbs",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/rent-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/yield-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/lifestyle/livability-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/growth-map",
+  "30¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/negative-gearing-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/density-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/new-dwellings-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/voting-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/single-parents-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/population-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/sales/recent",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/sales/summary",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/crime/summary",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/crime/breakdown",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/crime/by-mesh-block",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/property-hazard-counts",
+  "15¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/extras",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/counts",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/slope",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/heritage-share",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/lifestyle/summary",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/lifestyle/poi-impacts",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/lifestyle/livability",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/lifestyle/pois",
+  "25¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/lifestyle/landmarks",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/lifestyle/narrative",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/lifestyle/cbd",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/zoning-map",
+  "25¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/building-controls",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/construction-activity",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/supply",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/profile",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/council-rates",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/applications",
+  "15¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/population-history",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/business",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/voting",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/ancestry-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/cultural-integration",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/tenure",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/cohorts",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/income-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/street-forecasts",
+  "60¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/shapes/boundary",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/shapes/neighbours",
+  "15¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/shapes/mesh-blocks",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/shapes/hazards",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/shapes/public-housing-sa1",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/shapes/noise-heatmap",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/shapes/easements",
+  "15¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/shapes/busy-roads",
+  "10¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/valuation/land-values",
+  "15¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/valuation/value-series",
+  "30¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/valuation/negative-gearing",
+  "20¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/valuation/agent-quoting",
+  "50¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/surroundings/properties",
+  "15¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/surroundings/tenure",
+  "15¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/surroundings/public-housing",
+  "15¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/surroundings/parcels",
+  "25¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/surroundings/listing-history-signals",
+  "20¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/context/mesh-blocks",
+  "30¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/context/street-bedroom-series",
+  "15¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/context/nearby-for-sale",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/stock-on-market",
+  "8¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/months-of-supply",
+  "8¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/vacancy-rate",
+  "8¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/yield-pct-series",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/vacancy-rate-series",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/recent-price-movement",
+  "15¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/hv-power-lines",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/risks/capital-growth-impact",
+  "12¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/growth-drivers",
+  "25¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/underclass-drag",
+  "10¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/unemployment",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/single-parents",
+  "3¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/demographics/private-school",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/density",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/development/council-intelligence",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/{suburb_name}/market/median-price-map",
+  "20¢ per call."
+ ],
+ [
+  "/v1/properties/{gnaf_id}/street/profile",
+  "20¢ per call."
+ ],
+ [
+  "/v1/suburbs/finder/fields",
+  "?"
+ ],
+ [
+  "/v1/suburbs/finder/regions",
+  "?"
+ ],
+ [
+  "/v1/suburbs/finder/count",
+  "5¢ per call."
+ ],
+ [
+  "/v1/suburbs/finder/search",
+  "30¢ per call."
+ ]
+]

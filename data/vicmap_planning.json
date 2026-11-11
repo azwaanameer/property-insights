@@ -1,0 +1,4213 @@
+{
+ "144.942677,-37.819343": {
+  "zone": [
+   {
+    "pfi": 3075451,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6921,
+    "zone_status": "g",
+    "zone_code": "DZ2",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 2",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733499,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4162378,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2727,
+    "zone_status": "g",
+    "zone_code": "DPO3",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11885504,
+    "ufi_created": "2024-05-20T11:24:57Z"
+   },
+   {
+    "pfi": 4160030,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4208,
+    "zone_status": "g",
+    "zone_code": "DDO50-A5",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 50 (AREA 5)",
+    "gaz_begin_date": "2013-01-17T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472310,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4160019,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4172,
+    "zone_status": "g",
+    "zone_code": "DDO50",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 50",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472303,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4241239,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6986,
+    "zone_status": "g",
+    "zone_code": "PO6",
+    "zone_description": "PARKING OVERLAY - PRECINCT 6",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7473294,
+    "ufi_created": "2023-03-17T11:51:09Z"
+   },
+   {
+    "pfi": 4159963,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11742262,
+    "ufi_created": "2024-05-08T11:08:08Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729428578,
+    "pfi": "207716263",
+    "centroid_pfi": "207716262",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2006-07-07T14:51:10Z",
+    "ufi_old": 533701796,
+    "ufi_created": "2023-03-05T03:45:26Z"
+   }
+  ]
+ },
+ "144.947576,-37.819155": {
+  "zone": [
+   {
+    "pfi": 3075431,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6922,
+    "zone_status": "g",
+    "zone_code": "DZ3",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2015-01-29T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730954,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4241236,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6987,
+    "zone_status": "g",
+    "zone_code": "PO7",
+    "zone_description": "PARKING OVERLAY - PRECINCT 7",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7471298,
+    "ufi_created": "2023-03-13T11:02:28Z"
+   },
+   {
+    "pfi": 4160015,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4216,
+    "zone_status": "g",
+    "zone_code": "DDO51",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 51",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472311,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4287250,
+    "scheme_code": "SCO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 5441,
+    "zone_status": "g",
+    "zone_code": "SCO41",
+    "zone_description": "SPECIFIC CONTROLS OVERLAY - PS MAP REF SCO41",
+    "gaz_begin_date": "2025-12-01T00:00:00Z",
+    "pfi_created": "2025-11-28T11:48:24Z",
+    "ufi": 16594328,
+    "ufi_created": "2025-12-04T10:33:50Z"
+   },
+   {
+    "pfi": 4159963,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11742262,
+    "ufi_created": "2024-05-08T11:08:08Z"
+   },
+   {
+    "pfi": 4162384,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2728,
+    "zone_status": "g",
+    "zone_code": "DPO4",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7473338,
+    "ufi_created": "2023-03-17T11:51:12Z"
+   },
+   {
+    "pfi": 4160003,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4219,
+    "zone_status": "g",
+    "zone_code": "DDO51-A3",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 51 (AREA 3)",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472314,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729428750,
+    "pfi": "206206723",
+    "centroid_pfi": "206206722",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2006-02-16T12:09:38Z",
+    "ufi_old": 610008810,
+    "ufi_created": "2023-03-05T03:45:26Z"
+   }
+  ]
+ },
+ "144.982814,-37.86238": {
+  "zone": [
+   {
+    "pfi": 3097740,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 420,
+    "zone_status": "g",
+    "zone_code": "NRZ1",
+    "zone_description": "NEIGHBOURHOOD RESIDENTIAL ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2017-12-14T00:00:00Z",
+    "pfi_created": "2017-12-08T13:46:56Z",
+    "ufi": 15733747,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 1773903,
+    "scheme_code": "HO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 2755,
+    "zone_status": "g",
+    "zone_code": "HO5",
+    "zone_description": "HERITAGE OVERLAY (HO5)",
+    "gaz_begin_date": "2024-08-01T00:00:00Z",
+    "pfi_created": "2021-02-05T12:00:00Z",
+    "ufi": 12609189,
+    "ufi_created": "2024-07-31T13:39:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 743027626,
+    "pfi": "150057204",
+    "centroid_pfi": "150057203",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.16,
+    "task_id": 392259,
+    "pfi_created": null,
+    "ufi_old": 511219349,
+    "ufi_created": "2023-04-16T04:27:00Z"
+   }
+  ]
+ },
+ "144.952523,-37.82268": {
+  "zone": [
+   {
+    "pfi": 3075405,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2012-04-26T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733483,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 879528806,
+    "pfi": "152639496",
+    "centroid_pfi": "152639495",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 8.81,
+    "task_id": 492836,
+    "pfi_created": "2003-12-31T08:20:44Z",
+    "ufi_old": 879022698,
+    "ufi_created": "2026-02-06T07:39:35Z"
+   }
+  ]
+ },
+ "144.99381,-37.838616": {
+  "zone": [
+   {
+    "pfi": 3097401,
+    "scheme_code": "ZN",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 801,
+    "zone_status": "g",
+    "zone_code": "ACZ1",
+    "zone_description": "ACTIVITY CENTRE ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2017-08-10T00:00:00Z",
+    "pfi_created": "2017-08-09T10:12:55Z",
+    "ufi": 17898885,
+    "ufi_created": "2026-03-19T11:55:33Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4185600,
+    "scheme_code": "IPO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2703,
+    "zone_status": "g",
+    "zone_code": "IPO3",
+    "zone_description": "INCORPORATED PLAN OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2012-02-02T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:51Z",
+    "ufi": 7342450,
+    "ufi_created": "2023-03-01T13:52:55Z"
+   },
+   {
+    "pfi": 4264945,
+    "scheme_code": "DCPO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2831,
+    "zone_status": "g",
+    "zone_code": "DCPO1",
+    "zone_description": "DEVELOPMENT CONTRIBUTIONS PLAN OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2023-08-31T00:00:00Z",
+    "pfi_created": "2023-08-30T13:40:57Z",
+    "ufi": 15984551,
+    "ufi_created": "2025-08-10T06:00:31Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 722256680,
+    "pfi": "421639372",
+    "centroid_pfi": "421639375",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.13,
+    "task_id": 386222,
+    "pfi_created": "2015-02-11T00:48:16Z",
+    "ufi_old": 520300827,
+    "ufi_created": "2023-02-19T04:38:16Z"
+   }
+  ]
+ },
+ "144.919854,-37.83469": {
+  "zone": [
+   {
+    "pfi": 3084122,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2012-07-05T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 18929931,
+    "ufi_created": "2026-07-03T12:29:52Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 5501009,
+    "scheme_code": "EAO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 2674,
+    "zone_status": "g",
+    "zone_code": "EAO",
+    "zone_description": "ENVIRONMENTAL AUDIT OVERLAY",
+    "gaz_begin_date": "2018-10-05T00:00:00Z",
+    "pfi_created": "2018-10-04T15:59:32Z",
+    "ufi": 13087090,
+    "ufi_created": "2024-09-04T10:58:31Z"
+   },
+   {
+    "pfi": 4365616,
+    "scheme_code": "DCPO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 2832,
+    "zone_status": "g",
+    "zone_code": "DCPO2",
+    "zone_description": "DEVELOPMENT CONTRIBUTIONS PLAN OVERLAY - SCHEDULE 2",
+    "gaz_begin_date": "2026-10-06T00:00:00Z",
+    "pfi_created": "2026-10-05T13:33:46Z",
+    "ufi": 20025965,
+    "ufi_created": "2026-10-05T13:33:46Z"
+   },
+   {
+    "pfi": 4241396,
+    "scheme_code": "PO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2012-07-05T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 13087109,
+    "ufi_created": "2024-09-04T10:58:32Z"
+   },
+   {
+    "pfi": 5501010,
+    "scheme_code": "DDO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 4155,
+    "zone_status": "g",
+    "zone_code": "DDO33",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 33",
+    "gaz_begin_date": "2018-10-05T00:00:00Z",
+    "pfi_created": "2018-10-04T16:02:06Z",
+    "ufi": 18930026,
+    "ufi_created": "2026-07-03T12:36:22Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 743014370,
+    "pfi": "430347784",
+    "centroid_pfi": "430347787",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 7.39,
+    "task_id": 392259,
+    "pfi_created": "2019-07-03T02:42:00Z",
+    "ufi_old": 587215313,
+    "ufi_created": "2023-04-16T04:26:43Z"
+   }
+  ]
+ },
+ "144.95566,-37.813956": {
+  "zone": [
+   {
+    "pfi": 1747169,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2019-10-21T17:06:56Z",
+    "ufi": 19417333,
+    "ufi_created": "2026-08-05T12:41:10Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729426640,
+    "pfi": "431017942",
+    "centroid_pfi": "431017945",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 1.16,
+    "task_id": 388080,
+    "pfi_created": "2019-10-24T23:49:03Z",
+    "ufi_old": 668427072,
+    "ufi_created": "2023-03-05T03:45:23Z"
+   }
+  ]
+ },
+ "144.960227,-37.807221": {
+  "zone": [
+   {
+    "pfi": 1747169,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2019-10-21T17:06:56Z",
+    "ufi": 19417333,
+    "ufi_created": "2026-08-05T12:41:10Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 1755973,
+    "scheme_code": "SBO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3621,
+    "zone_status": "g",
+    "zone_code": "SBO2",
+    "zone_description": "SPECIAL BUILDING OVERLAY - SCHEDULE 2",
+    "gaz_begin_date": "2024-12-13T00:00:00Z",
+    "pfi_created": "2020-10-14T07:00:00Z",
+    "ufi": 17639091,
+    "ufi_created": "2026-02-26T10:25:39Z"
+   },
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729423741,
+    "pfi": "423741943",
+    "centroid_pfi": "423741946",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2016-03-22T10:26:24Z",
+    "ufi_old": 509796726,
+    "ufi_created": "2023-03-05T03:45:19Z"
+   }
+  ]
+ },
+ "144.941496,-37.820271": {
+  "zone": [
+   {
+    "pfi": 3075451,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6921,
+    "zone_status": "g",
+    "zone_code": "DZ2",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 2",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733499,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4162378,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2727,
+    "zone_status": "g",
+    "zone_code": "DPO3",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11885504,
+    "ufi_created": "2024-05-20T11:24:57Z"
+   },
+   {
+    "pfi": 4160030,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4208,
+    "zone_status": "g",
+    "zone_code": "DDO50-A5",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 50 (AREA 5)",
+    "gaz_begin_date": "2013-01-17T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472310,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4160019,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4172,
+    "zone_status": "g",
+    "zone_code": "DDO50",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 50",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472303,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 1756228,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3602,
+    "zone_status": "g",
+    "zone_code": "LSIO3",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2024-12-13T00:00:00Z",
+    "pfi_created": "2020-10-16T12:55:12Z",
+    "ufi": 13873128,
+    "ufi_created": "2024-12-12T11:23:13Z"
+   },
+   {
+    "pfi": 4241239,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6986,
+    "zone_status": "g",
+    "zone_code": "PO6",
+    "zone_description": "PARKING OVERLAY - PRECINCT 6",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7473294,
+    "ufi_created": "2023-03-17T11:51:09Z"
+   },
+   {
+    "pfi": 4159963,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11742262,
+    "ufi_created": "2024-05-08T11:08:08Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845404909,
+    "pfi": "423078938",
+    "centroid_pfi": "423078941",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.32,
+    "task_id": 1005,
+    "pfi_created": "2015-11-18T14:09:32Z",
+    "ufi_old": 729428678,
+    "ufi_created": "2024-05-10T08:47:58Z"
+   }
+  ]
+ },
+ "144.953314,-37.815071": {
+  "zone": [
+   {
+    "pfi": 3075448,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472122,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159877,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472240,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729427615,
+    "pfi": "220198784",
+    "centroid_pfi": "220198783",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 1.81,
+    "task_id": 388080,
+    "pfi_created": "2012-08-08T08:13:58Z",
+    "ufi_old": 693492965,
+    "ufi_created": "2023-03-05T03:45:25Z"
+   }
+  ]
+ },
+ "144.991315,-37.861921": {
+  "zone": [
+   {
+    "pfi": 1585310,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 400,
+    "zone_status": "g",
+    "zone_code": "GRZ1",
+    "zone_description": "GENERAL RESIDENTIAL ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2021-04-23T00:00:00Z",
+    "pfi_created": "2019-01-10T11:18:17Z",
+    "ufi": 15733809,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [],
+  "parcel": [
+   {
+    "ufi": 829377685,
+    "pfi": "2536143",
+    "centroid_pfi": "23751146",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.46,
+    "task_id": 414169,
+    "pfi_created": null,
+    "ufi_old": 743027397,
+    "ufi_created": "2024-02-05T22:25:21Z"
+   }
+  ]
+ },
+ "144.983183,-37.864104": {
+  "zone": [
+   {
+    "pfi": 3083971,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 209,
+    "zone_status": "g",
+    "zone_code": "MUZ",
+    "zone_description": "MIXED USE ZONE",
+    "gaz_begin_date": "2000-03-23T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733643,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [],
+  "parcel": [
+   {
+    "ufi": 743028332,
+    "pfi": "172714663",
+    "centroid_pfi": "172714662",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.35,
+    "task_id": 392259,
+    "pfi_created": "2004-03-17T20:53:53Z",
+    "ufi_old": 553518189,
+    "ufi_created": "2023-04-16T04:27:01Z"
+   }
+  ]
+ },
+ "144.990373,-37.833262": {
+  "zone": [
+   {
+    "pfi": 3086329,
+    "scheme_code": "ZN",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 402,
+    "zone_status": "g",
+    "zone_code": "GRZ3",
+    "zone_description": "GENERAL RESIDENTIAL ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2014-06-19T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 19175184,
+    "ufi_created": "2026-07-24T11:20:51Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4161003,
+    "scheme_code": "DDO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 4342,
+    "zone_status": "g",
+    "zone_code": "DDO3-B",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 3-B",
+    "gaz_begin_date": "2017-02-24T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 19904609,
+    "ufi_created": "2026-09-21T13:35:31Z"
+   },
+   {
+    "pfi": 4152217,
+    "scheme_code": "SLO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2675,
+    "zone_status": "g",
+    "zone_code": "SLO1",
+    "zone_description": "SIGNIFICANT LANDSCAPE OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2017-02-24T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:49Z",
+    "ufi": 19904504,
+    "ufi_created": "2026-09-21T13:32:50Z"
+   },
+   {
+    "pfi": 4160971,
+    "scheme_code": "DDO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": null,
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472217,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4182312,
+    "scheme_code": "HO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 10122,
+    "zone_status": "g",
+    "zone_code": "HO122",
+    "zone_description": "HERITAGE OVERLAY (HO122)",
+    "gaz_begin_date": "2012-10-25T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 13999293,
+    "ufi_created": "2025-01-15T12:50:48Z"
+   },
+   {
+    "pfi": 4264945,
+    "scheme_code": "DCPO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2831,
+    "zone_status": "g",
+    "zone_code": "DCPO1",
+    "zone_description": "DEVELOPMENT CONTRIBUTIONS PLAN OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2023-08-31T00:00:00Z",
+    "pfi_created": "2023-08-30T13:40:57Z",
+    "ufi": 15984551,
+    "ufi_created": "2025-08-10T06:00:31Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 843594465,
+    "pfi": "2596013",
+    "centroid_pfi": "24124775",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.28,
+    "task_id": 1005,
+    "pfi_created": null,
+    "ufi_old": 722254828,
+    "ufi_created": "2024-05-01T10:03:03Z"
+   }
+  ]
+ },
+ "144.947713,-37.814754": {
+  "zone": [
+   {
+    "pfi": 3075452,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6923,
+    "zone_status": "g",
+    "zone_code": "DZ4",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 4",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7473386,
+    "ufi_created": "2023-03-17T11:51:14Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4162374,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2729,
+    "zone_status": "g",
+    "zone_code": "DPO5",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 5",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7471148,
+    "ufi_created": "2023-03-13T09:27:42Z"
+   },
+   {
+    "pfi": 4160001,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4224,
+    "zone_status": "g",
+    "zone_code": "DDO52-A2",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 52 (AREA 2)",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7469862,
+    "ufi_created": "2023-03-13T09:27:38Z"
+   },
+   {
+    "pfi": 4241234,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6988,
+    "zone_status": "g",
+    "zone_code": "PO8",
+    "zone_description": "PARKING OVERLAY - PRECINCT 8",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7535170,
+    "ufi_created": "2023-03-23T11:37:26Z"
+   },
+   {
+    "pfi": 4159963,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11742262,
+    "ufi_created": "2024-05-08T11:08:08Z"
+   },
+   {
+    "pfi": 4160014,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4222,
+    "zone_status": "g",
+    "zone_code": "DDO52",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 52",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7469860,
+    "ufi_created": "2023-03-13T09:27:38Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 860597910,
+    "pfi": "219437235",
+    "centroid_pfi": "219437234",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 454229,
+    "pfi_created": "2012-04-12T15:09:52Z",
+    "ufi_old": 729427195,
+    "ufi_created": "2024-12-11T14:59:50Z"
+   }
+  ]
+ },
+ "144.942676,-37.820698": {
+  "zone": [
+   {
+    "pfi": 3075451,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6921,
+    "zone_status": "g",
+    "zone_code": "DZ2",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 2",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733499,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4162378,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2727,
+    "zone_status": "g",
+    "zone_code": "DPO3",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11885504,
+    "ufi_created": "2024-05-20T11:24:57Z"
+   },
+   {
+    "pfi": 4160030,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4208,
+    "zone_status": "g",
+    "zone_code": "DDO50-A5",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 50 (AREA 5)",
+    "gaz_begin_date": "2013-01-17T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472310,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4160019,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4172,
+    "zone_status": "g",
+    "zone_code": "DDO50",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 50",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472303,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 1756228,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3602,
+    "zone_status": "g",
+    "zone_code": "LSIO3",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2024-12-13T00:00:00Z",
+    "pfi_created": "2020-10-16T12:55:12Z",
+    "ufi": 13873128,
+    "ufi_created": "2024-12-12T11:23:13Z"
+   },
+   {
+    "pfi": 4241239,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6986,
+    "zone_status": "g",
+    "zone_code": "PO6",
+    "zone_description": "PARKING OVERLAY - PRECINCT 6",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7473294,
+    "ufi_created": "2023-03-17T11:51:09Z"
+   },
+   {
+    "pfi": 4159963,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11742262,
+    "ufi_created": "2024-05-08T11:08:08Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729428837,
+    "pfi": "424331076",
+    "centroid_pfi": "424331079",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2016-06-20T08:42:24Z",
+    "ufi_old": 533701827,
+    "ufi_created": "2023-03-05T03:45:26Z"
+   }
+  ]
+ },
+ "144.960837,-37.810682": {
+  "zone": [
+   {
+    "pfi": 1747169,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2019-10-21T17:06:56Z",
+    "ufi": 19417333,
+    "ufi_created": "2026-08-05T12:41:10Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845405134,
+    "pfi": "426008845",
+    "centroid_pfi": "426008848",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 1.5,
+    "task_id": 1005,
+    "pfi_created": "2017-04-13T11:10:17Z",
+    "ufi_old": 729425254,
+    "ufi_created": "2024-05-10T08:47:58Z"
+   }
+  ]
+ },
+ "144.972565,-37.812738": {
+  "zone": [
+   {
+    "pfi": 1747169,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2019-10-21T17:06:56Z",
+    "ufi": 19417333,
+    "ufi_created": "2026-08-05T12:41:10Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845401892,
+    "pfi": "219820642",
+    "centroid_pfi": "219820641",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.38,
+    "task_id": 1005,
+    "pfi_created": "2012-07-06T11:58:54Z",
+    "ufi_old": 729426229,
+    "ufi_created": "2024-05-10T08:47:56Z"
+   }
+  ]
+ },
+ "144.996744,-37.844871": {
+  "zone": [
+   {
+    "pfi": 3097398,
+    "scheme_code": "ZN",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 801,
+    "zone_status": "g",
+    "zone_code": "ACZ1",
+    "zone_description": "ACTIVITY CENTRE ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2017-08-10T00:00:00Z",
+    "pfi_created": "2017-08-09T10:24:42Z",
+    "ufi": 19113261,
+    "ufi_created": "2026-07-21T13:40:22Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4238921,
+    "scheme_code": "EAO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2674,
+    "zone_status": "g",
+    "zone_code": "EAO",
+    "zone_description": "ENVIRONMENTAL AUDIT OVERLAY",
+    "gaz_begin_date": null,
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7342505,
+    "ufi_created": "2023-03-01T13:52:56Z"
+   },
+   {
+    "pfi": 4185597,
+    "scheme_code": "IPO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2703,
+    "zone_status": "g",
+    "zone_code": "IPO3",
+    "zone_description": "INCORPORATED PLAN OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2012-02-02T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:51Z",
+    "ufi": 18447001,
+    "ufi_created": "2026-05-13T12:10:05Z"
+   },
+   {
+    "pfi": 4264945,
+    "scheme_code": "DCPO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2831,
+    "zone_status": "g",
+    "zone_code": "DCPO1",
+    "zone_description": "DEVELOPMENT CONTRIBUTIONS PLAN OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2023-08-31T00:00:00Z",
+    "pfi_created": "2023-08-30T13:40:57Z",
+    "ufi": 15984551,
+    "ufi_created": "2025-08-10T06:00:31Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 843598159,
+    "pfi": "420959125",
+    "centroid_pfi": "420959128",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.39,
+    "task_id": 1005,
+    "pfi_created": "2014-09-29T01:41:34Z",
+    "ufi_old": 722261173,
+    "ufi_created": "2024-05-01T10:03:06Z"
+   }
+  ]
+ },
+ "144.925712,-37.839236": {
+  "zone": [
+   {
+    "pfi": 3097723,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 440,
+    "zone_status": "g",
+    "zone_code": "RGZ1",
+    "zone_description": "RESIDENTIAL GROWTH ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2017-12-14T00:00:00Z",
+    "pfi_created": "2017-12-08T13:25:20Z",
+    "ufi": 15733745,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4160817,
+    "scheme_code": "DDO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 2625,
+    "zone_status": "g",
+    "zone_code": "DDO20",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 20",
+    "gaz_begin_date": "2011-11-24T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851537,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 743019726,
+    "pfi": "205864556",
+    "centroid_pfi": "205864555",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.57,
+    "task_id": 392259,
+    "pfi_created": "2005-12-05T14:45:21Z",
+    "ufi_old": 498094109,
+    "ufi_created": "2023-04-16T04:26:50Z"
+   }
+  ]
+ },
+ "144.959283,-37.810695": {
+  "zone": [
+   {
+    "pfi": 1747169,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2019-10-21T17:06:56Z",
+    "ufi": 19417333,
+    "ufi_created": "2026-08-05T12:41:10Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729425242,
+    "pfi": "2377748",
+    "centroid_pfi": "22605969",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": null,
+    "ufi_old": 693891502,
+    "ufi_created": "2023-03-05T03:45:22Z"
+   }
+  ]
+ },
+ "144.95327,-37.813602": {
+  "zone": [
+   {
+    "pfi": 3075448,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472122,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159877,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472240,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729426665,
+    "pfi": "4498632",
+    "centroid_pfi": "40096065",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 1.73,
+    "task_id": 388080,
+    "pfi_created": null,
+    "ufi_old": 668427075,
+    "ufi_created": "2023-03-05T03:45:24Z"
+   }
+  ]
+ },
+ "144.947652,-37.824921": {
+  "zone": [
+   {
+    "pfi": 3075399,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6920,
+    "zone_status": "g",
+    "zone_code": "DZ1",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733497,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159990,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4203,
+    "zone_status": "g",
+    "zone_code": "DDO49-A3",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 49 (AREA 3)",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7469842,
+    "ufi_created": "2023-03-13T09:27:38Z"
+   },
+   {
+    "pfi": 4160016,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4171,
+    "zone_status": "g",
+    "zone_code": "DDO49",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 49",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472302,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4162377,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2726,
+    "zone_status": "g",
+    "zone_code": "DPO2",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 2",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7535194,
+    "ufi_created": "2023-03-23T11:37:30Z"
+   },
+   {
+    "pfi": 4241238,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6991,
+    "zone_status": "g",
+    "zone_code": "PO11",
+    "zone_description": "PARKING OVERLAY - PRECINCT 11",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7473298,
+    "ufi_created": "2023-03-17T11:51:09Z"
+   },
+   {
+    "pfi": 4287250,
+    "scheme_code": "SCO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 5441,
+    "zone_status": "g",
+    "zone_code": "SCO41",
+    "zone_description": "SPECIFIC CONTROLS OVERLAY - PS MAP REF SCO41",
+    "gaz_begin_date": "2025-12-01T00:00:00Z",
+    "pfi_created": "2025-11-28T11:48:24Z",
+    "ufi": 16594328,
+    "ufi_created": "2025-12-04T10:33:50Z"
+   },
+   {
+    "pfi": 4159963,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11742262,
+    "ufi_created": "2024-05-08T11:08:08Z"
+   },
+   {
+    "pfi": 1756228,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3602,
+    "zone_status": "g",
+    "zone_code": "LSIO3",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2024-12-13T00:00:00Z",
+    "pfi_created": "2020-10-16T12:55:12Z",
+    "ufi": 13873128,
+    "ufi_created": "2024-12-12T11:23:13Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845404284,
+    "pfi": "172982288",
+    "centroid_pfi": "172982287",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 1.31,
+    "task_id": 1005,
+    "pfi_created": "2004-04-21T12:54:11Z",
+    "ufi_old": 729429476,
+    "ufi_created": "2024-05-10T08:47:58Z"
+   }
+  ]
+ },
+ "144.940163,-37.843832": {
+  "zone": [
+   {
+    "pfi": 3083914,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 209,
+    "zone_status": "g",
+    "zone_code": "MUZ",
+    "zone_description": "MIXED USE ZONE",
+    "gaz_begin_date": null,
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733618,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4181575,
+    "scheme_code": "HO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 10456,
+    "zone_status": "g",
+    "zone_code": "HO456",
+    "zone_description": "HERITAGE OVERLAY (HO456)",
+    "gaz_begin_date": "2016-07-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851771,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4160861,
+    "scheme_code": "DDO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 11111,
+    "zone_status": "g",
+    "zone_code": "DDO1-1B",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1-1B",
+    "gaz_begin_date": "2016-07-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851602,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 743021933,
+    "pfi": "4312129",
+    "centroid_pfi": "36961385",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 1.3,
+    "task_id": 392259,
+    "pfi_created": null,
+    "ufi_old": 418068496,
+    "ufi_created": "2023-04-16T04:26:53Z"
+   }
+  ]
+ },
+ "144.953517,-37.821271": {
+  "zone": [
+   {
+    "pfi": 3075431,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6922,
+    "zone_status": "g",
+    "zone_code": "DZ3",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2015-01-29T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730954,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4241236,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6987,
+    "zone_status": "g",
+    "zone_code": "PO7",
+    "zone_description": "PARKING OVERLAY - PRECINCT 7",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7471298,
+    "ufi_created": "2023-03-13T11:02:28Z"
+   },
+   {
+    "pfi": 4162379,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2728,
+    "zone_status": "g",
+    "zone_code": "DPO4",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7471146,
+    "ufi_created": "2023-03-13T09:27:42Z"
+   },
+   {
+    "pfi": 4159961,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7469788,
+    "ufi_created": "2023-03-13T09:27:38Z"
+   },
+   {
+    "pfi": 4287250,
+    "scheme_code": "SCO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 5441,
+    "zone_status": "g",
+    "zone_code": "SCO41",
+    "zone_description": "SPECIFIC CONTROLS OVERLAY - PS MAP REF SCO41",
+    "gaz_begin_date": "2025-12-01T00:00:00Z",
+    "pfi_created": "2025-11-28T11:48:24Z",
+    "ufi": 16594328,
+    "ufi_created": "2025-12-04T10:33:50Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 873975624,
+    "pfi": "432377634",
+    "centroid_pfi": "432377637",
+    "status": "A",
+    "z_level": "A1",
+    "horiz_pos_uncertainty": 3.82,
+    "task_id": 481488,
+    "pfi_created": "2020-08-06T08:15:52Z",
+    "ufi_old": 845405601,
+    "ufi_created": "2025-10-01T14:51:34Z"
+   }
+  ]
+ },
+ "144.946762,-37.814937": {
+  "zone": [
+   {
+    "pfi": 3075452,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6923,
+    "zone_status": "g",
+    "zone_code": "DZ4",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 4",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7473386,
+    "ufi_created": "2023-03-17T11:51:14Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4162374,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2729,
+    "zone_status": "g",
+    "zone_code": "DPO5",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 5",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7471148,
+    "ufi_created": "2023-03-13T09:27:42Z"
+   },
+   {
+    "pfi": 4160001,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4224,
+    "zone_status": "g",
+    "zone_code": "DDO52-A2",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 52 (AREA 2)",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7469862,
+    "ufi_created": "2023-03-13T09:27:38Z"
+   },
+   {
+    "pfi": 4241234,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6988,
+    "zone_status": "g",
+    "zone_code": "PO8",
+    "zone_description": "PARKING OVERLAY - PRECINCT 8",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7535170,
+    "ufi_created": "2023-03-23T11:37:26Z"
+   },
+   {
+    "pfi": 4159963,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11742262,
+    "ufi_created": "2024-05-08T11:08:08Z"
+   },
+   {
+    "pfi": 4160014,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4222,
+    "zone_status": "g",
+    "zone_code": "DDO52",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 52",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7469860,
+    "ufi_created": "2023-03-13T09:27:38Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 860597912,
+    "pfi": "151459673",
+    "centroid_pfi": "151459672",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.24,
+    "task_id": 454229,
+    "pfi_created": "2003-06-24T14:30:10Z",
+    "ufi_old": 729427225,
+    "ufi_created": "2024-12-11T14:59:50Z"
+   }
+  ]
+ },
+ "144.98223,-37.862766": {
+  "zone": [
+   {
+    "pfi": 3097738,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 400,
+    "zone_status": "g",
+    "zone_code": "GRZ1",
+    "zone_description": "GENERAL RESIDENTIAL ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2017-12-14T00:00:00Z",
+    "pfi_created": "2017-12-08T13:46:38Z",
+    "ufi": 15733805,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [],
+  "parcel": [
+   {
+    "ufi": 881180579,
+    "pfi": "4438953",
+    "centroid_pfi": "37583441",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 2.48,
+    "task_id": 496569,
+    "pfi_created": null,
+    "ufi_old": 743027798,
+    "ufi_created": "2026-03-11T21:49:15Z"
+   }
+  ]
+ },
+ "144.98135,-37.850939": {
+  "zone": [
+   {
+    "pfi": 3097812,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 711,
+    "zone_status": "g",
+    "zone_code": "C1Z",
+    "zone_description": "COMMERCIAL 1 ZONE",
+    "gaz_begin_date": "2017-12-14T00:00:00Z",
+    "pfi_created": "2017-12-08T13:11:52Z",
+    "ufi": 16844748,
+    "ufi_created": "2025-12-16T12:54:57Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4160851,
+    "scheme_code": "DDO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 4717,
+    "zone_status": "g",
+    "zone_code": "DDO26-5C",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 26-5C",
+    "gaz_begin_date": "2016-06-02T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17026996,
+    "ufi_created": "2026-01-07T09:50:02Z"
+   },
+   {
+    "pfi": 4160830,
+    "scheme_code": "DDO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 2618,
+    "zone_status": "g",
+    "zone_code": "DDO13",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 13",
+    "gaz_begin_date": "2014-05-08T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17026995,
+    "ufi_created": "2026-01-07T09:50:02Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 743024605,
+    "pfi": "431516946",
+    "centroid_pfi": "431516960",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 1.9,
+    "task_id": 392259,
+    "pfi_created": "2020-02-19T02:00:31Z",
+    "ufi_old": 687708850,
+    "ufi_created": "2023-04-16T04:26:56Z"
+   }
+  ]
+ },
+ "144.993952,-37.836381": {
+  "zone": [
+   {
+    "pfi": 3097401,
+    "scheme_code": "ZN",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 801,
+    "zone_status": "g",
+    "zone_code": "ACZ1",
+    "zone_description": "ACTIVITY CENTRE ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2017-08-10T00:00:00Z",
+    "pfi_created": "2017-08-09T10:12:55Z",
+    "ufi": 17898885,
+    "ufi_created": "2026-03-19T11:55:33Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 1585581,
+    "scheme_code": "LSIO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 3600,
+    "zone_status": "g",
+    "zone_code": "LSIO1",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2019-06-13T00:00:00Z",
+    "pfi_created": "2019-01-17T12:29:43Z",
+    "ufi": 1866102,
+    "ufi_created": "2019-06-12T15:32:17Z"
+   },
+   {
+    "pfi": 4238918,
+    "scheme_code": "EAO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2674,
+    "zone_status": "g",
+    "zone_code": "EAO",
+    "zone_description": "ENVIRONMENTAL AUDIT OVERLAY",
+    "gaz_begin_date": null,
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7342503,
+    "ufi_created": "2023-03-01T13:52:56Z"
+   },
+   {
+    "pfi": 4264945,
+    "scheme_code": "DCPO",
+    "lga_code": "363",
+    "lga": "STONNINGTON",
+    "zone_num": 2831,
+    "zone_status": "g",
+    "zone_code": "DCPO1",
+    "zone_description": "DEVELOPMENT CONTRIBUTIONS PLAN OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2023-08-31T00:00:00Z",
+    "pfi_created": "2023-08-30T13:40:57Z",
+    "ufi": 15984551,
+    "ufi_created": "2025-08-10T06:00:31Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 722255689,
+    "pfi": "421545382",
+    "centroid_pfi": "421545385",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 386222,
+    "pfi_created": "2015-01-23T01:08:23Z",
+    "ufi_old": 498094724,
+    "ufi_created": "2023-02-19T04:38:13Z"
+   }
+  ]
+ },
+ "144.968345,-37.807817": {
+  "zone": [
+   {
+    "pfi": 3075171,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 209,
+    "zone_status": "g",
+    "zone_code": "MUZ",
+    "zone_description": "MIXED USE ZONE",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730886,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4285027,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2609,
+    "zone_status": "g",
+    "zone_code": "DDO4",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2025-04-17T00:00:00Z",
+    "pfi_created": "2025-04-16T09:23:58Z",
+    "ufi": 15012790,
+    "ufi_created": "2025-04-23T11:11:53Z"
+   },
+   {
+    "pfi": 4252298,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6992,
+    "zone_status": "g",
+    "zone_code": "PO12",
+    "zone_description": "PARKING OVERLAY - PRECINCT 12",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2018-06-25T14:55:37Z",
+    "ufi": 9698924,
+    "ufi_created": "2023-10-12T11:58:06Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729423823,
+    "pfi": "4560981",
+    "centroid_pfi": "40415477",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": null,
+    "ufi_old": 534304341,
+    "ufi_created": "2023-03-05T03:45:20Z"
+   }
+  ]
+ },
+ "144.961055,-37.809026": {
+  "zone": [
+   {
+    "pfi": 1747169,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2019-10-21T17:06:56Z",
+    "ufi": 19417333,
+    "ufi_created": "2026-08-05T12:41:10Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845401829,
+    "pfi": "220463589",
+    "centroid_pfi": "220463588",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.37,
+    "task_id": 1005,
+    "pfi_created": "2012-10-01T15:30:40Z",
+    "ufi_old": 839497662,
+    "ufi_created": "2024-05-10T08:47:56Z"
+   }
+  ]
+ },
+ "144.956601,-37.820842": {
+  "zone": [
+   {
+    "pfi": 3075448,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472122,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 1756230,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3602,
+    "zone_status": "g",
+    "zone_code": "LSIO3",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 3",
+    "gaz_begin_date": "2024-12-13T00:00:00Z",
+    "pfi_created": "2020-10-16T13:00:00Z",
+    "ufi": 13873126,
+    "ufi_created": "2024-12-12T11:23:13Z"
+   },
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845403118,
+    "pfi": "210984337",
+    "centroid_pfi": "210984336",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.22,
+    "task_id": 1005,
+    "pfi_created": "2008-04-14T15:18:52Z",
+    "ufi_old": 729428876,
+    "ufi_created": "2024-05-10T08:47:57Z"
+   }
+  ]
+ },
+ "144.961215,-37.822884": {
+  "zone": [
+   {
+    "pfi": 3075415,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472135,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729429192,
+    "pfi": "420304552",
+    "centroid_pfi": "420304555",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2014-05-14T05:12:06Z",
+    "ufi_old": 484236780,
+    "ufi_created": "2023-03-05T03:45:27Z"
+   }
+  ]
+ },
+ "144.979407,-37.845567": {
+  "zone": [
+   {
+    "pfi": 3075392,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 711,
+    "zone_status": "g",
+    "zone_code": "C1Z",
+    "zone_description": "COMMERCIAL 1 ZONE",
+    "gaz_begin_date": "2014-06-13T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7471975,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159986,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2628,
+    "zone_status": "g",
+    "zone_code": "DDO23",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 23",
+    "gaz_begin_date": "2002-12-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472275,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4264703,
+    "scheme_code": "HO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 11714,
+    "zone_status": "g",
+    "zone_code": "HO1414",
+    "zone_description": "HERITAGE OVERLAY (HO1414)",
+    "gaz_begin_date": "2025-09-12T00:00:00Z",
+    "pfi_created": "2023-06-08T12:41:29Z",
+    "ufi": 16050347,
+    "ufi_created": "2025-09-11T10:58:20Z"
+   },
+   {
+    "pfi": 4159969,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2622,
+    "zone_status": "g",
+    "zone_code": "DDO17",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 17",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 13562401,
+    "ufi_created": "2024-11-06T13:00:32Z"
+   },
+   {
+    "pfi": 4159895,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 11095,
+    "zone_status": "g",
+    "zone_code": "DDO19-A42",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 19 (AREA 42)",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7849828,
+    "ufi_created": "2023-04-24T05:30:36Z"
+   },
+   {
+    "pfi": 4284379,
+    "scheme_code": "SCO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 5440,
+    "zone_status": "g",
+    "zone_code": "SCO40",
+    "zone_description": "SPECIFIC CONTROLS OVERLAY - PS MAP REF SCO40",
+    "gaz_begin_date": "2025-03-21T00:00:00Z",
+    "pfi_created": "2025-03-20T12:29:08Z",
+    "ufi": 14653515,
+    "ufi_created": "2025-03-20T12:29:08Z"
+   },
+   {
+    "pfi": 4159935,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2624,
+    "zone_status": "g",
+    "zone_code": "DDO19",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 19",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7849728,
+    "ufi_created": "2023-04-24T05:30:36Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845403508,
+    "pfi": "207792621",
+    "centroid_pfi": "207792620",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.52,
+    "task_id": 1005,
+    "pfi_created": "2006-07-18T11:48:09Z",
+    "ufi_old": 729431276,
+    "ufi_created": "2024-05-10T08:47:57Z"
+   }
+  ]
+ },
+ "144.961213,-37.809362": {
+  "zone": [
+   {
+    "pfi": 1747169,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2019-10-21T17:06:56Z",
+    "ufi": 19417333,
+    "ufi_created": "2026-08-05T12:41:10Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845405260,
+    "pfi": "426603723",
+    "centroid_pfi": "426603726",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 1.67,
+    "task_id": 1005,
+    "pfi_created": "2017-07-25T13:38:00Z",
+    "ufi_old": 839497701,
+    "ufi_created": "2024-05-10T08:47:59Z"
+   }
+  ]
+ },
+ "144.961687,-37.80801": {
+  "zone": [
+   {
+    "pfi": 1747169,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6890,
+    "zone_status": "g",
+    "zone_code": "CCZ1",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 1",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2019-10-21T17:06:56Z",
+    "ufi": 19417333,
+    "ufi_created": "2026-08-05T12:41:10Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4253965,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2020-12-07T00:00:00Z",
+    "pfi_created": "2020-12-04T09:12:44Z",
+    "ufi": 19417510,
+    "ufi_created": "2026-08-05T12:46:16Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845406603,
+    "pfi": "4746211",
+    "centroid_pfi": "42239058",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.19,
+    "task_id": 1005,
+    "pfi_created": null,
+    "ufi_old": 839497635,
+    "ufi_created": "2024-05-10T08:48:00Z"
+   }
+  ]
+ },
+ "144.966278,-37.807832": {
+  "zone": [
+   {
+    "pfi": 3075171,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 209,
+    "zone_status": "g",
+    "zone_code": "MUZ",
+    "zone_description": "MIXED USE ZONE",
+    "gaz_begin_date": "1999-03-04T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730886,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4176069,
+    "scheme_code": "HO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 10488,
+    "zone_status": "g",
+    "zone_code": "HO488",
+    "zone_description": "HERITAGE OVERLAY (HO488)",
+    "gaz_begin_date": null,
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472574,
+    "ufi_created": "2023-03-17T11:51:07Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4285027,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2609,
+    "zone_status": "g",
+    "zone_code": "DDO4",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2025-04-17T00:00:00Z",
+    "pfi_created": "2025-04-16T09:23:58Z",
+    "ufi": 15012790,
+    "ufi_created": "2025-04-23T11:11:53Z"
+   },
+   {
+    "pfi": 4252298,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6992,
+    "zone_status": "g",
+    "zone_code": "PO12",
+    "zone_description": "PARKING OVERLAY - PRECINCT 12",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2018-06-25T14:55:37Z",
+    "ufi": 9698924,
+    "ufi_created": "2023-10-12T11:58:06Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729424122,
+    "pfi": "203165377",
+    "centroid_pfi": "203165336",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2005-03-11T14:25:37Z",
+    "ufi_old": 417595411,
+    "ufi_created": "2023-03-05T03:45:20Z"
+   }
+  ]
+ },
+ "144.96434,-37.823372": {
+  "zone": [
+   {
+    "pfi": 3075412,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472132,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4160065,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2670,
+    "zone_status": "g",
+    "zone_code": "DDO27",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 27",
+    "gaz_begin_date": "2002-01-18T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851544,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 894314213,
+    "pfi": "4396932",
+    "centroid_pfi": "37389036",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 516069,
+    "pfi_created": null,
+    "ufi_old": 729429329,
+    "ufi_created": "2026-10-19T15:22:39Z"
+   }
+  ]
+ },
+ "144.962564,-37.824146": {
+  "zone": [
+   {
+    "pfi": 3075406,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730945,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729429470,
+    "pfi": "150828789",
+    "centroid_pfi": "150828788",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.14,
+    "task_id": 388080,
+    "pfi_created": null,
+    "ufi_old": 603204236,
+    "ufi_created": "2023-03-05T03:45:27Z"
+   }
+  ]
+ },
+ "144.940885,-37.843762": {
+  "zone": [
+   {
+    "pfi": 3083914,
+    "scheme_code": "ZN",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 209,
+    "zone_status": "g",
+    "zone_code": "MUZ",
+    "zone_description": "MIXED USE ZONE",
+    "gaz_begin_date": null,
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733618,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4238867,
+    "scheme_code": "EAO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 2674,
+    "zone_status": "g",
+    "zone_code": "EAO",
+    "zone_description": "ENVIRONMENTAL AUDIT OVERLAY",
+    "gaz_begin_date": null,
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7851920,
+    "ufi_created": "2023-04-27T13:54:11Z"
+   },
+   {
+    "pfi": 4160863,
+    "scheme_code": "DDO",
+    "lga_code": "358",
+    "lga": "PORT PHILLIP",
+    "zone_num": 4462,
+    "zone_status": "g",
+    "zone_code": "DDO1-2",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1-2",
+    "gaz_begin_date": "2016-07-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851565,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 743021995,
+    "pfi": "4730877",
+    "centroid_pfi": "42159314",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 3.84,
+    "task_id": 392259,
+    "pfi_created": null,
+    "ufi_old": 418068561,
+    "ufi_created": "2023-04-16T04:26:53Z"
+   }
+  ]
+ },
+ "144.960058,-37.824984": {
+  "zone": [
+   {
+    "pfi": 3075415,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472135,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 872759380,
+    "pfi": "456560690",
+    "centroid_pfi": "456560693",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 479367,
+    "pfi_created": "2024-03-03T02:43:36Z",
+    "ufi_old": 833287211,
+    "ufi_created": "2025-09-09T10:54:56Z"
+   }
+  ]
+ },
+ "144.963838,-37.825831": {
+  "zone": [
+   {
+    "pfi": 3075406,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730945,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4160065,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2670,
+    "zone_status": "g",
+    "zone_code": "DDO27",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 27",
+    "gaz_begin_date": "2002-01-18T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851544,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729429750,
+    "pfi": "432091155",
+    "centroid_pfi": "432091162",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 4.24,
+    "task_id": 388080,
+    "pfi_created": "2020-06-23T12:31:12Z",
+    "ufi_old": 592618968,
+    "ufi_created": "2023-03-05T03:45:28Z"
+   }
+  ]
+ },
+ "144.962122,-37.823916": {
+  "zone": [
+   {
+    "pfi": 3075415,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472135,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729429389,
+    "pfi": "213463590",
+    "centroid_pfi": "213463589",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2009-08-14T10:00:28Z",
+    "ufi_old": 418608219,
+    "ufi_created": "2023-03-05T03:45:27Z"
+   }
+  ]
+ },
+ "144.963564,-37.824219": {
+  "zone": [
+   {
+    "pfi": 3075412,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472132,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4160065,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2670,
+    "zone_status": "g",
+    "zone_code": "DDO27",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 27",
+    "gaz_begin_date": "2002-01-18T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851544,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729429434,
+    "pfi": "429527230",
+    "centroid_pfi": "429527233",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2019-01-24T08:30:06Z",
+    "ufi_old": 567260465,
+    "ufi_created": "2023-03-05T03:45:27Z"
+   }
+  ]
+ },
+ "144.958161,-37.82714": {
+  "zone": [
+   {
+    "pfi": 3075414,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 7472134,
+    "ufi_created": "2023-03-15T16:38:40Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 4287250,
+    "scheme_code": "SCO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 5441,
+    "zone_status": "g",
+    "zone_code": "SCO41",
+    "zone_description": "SPECIFIC CONTROLS OVERLAY - PS MAP REF SCO41",
+    "gaz_begin_date": "2025-12-01T00:00:00Z",
+    "pfi_created": "2025-11-28T11:48:24Z",
+    "ufi": 16594328,
+    "ufi_created": "2025-12-04T10:33:50Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729429943,
+    "pfi": "427782582",
+    "centroid_pfi": "427782585",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2018-03-15T12:09:19Z",
+    "ufi_old": 548542961,
+    "ufi_created": "2023-03-05T03:45:28Z"
+   }
+  ]
+ },
+ "144.943167,-37.813162": {
+  "zone": [
+   {
+    "pfi": 3075447,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6925,
+    "zone_status": "g",
+    "zone_code": "DZ6",
+    "zone_description": "DOCKLANDS ZONE - SCHEDULE 6",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15733498,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4160020,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4231,
+    "zone_status": "g",
+    "zone_code": "DDO54",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 54",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7534732,
+    "ufi_created": "2023-03-23T11:37:22Z"
+   },
+   {
+    "pfi": 4160010,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4236,
+    "zone_status": "g",
+    "zone_code": "DDO54-A5",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 54 (AREA 5)",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472325,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   },
+   {
+    "pfi": 4241237,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6990,
+    "zone_status": "g",
+    "zone_code": "PO10",
+    "zone_description": "PARKING OVERLAY - PRECINCT 10",
+    "gaz_begin_date": "2013-04-19T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:52Z",
+    "ufi": 7473297,
+    "ufi_created": "2023-03-17T11:51:09Z"
+   },
+   {
+    "pfi": 4162376,
+    "scheme_code": "DPO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2731,
+    "zone_status": "g",
+    "zone_code": "DPO7",
+    "zone_description": "DEVELOPMENT PLAN OVERLAY - SCHEDULE 7",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7473342,
+    "ufi_created": "2023-03-17T11:51:12Z"
+   },
+   {
+    "pfi": 4159963,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2617,
+    "zone_status": "g",
+    "zone_code": "DDO12",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 12",
+    "gaz_begin_date": "2008-04-07T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 11742262,
+    "ufi_created": "2024-05-08T11:08:08Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 777949865,
+    "pfi": "221337401",
+    "centroid_pfi": "221337400",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 1005,
+    "pfi_created": "2013-05-13T10:15:24Z",
+    "ufi_old": 729431466,
+    "ufi_created": "2023-07-04T15:11:28Z"
+   }
+  ]
+ },
+ "144.966333,-37.827841": {
+  "zone": [
+   {
+    "pfi": 1339921,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6896,
+    "zone_status": "g",
+    "zone_code": "CCZ7",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 7",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 15733355,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4160065,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2670,
+    "zone_status": "g",
+    "zone_code": "DDO27",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 27",
+    "gaz_begin_date": "2002-01-18T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851544,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4160042,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4242,
+    "zone_status": "g",
+    "zone_code": "DDO60",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 60",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388854,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4160039,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 4289,
+    "zone_status": "g",
+    "zone_code": "DDO60-A4A",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 60 (AREA 4A)",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7472372,
+    "ufi_created": "2023-03-17T11:51:06Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 860667665,
+    "pfi": "2589617",
+    "centroid_pfi": "457774545",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.6,
+    "task_id": 1000,
+    "pfi_created": null,
+    "ufi_old": 860583971,
+    "ufi_created": "2024-12-13T07:39:54Z"
+   }
+  ]
+ },
+ "144.961532,-37.825259": {
+  "zone": [
+   {
+    "pfi": 3075406,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730945,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729429603,
+    "pfi": "426438180",
+    "centroid_pfi": "426438197",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2017-06-22T12:50:13Z",
+    "ufi_old": 534413610,
+    "ufi_created": "2023-03-05T03:45:27Z"
+   }
+  ]
+ },
+ "144.962089,-37.825672": {
+  "zone": [
+   {
+    "pfi": 3075406,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730945,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   },
+   {
+    "pfi": 4160065,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2670,
+    "zone_status": "g",
+    "zone_code": "DDO27",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 27",
+    "gaz_begin_date": "2002-01-18T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 7851544,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 729429651,
+    "pfi": "220785200",
+    "centroid_pfi": "220785199",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 388080,
+    "pfi_created": "2012-12-20T09:07:19Z",
+    "ufi_old": 484233727,
+    "ufi_created": "2023-03-05T03:45:27Z"
+   }
+  ]
+ },
+ "144.958979,-37.827914": {
+  "zone": [
+   {
+    "pfi": 3075408,
+    "scheme_code": "ZN",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6892,
+    "zone_status": "g",
+    "zone_code": "CCZ3",
+    "zone_description": "CAPITAL CITY ZONE - SCHEDULE 3",
+    "gaz_begin_date": "2013-06-20T00:00:00Z",
+    "pfi_created": "2017-05-02T09:40:47Z",
+    "ufi": 15730947,
+    "ufi_created": "2025-07-10T11:24:16Z"
+   }
+  ],
+  "overlays": [
+   {
+    "pfi": 4159641,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2615,
+    "zone_status": "g",
+    "zone_code": "DDO10",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 10",
+    "gaz_begin_date": "2015-09-04T00:00:00Z",
+    "pfi_created": "2017-06-07T15:40:50Z",
+    "ufi": 17388851,
+    "ufi_created": "2026-02-10T13:28:03Z"
+   },
+   {
+    "pfi": 4363410,
+    "scheme_code": "LSIO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 3603,
+    "zone_status": "g",
+    "zone_code": "LSIO4",
+    "zone_description": "LAND SUBJECT TO INUNDATION OVERLAY - SCHEDULE 4",
+    "gaz_begin_date": "2026-06-11T00:00:00Z",
+    "pfi_created": "2026-06-10T11:04:20Z",
+    "ufi": 19051162,
+    "ufi_created": "2026-07-13T12:53:20Z"
+   },
+   {
+    "pfi": 1339925,
+    "scheme_code": "PO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 6981,
+    "zone_status": "g",
+    "zone_code": "PO1",
+    "zone_description": "PARKING OVERLAY - PRECINCT 1",
+    "gaz_begin_date": "2021-12-24T00:00:00Z",
+    "pfi_created": "2018-09-18T14:46:42Z",
+    "ufi": 12967829,
+    "ufi_created": "2024-08-21T11:35:49Z"
+   },
+   {
+    "pfi": 4258124,
+    "scheme_code": "DDO",
+    "lga_code": "343",
+    "lga": "MELBOURNE",
+    "zone_num": 2606,
+    "zone_status": "g",
+    "zone_code": "DDO1",
+    "zone_description": "DESIGN AND DEVELOPMENT OVERLAY - SCHEDULE 1",
+    "gaz_begin_date": "2021-09-30T00:00:00Z",
+    "pfi_created": "2021-09-27T03:31:05Z",
+    "ufi": 7851514,
+    "ufi_created": "2023-04-27T13:54:09Z"
+   }
+  ],
+  "parcel": [
+   {
+    "ufi": 845406362,
+    "pfi": "455376012",
+    "centroid_pfi": "455376015",
+    "status": "A",
+    "z_level": "G",
+    "horiz_pos_uncertainty": 0.1,
+    "task_id": 1005,
+    "pfi_created": "2023-07-03T22:45:33Z",
+    "ufi_old": 782445386,
+    "ufi_created": "2024-05-10T08:47:59Z"
+   }
+  ]
+ }
+}

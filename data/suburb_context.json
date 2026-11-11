@@ -1,0 +1,218 @@
+{
+ "dffh": {
+  "Docklands": {
+   "median_weekly": 800,
+   "lettings": 1471,
+   "median_year_ago": 750,
+   "change_pct": 6.666666666666667
+  },
+  "Southbank": {
+   "median_weekly": 750,
+   "lettings": 2353,
+   "median_year_ago": 720,
+   "change_pct": 4.166666666666666
+  },
+  "Melbourne CBD": {
+   "median_weekly": 750,
+   "lettings": 6461,
+   "median_year_ago": 730,
+   "change_pct": 2.73972602739726
+  },
+  "St Kilda": {
+   "median_weekly": 650,
+   "lettings": 1035,
+   "median_year_ago": 625,
+   "change_pct": 4
+  },
+  "South Yarra": {
+   "median_weekly": 730,
+   "lettings": 1247,
+   "median_year_ago": 700,
+   "change_pct": 4.285714285714286
+  },
+  "Port Melbourne": {
+   "median_weekly": 750,
+   "lettings": 349,
+   "median_year_ago": 728,
+   "change_pct": 3.021978021978022
+  }
+ },
+ "period": "Jun 2026",
+ "rea": {
+  "Docklands": {
+   "rent_listings_all": 250,
+   "rent2_n": 111,
+   "rent2_median": 780,
+   "sold2_n": 87,
+   "sold2_median": 627500,
+   "gross_yield": 6.463745019920318
+  },
+  "Southbank": {
+   "rent_listings_all": 459,
+   "rent2_n": 241,
+   "rent2_median": 800,
+   "sold2_n": 87,
+   "sold2_median": 589000,
+   "gross_yield": 7.062818336162987
+  },
+  "Melbourne CBD": {
+   "rent_listings_all": 1200,
+   "rent2_n": 598,
+   "rent2_median": 777.5,
+   "sold2_n": 80,
+   "sold2_median": 565000,
+   "gross_yield": 7.155752212389381
+  },
+  "St Kilda": {
+   "rent_listings_all": 219,
+   "rent2_n": 111,
+   "rent2_median": 675,
+   "sold2_n": 81,
+   "sold2_median": 605000,
+   "gross_yield": 5.801652892561983
+  },
+  "South Yarra": {
+   "rent_listings_all": 264,
+   "rent2_n": 96,
+   "rent2_median": 722.5,
+   "sold2_n": 58,
+   "sold2_median": 617500,
+   "gross_yield": 6.084210526315789
+  },
+  "Port Melbourne": {
+   "rent_listings_all": 98,
+   "rent2_n": 32,
+   "rent2_median": 772.5,
+   "sold2_n": 66,
+   "sold2_median": 687750,
+   "gross_yield": 5.840785169029443
+  }
+ },
+ "fx": 1.437,
+ "airdna": {
+  "South Yarra": {
+   "n": 213,
+   "rev_median": 17990,
+   "occ_median": 68.38,
+   "adr_median_usd": 162.69635,
+   "adr_median_aud": 233.79465495
+  },
+  "St Kilda": {
+   "n": 348,
+   "rev_median": 16064,
+   "occ_median": 69.06,
+   "adr_median_usd": 156.23075,
+   "adr_median_aud": 224.50358775
+  },
+  "Melbourne CBD": {
+   "n": 2536,
+   "rev_median": 23015,
+   "occ_median": 69.23,
+   "adr_median_usd": 161.86128000000002,
+   "adr_median_aud": 232.59465936000004
+  },
+  "Southbank": {
+   "n": 1074,
+   "rev_median": 20701,
+   "occ_median": 66.37,
+   "adr_median_usd": 168,
+   "adr_median_aud": 241.416
+  },
+  "Docklands": {
+   "n": 551,
+   "rev_median": 20474,
+   "occ_median": 66.78,
+   "adr_median_usd": 167.31818,
+   "adr_median_aud": 240.43622466000002
+  },
+  "Port Melbourne": {
+   "n": 84,
+   "rev_median": 22802.5,
+   "occ_median": 67.535,
+   "adr_median_usd": 172.942855,
+   "adr_median_aud": 248.518882635
+  }
+ },
+ "pipeline": {
+  "APPLIED": {
+   "projects": 8,
+   "dwellings": 2364
+  },
+  "APPROVED": {
+   "projects": 29,
+   "dwellings": 4056
+  },
+  "UNDER CONSTRUCTION": {
+   "projects": 3,
+   "dwellings": 292
+  }
+ },
+ "pipeline_top": [
+  {
+   "status": "APPLIED",
+   "street_address": "87-89 Queens Bridge Street, SOUTHBANK VIC 3006",
+   "resi_dwellings": 1336,
+   "floors_above": 79,
+   "year_completed": null,
+   "clue_small_area": "Southbank",
+   "latitude": -37.82417497,
+   "longitude": 144.9609117,
+   "town_planning_application": "ID-2026-1"
+  },
+  {
+   "status": "APPROVED",
+   "street_address": "87-89 Queens Bridge Street SOUTHBANK VIC 3006",
+   "resi_dwellings": 610,
+   "floors_above": 47,
+   "year_completed": null,
+   "clue_small_area": "Southbank",
+   "latitude": -37.82460797,
+   "longitude": 144.9609935,
+   "town_planning_application": "ID-2016-6"
+  },
+  {
+   "status": "APPROVED",
+   "street_address": "640-652 Bourke Street MELBOURNE VIC 3000",
+   "resi_dwellings": 607,
+   "floors_above": 71,
+   "year_completed": null,
+   "clue_small_area": "Melbourne (CBD)",
+   "latitude": -37.81617703,
+   "longitude": 144.9544085,
+   "town_planning_application": "TPM-2015-26/B"
+  },
+  {
+   "status": "APPROVED",
+   "street_address": "27-59 Whiteman Street SOUTHBANK VIC 3006",
+   "resi_dwellings": 510,
+   "floors_above": 53,
+   "year_completed": null,
+   "clue_small_area": "Southbank",
+   "latitude": -37.82593265,
+   "longitude": 144.9588247,
+   "town_planning_application": "TPMR-2025-19"
+  },
+  {
+   "status": "APPLIED",
+   "street_address": "1-7 Queens Bridge Street SOUTHBANK VIC 3006",
+   "resi_dwellings": 508,
+   "floors_above": 72,
+   "year_completed": null,
+   "clue_small_area": "Southbank",
+   "latitude": -37.82194183,
+   "longitude": 144.9615506,
+   "town_planning_application": "TPMR-2025-13/A"
+  },
+  {
+   "status": "APPROVED",
+   "street_address": "1-7 Queens Bridge Street SOUTHBANK VIC 3006",
+   "resi_dwellings": 483,
+   "floors_above": 66,
+   "year_completed": null,
+   "clue_small_area": "Southbank",
+   "latitude": -37.82194183,
+   "longitude": 144.9615506,
+   "town_planning_application": "TPMR-2025-13"
+  }
+ ]
+}

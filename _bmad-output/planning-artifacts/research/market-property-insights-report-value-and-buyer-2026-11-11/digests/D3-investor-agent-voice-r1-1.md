@@ -1,0 +1,65 @@
+# D3 digest: investor / buyer's agent / apartment buyer voice (round 1)
+
+Accessed 2026-11-11 (all sources). Web only. 19 tool calls used. Headline: genuine first-person user voice was THIN. Reddit domains are blocked from WebSearch filtering; one Reddit mirror snapshot was readable. Whirlpool threads surfaced in search but the one fetched returned 403. Most other material is vendor, agent or media register. No prevalence claim below is supported by 2 independent first-person communities unless stated.
+
+## (a) Findings
+
+### Pain: pre-contract information is missing in Victoria
+1. Victorian buyers get 3 items in the Owners Corporation Certificate (latest AGM minutes, insurance, current fund balances and levies) versus 14 in interstate strata reports. Missing: levy history, maintenance plans, engineering/defect reports, lift certificates, AESMR, committee minutes. Records generally only accessible after contract signing. Source is a strata-data vendor (Cohabit) selling the fix; no buyer quotes. https://www.smartpropertyinvestment.com.au/tax-and-legal/28062-the-critical-strata-checks-victorian-buyers-can-t-make | Smart Property Investment (reporting Cohabit analysis) | 2026-08-20 | accessed 2026-11-11 | medium on the gap (matches Consumer Affairs Vic checklist), low on severity (vendor-framed) | pain, statistic. Same upstream restated at https://www.realestatebusiness.com.au/industry/32362-victoria-s-strata-disclosure-system-leaves-key-questions-unanswered | Real Estate Business | 2026-08-21 | counts as ONE source (same Cohabit upstream).
+2. A Melbourne first-time investor (1-bed, 8-lot block built early 2010s) found after purchase an almost-empty sinking fund, lift issues, ceiling leaks, basement damp, and was "anxious" about special levies quoted as "$50k-$100k per unit" from forums; had not had a solicitor review the contract. Holding cost about $5-6k a year, negatively geared. https://reddit.sentinel-team.org/posts/1rpw6lb/snapshots/2026-03-11T15%3A16%3A25.232316Z | r/AusProperty (mirror) | ~July 2025 (derived from "245 days before snapshot"; borderline 18-month freshness) | single thread, LOW confidence | pain, workaround.
+3. Commenters in that thread: a building report "will cost you a few hundred"; "A new lift could run you 80k or more"; tactic is to join the committee and raise the sinking fund levy; view that small Melbourne blocks are fine and "the big 100+ unit towers" are the bigger risk; others said "Sell it now" and "Never again". Opinion split; same single thread | LOW | workaround, language, price point.
+4. A Whirlpool poster reported owners corporation fees near $6,000 per unit per year in a 36-unit building, said pre-purchase they only had AGM minutes and the proposed budget vs actual, and advised attending meetings and questioning service pricing. Found via search snippet only (fetch returned 403), thread undated (thread ID suggests several years old, unverified). https://forums.whirlpool.net.au/archive/2463399 | Whirlpool | undated, likely stale | LOW | pain, workaround.
+
+### Pain: buyers skip the reports that exist
+5. A Sydney strata lawyer estimates about 90% of potential buyers do not obtain an owners corporation/strata report; her reasons: unwilling to pay, attached to the property, unaware it exists. It is an experience-based estimate, not a survey. The original page returned 404 on fetch; content seen only through search summaries. https://propertyupdate.com.au/up-to-90-per-cent-of-apartment-buyers-not-ordering-strata-reports/ | Property Update (lawyer opinion) | undated | LOW | statistic, pain. NSW lens, not Melbourne.
+6. Strata report prices quoted by advisers: roughly $250-$600 (one source), $200-$350 NSW (another). Victorian pricing not established. Via search summary of https://picagroup.com.au/ and https://stratachecks.com.au/ (vendors/advisers) | marketing register | 2026 | LOW | willingness-to-pay (price anchor, not stated WTP).
+7. Agents/advisers warn "low levies" can signal an underfunded fund and a coming special levy; one Collings article describes an investor who avoided a low-fee building then got a levy. https://www.collings.com.au/?p=54660 | buyer's agent blog | undated | LOW (marketing register) | pain.
+
+### Workarounds and data used
+8. Free/cheap sources recommended in the market: SQM free data, state land value and sales maps, Domain/realestate.com.au sold listings; one forum post said free data covers "a lot" of research needs. (Search-summary paraphrase, post not directly read.) https://ozbargain.com.au/node/745730 and https://www.microburbs.com.au/blog/top-10-property-research-tools-for-2024-in-australia | OzBargain / Microburbs (vendor) | 2024 | LOW | workaround.
+9. Consumer Affairs Victoria's checklist and RACV guides tell buyers to read the OC certificate, minutes, sinking fund, levy history and not rely on a building inspection alone. https://www.consumer.vic.gov.au/housing/buying-and-selling-property/checklists/due-diligence | government | current | HIGH that this is the official workaround, but it is advice, not user voice | workaround.
+10. Buyers' real workaround evident in the one thread: ask strangers online after purchase, hire engineer for the specific defect. LOW (n=1).
+
+### Willingness to pay / price points
+11. SQM Research: one-off postcode report $39.95; unlimited postcode subscription $79.95/month; monthly, cancellable, money-back guarantee. Pricefinder investor plan about $99/month (2024 comparison by a vendor). CoreLogic RP Data Lite $198/month or $139/month annual. All from vendor pages or a competitor blog, not user statements. https://sqmresearch.com.au/products.php ; https://www.microburbs.com.au/blog/top-10-property-research-tools-for-2024-in-australia ; https://corelogic.com.au/legals/rp-data-packages | vendors | 2024-2026 | medium on list prices, may be stale | statistic, willingness-to-pay (anchors).
+12. Buyer's agent fees: about 2-3% of price plus GST and engagement fee (REBAA, via secondary pages); $12k-$25k quoted for $1-1.5M property. 2023 PIPA survey reportedly found 40% of buyers had considered a buyer's agent (up from about 10% a decade ago); an Unikorn survey of 1,000 found 44% would and 44% would not. These came via search-engine summaries of agent/finder/aussie pages; I did not open the primary surveys. https://www.finder.com.au/home-loans/buyers-agent-fees ; https://www.aussie.com.au/insights/articles/how-much-does-a-buyers-agent-cost/ | Finder, Aussie, others | 2022-2025 | LOW-medium; Unikorn is a buyer's agency (interested party) | statistic, willingness-to-pay.
+13. Vendor-review evidence on paying for data: Trustpilot page for corelogic.com (note: reviews mostly look US-oriented, mixed with escrow/mortgage issues, so weak fit for Australian investors) has 1.7/5 from 18 reviews (94% one-star), dated 2020-Aug 2026; themes: no trial ("Propstream offers a free trial for 7 days"), one week at $54 "didn't deliver", cancellation denied, valuations that moved sharply month to month, "do not rely on" house price and rental data. https://au.trustpilot.com/review/corelogic.com | Trustpilot | 2020-2026 | LOW (n=18, unverified, relevance uncertain) | pain, willingness-to-pay. The only possibly relevant takeaway is trial/refund friction and trust in valuation numbers.
+
+### Apartment-specific pains (what was found)
+14. Special levies / cladding: Choice cites Lacrosse (Melbourne) owners facing about $20M, roughly $40,000 each, for cladding. https://www.choice.com.au/money/property/buying/articles/apartment-building-defects | Choice | undated | HIGH that it happened; old event | pain.
+15. Oversupply and yield: Whirlpool posts (search snippets only) argue both ways on Melbourne apartment oversupply ("overbuilt", vs "if there was an oversupply, vacancy rate should be higher"); investors "owning almost 60 per cent" of units is repeated second-hand and unverified. Many posts 1-11 years old. https://forums.whirlpool.net.au/archive/3qqz5jp3 | Whirlpool | mixed, mostly stale | LOW | pain.
+16. Short stay: since 1 Jan 2025 Victorian OCs can ban short stays by special resolution (75%); principal residences are protected; 7.5% state short-stay levy. Investor groups said the impact would affect "a very small pool of investors". No investor first-person reaction found. https://www.pipa.asn.au/?p=39435 ; https://www.hostaway.com/blog/airbnb-rules-in-victoria/ | PIPA / host-software vendor | 2024-2025 | medium | pain (regulatory).
+17. Melbourne buyer-protection reform (July 2025) reportedly does not cover common property (roof, facade, lifts, fire systems); a "clean strata report" is not a "clean bill of health". Source is a Skool community post / blog, vendor register. https://www.skool.com/aus-property-report-8047/melbourne-apartment-buyers-july-1st-buyer-protections-act-2025-changes | LOW | pain.
+
+### Language (their words versus vendor jargon)
+Users: "special levy", "sinking fund", "empty sinking fund", "running the building responsibly", "dud", "Sell it now", "Never again", "a new lift could run you 80k", "$50k-$100k per unit", "big 100+ unit towers", "body corp/owners corp fees". Vendors: "strata intelligence", "Building Health Score", "capital works fund", "due diligence". Note the Victorian users say "owners corporation/OC"; NSW "strata"; "sinking fund" is the popular term even where statute says "maintenance fund". All low confidence; one Reddit thread plus one Whirlpool thread.
+
+## (b) Patterns seen in 2+ independent communities
+Honest status: only weak cross-community patterns.
+- Fear of unknown special levies / empty sinking fund: seen in r/AusProperty thread (first-person), Whirlpool OC thread (first-person, stale), plus advisers (Collings, Choice) and Cohabit (vendor). First-person communities = 2 but each n=1 thread. Treat as plausible, not established as prevalent.
+- Buyers cannot see building financial health before committing: Whirlpool poster (AGM minutes and budget only) and Cohabit/Consumer Affairs Vic framing. Independent in origin but one is old and one is a vendor.
+- A building report/strata report costs "a few hundred" dollars (Reddit commenter; PIC/StrataChecks advisers). Price anchor consistent at $200-$600 across sources, though advisers have commercial interest.
+- Distrust or friction around paid data subscriptions: Trustpilot (trial/refund) and Whirlpool/OzBargain suggestions to use free data. Weak and indirect.
+
+## (c) Leads worth chasing
+- The Reddit mirror host (reddit.sentinel-team.org) is fetchable; search it for r/AusProperty, r/AusFinance, r/melbourne threads on units, levy and "dud building" to get more first-person voices.
+- Cohabit (competitor/analogue): its Victorian product, pricing and any customer reviews; this is the closest direct comparable to the proposed report.
+- PIPA Investor Sentiment Survey 2025 (full PDF fetch returned only a download index) and 2023 buyer's agent survey: get the primary document for sample size and research-tool questions.
+- Whirlpool "VIC property market and price discussion" and "Owners Corporation Fees" archive pages via different fetch route (403 on one).
+- Flat Chat (flatchat.com.au) strata forum: strata owners' first-person complaints; NSW-centric but pattern-relevant.
+- Choice and Mozo articles on defects (UNSW study: 26% of Sydney apartments flawed) for statistic-grade evidence.
+- Apple/Google Play reviews of realestate/Domain/Cotality/PropTrack apps; SQM, Pricefinder reviews on Product Review / Capterra.
+- Victorian Owners Corporation Victoria and Consumer Affairs Vic surveys of apartment owners.
+
+## (d) Searched for and not found
+- Reddit threads (r/AusPropertyInvestments, r/AusFinance, r/melbourne) on researching a specific unit: the domain was blocked from search filtering; direct fetch of one r/melbourne mirror thread failed (SSL error).
+- Any investor or buyer first-person statement about WILLINGNESS to pay for a per-unit report. None found; only list prices and vendor/adviser fee ranges.
+- Any survey with methodology on which research tools Australian investors use (PIPA/API reports surfaced only as titles/download pages; not opened).
+- Independent complaints about Cotality/CoreLogic, Pricefinder, SQM or Hotspotting pricing from Australian investors. The one Trustpilot page is mostly US/mortgage-escrow context. No Hotspotting results at all.
+- PropertyChat and Australian Property Forum: search returned only US BiggerPockets content; no threads read.
+- App store reviews of property apps, ProductReview, ASIC/Finder/Mozo survey on apartment buyer research: not surfaced.
+- First-person investor reaction to Victorian short-stay ban/levy; first-person views on off-the-plan problems and rental yield vs growth: not found.
+- Buyer's agent first-person Q&A: only buyer's agent marketing blogs found (marketing register, discount).
+
+## Confidence summary
+No claim above reaches "high" for user prevalence. Strongest: the Victorian disclosure gap (official checklist plus vendor analysis, Aug 2026, current) and report price anchors ($200-$600). Everything first-person comes from n=1 threads.

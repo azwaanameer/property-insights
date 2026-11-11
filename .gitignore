@@ -1,0 +1,14 @@
+node_modules
+.env*
+data/raw
+
+# Personal / business data: listing agent names and phone numbers, CRM addresses and AirDNA records.
+data/demo_raw.json
+data/rp_harvest.json
+data/rp_joined.json
+data/rp_new_to_crm.json
+data/benchmark_addresses.json
+data/vicmap_match.json
+data/planning.log
+# Large local downloads and renders
+*.zip

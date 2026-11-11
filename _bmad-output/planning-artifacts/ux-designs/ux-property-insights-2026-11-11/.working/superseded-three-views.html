@@ -1,0 +1,172 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Property Insights: 310/628 Flinders Street, Docklands (mock)</title><style>
+/* Governing spec: DESIGN.md (all tokens), EXPERIENCE.md (IA, Component Patterns, State Patterns, Key Flows 1-3). Spines win on conflict. */
+:root{--canvas:#F3F4F0;--surface:#fff;--ink:#16202A;--ink-muted:#566270;--line:#D9DDD4;--accent:#0E5C63;--accent-fg:#fff;--observed:#1F6B45;--observed-wash:#E3F1E8;--estimated:#8A5A00;--estimated-wash:#FBF0D6;--unknown:#5B4B8A;--unknown-wash:#ECE8F6;--conflict:#A3281F;--conflict-wash:#FBE5E2}
+@media (prefers-color-scheme:dark){:root{--canvas:#0F161C;--surface:#17212A;--ink:#E8ECEF;--ink-muted:#9AA7B3;--line:#2B3945;--accent:#5BB8C1;--accent-fg:#0F161C;--observed:#6CCB98;--observed-wash:#16301F;--estimated:#E5B358;--estimated-wash:#33290F;--unknown:#B8A8EA;--unknown-wash:#272142;--conflict:#F08A80;--conflict-wash:#3A1B18}}
+*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.mockbar{background:var(--ink);color:var(--canvas);font-size:12px;padding:6px 16px;text-align:center}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+input.v{position:absolute;opacity:0;pointer-events:none}
+header.top{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin-bottom:24px}
+h1{font:600 28px/1.15 ui-serif,Georgia,serif;margin:0 0 4px}
+.sub0{color:var(--ink-muted)}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.fact{border:1px solid var(--line);border-radius:9999px;padding:2px 10px;font-size:12px;color:var(--ink-muted)}
+.tabs{display:flex;gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px;width:max-content;max-width:100%;flex-wrap:wrap;margin-top:8px}
+.tabs label{padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:600;color:var(--ink-muted)}
+#v1:checked~header .t1,#v2:checked~header .t2,#v3:checked~header .t3{background:var(--accent);color:var(--accent-fg)}
+#v1:focus-visible~header .t1,#v2:focus-visible~header .t2,#v3:focus-visible~header .t3{outline:2px solid var(--accent);outline-offset:2px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+@media(max-width:1023px){.layout{grid-template-columns:1fr}}
+.main{display:flex;flex-direction:column;gap:24px}
+.rail{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px}
+@media(max-width:1023px){.rail{position:static}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px}
+.card h2{font:650 16px/1.3 system-ui,sans-serif;margin:0 0 2px}.take{color:var(--ink-muted);margin:0 0 16px}
+.foot{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-muted)}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:9999px;padding:1px 9px;font-size:12px;font-weight:600}
+.chip i{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+.chip.observed{background:var(--observed-wash);color:var(--observed)}.chip.estimated{background:var(--estimated-wash);color:var(--estimated)}
+.chip.unknown{background:var(--unknown-wash);color:var(--unknown)}.chip.conflict{background:var(--conflict-wash);color:var(--conflict)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px}
+.cap{font-size:12px;color:var(--ink-muted);font-weight:500}.fig{font:650 22px/1.1 system-ui,sans-serif;font-variant-numeric:tabular-nums;margin:4px 0}
+.tile .sub{font-size:12px;color:var(--ink-muted);margin-bottom:6px}.tile .row{margin:6px 0 4px}.src{font-size:12px;color:var(--ink-muted)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-size:12px;color:var(--ink-muted);padding-bottom:6px}
+th{text-align:left;font-size:12px;color:var(--ink-muted);font-weight:600;border-bottom:1px solid var(--line);padding:6px 8px}
+td{padding:7px 8px;border-bottom:1px solid var(--line)}td.n,th.n{text-align:right}
+tr.like td:first-child{border-left:3px solid var(--observed)}tr.weak{color:var(--ink-muted)}tr.weak td:first-child{border-left:3px solid transparent}
+tr.self{background:var(--estimated-wash)}tr.self td:first-child{border-left:3px solid var(--estimated)}
+.why,.mut{color:var(--ink-muted);font-size:12px}
+.gap{background:repeating-linear-gradient(135deg,var(--unknown-wash),var(--unknown-wash) 8px,transparent 8px,transparent 16px);border:1px dashed var(--unknown);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;color:var(--ink)}
+.gap b{color:var(--unknown)}.gap span{font-size:13px}.gap em{font-size:12px;color:var(--ink-muted);font-style:normal}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:700px){.two{grid-template-columns:1fr}}
+ul.ov{margin:8px 0 0;padding-left:18px}ul.ov li{margin:4px 0}
+ol.q{margin:0;padding-left:20px}ol.q li{margin:6px 0}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-fg);border-radius:8px;padding:8px 14px;font-weight:600}
+.btn.o{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.note{font-size:12px;color:var(--ink-muted);margin-top:8px}
+.key{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:12px;color:var(--ink-muted);margin-top:6px}.key svg{vertical-align:middle}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+/* view switch: section order + rail variants (CSS-only) */
+.s-str{order:1}.s-bldg{order:2}.s-rent{order:3}.s-sales{order:4}.s-yield{order:5}.s-plan{order:6}.s-q{order:7}.s-src{order:8}
+#v2:checked~.layout .s-sales{order:1}#v2:checked~.layout .s-rent{order:2}#v2:checked~.layout .s-yield{order:3}#v2:checked~.layout .s-bldg{order:4}#v2:checked~.layout .s-str{order:5}
+#v3:checked~.layout .s-sales{order:1}#v3:checked~.layout .s-yield{order:2}#v3:checked~.layout .s-rent{order:3}#v3:checked~.layout .s-plan{order:4}#v3:checked~.layout .s-bldg{order:5}#v3:checked~.layout .s-str{order:6}
+.r2,.r3{display:none}#v2:checked~.layout .r1,#v3:checked~.layout .r1{display:none}#v2:checked~.layout .r2{display:flex}#v3:checked~.layout .r3{display:flex}
+.rail>div{flex-direction:column;gap:12px}.r1{display:flex}
+</style></head><body>
+<div class="mockbar">MOCK-UP · real records from the City Retreats CRM, realestate.com.au (via RapidAPI), Vicmap and AirDNA · generated 2026-11-11</div>
+<div class="wrap">
+<input class="v" type="radio" name="view" id="v1" checked aria-label="Acquisition view"><input class="v" type="radio" name="view" id="v2" aria-label="Investor view"><input class="v" type="radio" name="view" id="v3" aria-label="Broker view">
+<header class="top">
+  <div class="sub0">Docklands VIC 3008 · City of Melbourne</div>
+  <h1>310/628 Flinders Street, Docklands</h1>
+  <div class="facts"><span class="fact">Apartment</span><span class="fact">2 bed</span><span class="fact">1 bath</span><span class="fact">0 car</span><span class="fact">Listed since 7 Sep 2026 · 65 days</span><span class="fact">Agent: Ibrahim Gardezi, MRE</span><span class="fact">CRM status: New</span></div>
+  <div class="legend"><span class="chip observed"><i></i>Observed: recorded fact with source and date</span><span class="chip estimated"><i></i>Estimated: model or provider estimate</span><span class="chip unknown"><i></i>Unknown: not in any connected source</span><span class="chip conflict"><i></i>Conflict: our sources disagree</span></div>
+  <div class="tabs" role="tablist" aria-label="View"><label class="t1" for="v1">Acquisition</label><label class="t2" for="v2">Investor</label><label class="t3" for="v3">Broker</label></div>
+</header>
+<div class="layout">
+<main class="main">
+
+<section class="card s-sales" aria-labelledby="h-sales"><h2 id="h-sales">Sales evidence: this building</h2>
+<p class="take">5 like-for-like settled sales (same layout, same building, last 6 months): median $510,000, range $495,888 to $532,000.</p>
+<table><caption>Settled sales at 628 Flinders Street found in the newest 150 Docklands sales, May to Sep 2026. No sale of unit 310 appears in this window.</caption>
+<thead><tr><th>Unit</th><th class="n">Sold for</th><th>Date</th><th>Layout</th><th>Relevance</th></tr></thead><tbody><tr class="weak"><td>3203/628</td><td class="n">$760,000</td><td>17 Sep 2026 <span class="mut">(2 mo)</span></td><td>2b 2b 1c</td><td class="why">Weaker: 2 baths, not 1</td></tr><tr class="like"><td>2715/628</td><td class="n">$510,000</td><td>10 Sep 2026 <span class="mut">(2 mo)</span></td><td>2b 1b 0c</td><td class="why">Same layout, same building</td></tr><tr class="like"><td>3318/628</td><td class="n">$495,888</td><td>10 Sep 2026 <span class="mut">(2 mo)</span></td><td>2b 1b 0c</td><td class="why">Same layout, same building</td></tr><tr class="weak"><td>1212/628</td><td class="n">$360,000</td><td>31 Aug 2026 <span class="mut">(2 mo)</span></td><td>1b 1b 0c</td><td class="why">Weaker: 1-bed, not 2</td></tr><tr class="weak"><td>1309/628</td><td class="n">$370,000</td><td>26 Aug 2026 <span class="mut">(3 mo)</span></td><td>1b 1b 0c</td><td class="why">Weaker: 1-bed, not 2</td></tr><tr class="like"><td>2416/628</td><td class="n">$500,000</td><td>14 Aug 2026 <span class="mut">(3 mo)</span></td><td>2b 1b 0c</td><td class="why">Same layout, same building</td></tr><tr class="weak"><td>2112/628</td><td class="n">$390,888</td><td>11 Aug 2026 <span class="mut">(3 mo)</span></td><td>1b 1b 0c</td><td class="why">Weaker: 1-bed, not 2</td></tr><tr class="weak"><td>2511/628</td><td class="n">$388,100</td><td>07 Aug 2026 <span class="mut">(3 mo)</span></td><td>1b 1b 0c</td><td class="why">Weaker: 1-bed, not 2</td></tr><tr class="weak"><td>509/628</td><td class="n">$475,000</td><td>28 May 2026 <span class="mut">(6 mo)</span></td><td>1b 1b 1c</td><td class="why">Weaker: 1-bed, not 2</td></tr><tr class="like"><td>3614/628</td><td class="n">$525,000</td><td>14 May 2026 <span class="mut">(6 mo)</span></td><td>2b 1b 0c</td><td class="why">Same layout, same building</td></tr><tr class="like"><td>2015/628</td><td class="n">$532,000</td><td>13 May 2026 <span class="mut">(6 mo)</span></td><td>2b 1b 0c</td><td class="why">Same layout, same building</td></tr></tbody></table>
+<div class="note">Layout key: beds, baths, car spaces. The $760,000 sale has a second bathroom and a car space, so it is shown but excluded from the median.</div>
+<div class="foot">Source: realestate.com.au sold listings via RapidAPI (realty-in-au), retrieved 11 Nov 2026. Match: exact building, unit-level addresses. Coverage: newest 150 sales in the suburb only; older sales would need deeper paging or another source.</div></section>
+
+<section class="card s-rent" aria-labelledby="h-rent"><h2 id="h-rent">Rent evidence: this building</h2>
+<p class="take">Asking $675/wk is below the building median of $725/wk for the same layout (11 current listings, range $650 to $850). The unit has been advertised for 65 days.</p>
+<table><caption>Advertised rents for 2-bed, 1-bath, no-car units at 628 Flinders Street. These are asking rents, not signed leases.</caption>
+<thead><tr><th>Unit</th><th class="n">Asking rent</th><th>Available</th><th>Layout</th></tr></thead><tbody><tr class="like"><td>2217/628</td><td class="n">$650/wk</td><td>16 Nov 2026</td><td>2b 1b 0c</td></tr><tr class="self"><td>310/628 <b>(this unit)</b></td><td class="n">$675/wk</td><td>Available now</td><td>2b 1b 0c</td></tr><tr class="like"><td>610/628</td><td class="n">$680/wk</td><td>Available now</td><td>2b 1b 0c</td></tr><tr class="like"><td>1616/628</td><td class="n">$700/wk</td><td>Available now</td><td>2b 1b 0c</td></tr><tr class="like"><td>618/628</td><td class="n">$715/wk</td><td>19 Nov 2026</td><td>2b 1b 0c</td></tr><tr class="like"><td>2617/628</td><td class="n">$720/wk</td><td>Available now</td><td>2b 1b 0c</td></tr><tr class="like"><td>1816E/628</td><td class="n">$725/wk</td><td>Available now</td><td>2b 1b 0c</td></tr><tr class="like"><td>3210/628</td><td class="n">$730/wk</td><td>16 Nov 2026</td><td>2b 1b 0c</td></tr><tr class="like"><td>3017/628</td><td class="n">$780/wk</td><td>20 Nov 2026</td><td>2b 1b 0c</td></tr><tr class="like"><td>3815/628</td><td class="n">$780/wk</td><td>Available now</td><td>2b 1b 0c</td></tr><tr class="like"><td>4012/628</td><td class="n">$800/wk</td><td>Available now</td><td>2b 1b 0c</td></tr><tr class="like"><td>514/628</td><td class="n">$850/wk</td><td>Available now</td><td>2b 1b 0c</td></tr></tbody></table>
+<div class="two" style="margin-top:12px"><div class="tile"><div class="cap">Bond</div><div class="fig">$2,933</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">realestate.com.au, 11 Nov 2026</div></div><div class="tile"><div class="cap">Bond check</div><div class="fig">Consistent</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">Bond ≈ 4.3 weeks of asking rent</div></div></div>
+<div class="foot">Source: realestate.com.au rental listings via RapidAPI (realty-in-au), 11 Nov 2026; the same unit and rent also appear in the CRM from Domain (matching). Suburb bond-based rent benchmark (Homes Victoria) is not yet connected.</div></section>
+
+<section class="card s-yield" aria-labelledby="h-yield"><h2 id="h-yield">Gross yield scenarios</h2>
+<p class="take">At the building's like-for-like sale prices and the asking rent, gross yield is 6.6% to 7.1%. Net yield cannot be shown yet.</p>
+<table><caption>Gross yield = annual rent ÷ price. Inputs are scenarios you can edit; they are not evidence.</caption>
+<thead><tr><th>Weekly rent</th><th class="n">At $495,888</th><th class="n">At $510,000 (median)</th><th class="n">At $532,000</th></tr></thead><tbody><tr><td>$650/wk</td><td class="n">6.82%</td><td class="n">6.63%</td><td class="n">6.35%</td></tr><tr><td>$675/wk (asking)</td><td class="n">7.08%</td><td class="n">6.88%</td><td class="n">6.60%</td></tr><tr><td>$725/wk</td><td class="n">7.60%</td><td class="n">7.39%</td><td class="n">7.09%</td></tr></tbody></table>
+<div style="margin-top:12px"><div class="gap"><b>Owners corporation fees, levies and rates: unknown</b><span>Net yield and any holding-cost figure would be invented without them.</span><em>Next step: Request the owners corporation certificate from the agent.</em></div></div>
+<div class="foot">Derived from the two sections above. Labelled: Derived, not Observed.</div></section>
+
+<section class="card s-str" aria-labelledby="h-str"><h2 id="h-str">Short-stay scenario</h2>
+<p class="take">Two estimates agree within 2%: AirDNA $59,714 (low confidence) and our building-tier $60,836. Observed activity in the building is heavy, but nothing here shows short stays are permitted.</p>
+<div class="tiles">
+<div class="tile"><div class="cap">AirDNA estimate, per year</div><div class="fig">$59,714</div><div class="sub">72% occupancy · $228 average nightly rate · confidence 40/100 · 50 comps (42 within 30 m)</div><div class="row"><span class="chip estimated"><i></i>Estimated, low confidence</span></div><div class="src">AirDNA rentalizer via RapidAPI, 2 Nov 2026</div></div>
+<div class="tile"><div class="cap">Our building-tier estimate, per year</div><div class="fig">$60,836</div><div class="sub">$59,647 to $68,917 · 14 same-building 2-bed 1-bath listings, professional-operator scope</div><div class="row"><span class="chip estimated"><i></i>Estimated, strong</span></div><div class="src">City Retreats model, 19 Oct 2026</div></div>
+</div>
+<div style="margin-top:16px"><svg viewBox="0 0 560 150" role="img" aria-label="Annual revenue of the 50 AirDNA comparable listings, sorted low to high, with our estimate and the lease cost marked" style="width:100%;height:auto"><rect x="1.0" y="131.4" width="9.2" height="0.6" fill="var(--estimated)" opacity=".55"/><rect x="12.2" y="130.5" width="9.2" height="1.5" fill="var(--estimated)" opacity=".55"/><rect x="23.4" y="129.7" width="9.2" height="2.3" fill="var(--estimated)" opacity=".55"/><rect x="34.6" y="129.6" width="9.2" height="2.4" fill="var(--estimated)" opacity=".55"/><rect x="45.8" y="128.5" width="9.2" height="3.5" fill="var(--estimated)" opacity=".55"/><rect x="57.0" y="126.5" width="9.2" height="5.5" fill="var(--estimated)" opacity=".55"/><rect x="68.2" y="125.4" width="9.2" height="6.6" fill="var(--estimated)" opacity=".55"/><rect x="79.4" y="125.2" width="9.2" height="6.8" fill="var(--estimated)" opacity=".55"/><rect x="90.6" y="124.1" width="9.2" height="7.9" fill="var(--estimated)" opacity=".55"/><rect x="101.8" y="115.7" width="9.2" height="16.3" fill="var(--estimated)" opacity=".55"/><rect x="113.0" y="108.0" width="9.2" height="24.0" fill="var(--estimated)" opacity=".55"/><rect x="124.2" y="106.0" width="9.2" height="26.0" fill="var(--estimated)" opacity=".55"/><rect x="135.4" y="105.6" width="9.2" height="26.4" fill="var(--estimated)" opacity=".55"/><rect x="146.6" y="104.5" width="9.2" height="27.5" fill="var(--estimated)" opacity=".55"/><rect x="157.8" y="102.9" width="9.2" height="29.1" fill="var(--estimated)" opacity=".55"/><rect x="169.0" y="100.2" width="9.2" height="31.8" fill="var(--estimated)" opacity=".55"/><rect x="180.2" y="99.4" width="9.2" height="32.6" fill="var(--estimated)" opacity=".55"/><rect x="191.4" y="92.7" width="9.2" height="39.3" fill="var(--estimated)" opacity=".55"/><rect x="202.6" y="92.2" width="9.2" height="39.8" fill="var(--estimated)" opacity=".55"/><rect x="213.8" y="84.2" width="9.2" height="47.8" fill="var(--estimated)" opacity=".55"/><rect x="225.0" y="78.9" width="9.2" height="53.1" fill="var(--estimated)" opacity=".55"/><rect x="236.2" y="77.6" width="9.2" height="54.4" fill="var(--estimated)" opacity=".55"/><rect x="247.4" y="73.1" width="9.2" height="58.9" fill="var(--estimated)" opacity=".55"/><rect x="258.6" y="68.3" width="9.2" height="63.7" fill="var(--estimated)" opacity=".55"/><rect x="269.8" y="67.5" width="9.2" height="64.5" fill="var(--estimated)" opacity=".55"/><rect x="281.0" y="67.0" width="9.2" height="65.0" fill="var(--estimated)" opacity=".55"/><rect x="292.2" y="66.6" width="9.2" height="65.4" fill="var(--estimated)" opacity=".55"/><rect x="303.4" y="66.5" width="9.2" height="65.5" fill="var(--estimated)" opacity=".55"/><rect x="314.6" y="65.9" width="9.2" height="66.1" fill="var(--estimated)" opacity=".55"/><rect x="325.8" y="65.9" width="9.2" height="66.1" fill="var(--estimated)" opacity=".55"/><rect x="337.0" y="63.4" width="9.2" height="68.6" fill="var(--estimated)" opacity=".55"/><rect x="348.2" y="61.7" width="9.2" height="70.3" fill="var(--estimated)" opacity=".55"/><rect x="359.4" y="60.6" width="9.2" height="71.4" fill="var(--estimated)" opacity=".55"/><rect x="370.6" y="59.0" width="9.2" height="73.0" fill="var(--estimated)" opacity=".55"/><rect x="381.8" y="58.1" width="9.2" height="73.9" fill="var(--estimated)" opacity=".55"/><rect x="393.0" y="58.1" width="9.2" height="73.9" fill="var(--estimated)" opacity=".55"/><rect x="404.2" y="57.1" width="9.2" height="74.9" fill="var(--estimated)" opacity=".55"/><rect x="415.4" y="55.8" width="9.2" height="76.2" fill="var(--estimated)" opacity=".55"/><rect x="426.6" y="55.7" width="9.2" height="76.3" fill="var(--estimated)" opacity=".55"/><rect x="437.8" y="54.7" width="9.2" height="77.3" fill="var(--estimated)" opacity=".55"/><rect x="449.0" y="53.2" width="9.2" height="78.8" fill="var(--estimated)" opacity=".55"/><rect x="460.2" y="52.4" width="9.2" height="79.6" fill="var(--estimated)" opacity=".55"/><rect x="471.4" y="51.1" width="9.2" height="80.9" fill="var(--estimated)" opacity=".55"/><rect x="482.6" y="49.7" width="9.2" height="82.3" fill="var(--estimated)" opacity=".55"/><rect x="493.8" y="46.0" width="9.2" height="86.0" fill="var(--estimated)" opacity=".55"/><rect x="505.0" y="45.9" width="9.2" height="86.1" fill="var(--estimated)" opacity=".55"/><rect x="516.2" y="43.3" width="9.2" height="88.7" fill="var(--estimated)" opacity=".55"/><rect x="527.4" y="43.2" width="9.2" height="88.8" fill="var(--estimated)" opacity=".55"/><rect x="538.6" y="43.2" width="9.2" height="88.8" fill="var(--estimated)" opacity=".55"/><rect x="549.8" y="2.0" width="9.2" height="130.0" fill="var(--estimated)" opacity=".55"/><line x1="0" x2="560" y1="66.1" y2="66.1" stroke="var(--ink)" stroke-width="1.2" /><text x="558" y="62.1" text-anchor="end" font-size="10" fill="var(--ink)"></text><line x1="0" x2="560" y1="94.0" y2="94.0" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="4 3"/><text x="558" y="90.0" text-anchor="end" font-size="10" fill="var(--ink)"></text></svg><div class="key"><span><svg width="26" height="8"><line x1="0" x2="26" y1="4" y2="4" stroke="var(--ink)" stroke-width="1.5"/></svg> Our building-tier median $60,836</span><span><svg width="26" height="8"><line x1="0" x2="26" y1="4" y2="4" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 3"/></svg> Lease cost at asking rent $35,100</span><span>Bars: annual revenue of the 50 AirDNA comparable listings, lowest to highest</span></div></div>
+<div class="two" style="margin-top:16px">
+<div class="tile"><div class="cap">Airbnb listings in this building</div><div class="fig">53</div><div class="sub">52 entire homes · 40 run by operators with 5 or more listings · median occupancy 72.8%</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">City Retreats building register, last seen 2 Nov 2026</div></div>
+<div class="tile"><div class="cap">City Retreats units already in the building</div><div class="fig">12</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">CRM, 28 distinct units seen in the building</div></div>
+</div>
+<div class="note" style="margin-top:10px"><span class="chip conflict"><i></i>Conflict</span> This unit's own record says 0 Airbnb listings in the building, but the building register shows 53. The register is used here; the unit record needs a refresh.</div>
+<div style="margin-top:12px"><div class="gap"><b>Are short stays permitted in this building? Unknown</b><span>Observed Airbnb activity is not permission. Owners corporations can ban short stays by rule; no rule or flag is recorded for this building.</span><em>Next step: Ask the agent and the owners corporation; record the answer so every unit here inherits it.</em></div></div>
+<div class="foot">Sources: AirDNA (fetched 2 Nov 2026, address match to this unit), City Retreats model, CRM building register. Nightly rate and occupancy are model outputs, not bookings.</div></section>
+
+<section class="card s-bldg" aria-labelledby="h-bldg"><h2 id="h-bldg">Building and unit identity</h2>
+<p class="take">The unit is matched to an official address record. Building rules and financials are not.</p>
+<div class="tiles">
+<div class="tile"><div class="cap">Official address match</div><div class="fig">Exact unit</div><div class="sub">310/628 FLINDERS STREET DOCKLANDS 3008</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">Vicmap Address, 11 Nov 2026</div></div>
+<div class="tile"><div class="cap">Vicmap property ID</div><div class="fig">432377214</div><div class="sub">Mesh block 20395174000</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">Vicmap Address</div></div>
+<div class="tile"><div class="cap">Building facilities</div><div class="fig">Pool · Gym · Spa · Sauna</div><div class="sub">City views · storage</div><div class="row"><span class="chip observed"><i></i>Advertised</span></div><div class="src">Listing amenities, Sep 2026</div></div>
+</div>
+<div class="two" style="margin-top:12px">
+<div class="gap"><b>Owners corporation fees, special levies, major works: unknown</b><span>These drive holding cost and surprise bills.</span><em>Next step: Request the owners corporation certificate and records.</em></div>
+<div class="gap"><b>Defects, cladding, building insurance claims: unknown</b><span>No document from this building is in our data.</span><em>Next step: Ask for the building and pest report and owners corporation minutes.</em></div>
+</div>
+<div class="note" style="margin-top:10px"><span class="chip conflict"><i></i>Conflict</span> Furnished: the CRM says furnished, the listing says "Furnished: no". Both are shown; confirm with the agent.</div>
+<div class="foot">Vicmap Address lists 721 address records at 628 Flinders Street (units, car spaces and storage). The unit matches exactly.</div></section>
+
+<section class="card s-plan" aria-labelledby="h-plan"><h2 id="h-plan">Planning screen</h2>
+<p class="take">Docklands Zone - Schedule 3 with 4 overlays at this location. This is a map screen, not a planning certificate.</p>
+<div class="tiles"><div class="tile"><div class="cap">Zone</div><div class="fig">DZ3</div><div class="sub">DOCKLANDS ZONE - SCHEDULE 3</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">Vicmap Planning, 11 Nov 2026</div></div><div class="tile"><div class="cap">Council</div><div class="fig">City of Melbourne</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">Vicmap Address, council code 343</div></div></div>
+<ul class="ov"><li><b>PO7</b> Parking Overlay - Precinct 7<span class="mut"> Parking Overlay: sets car-parking requirements for the precinct.</span></li><li><b>DPO4</b> Development Plan Overlay - Schedule 4<span class="mut"> Development Plan Overlay: future development needs an approved plan.</span></li><li><b>DDO12</b> Design And Development Overlay - Schedule 12<span class="mut"> Design and Development Overlay: built-form and design controls.</span></li><li><b>SCO41</b> Specific Controls Overlay - Ps Map Ref Sco41<span class="mut"> Specific Controls Overlay: site-specific planning provisions.</span></li></ul>
+<div class="foot">Source: Vicmap Planning, point-in-polygon at the building location. Overlay explanations are general; confirm the schedule text before relying on it. No flood overlay (LSIO) was returned at this point.</div></section>
+
+<section class="card s-q" aria-labelledby="h-q"><h2 id="h-q">Questions to take to the agent</h2>
+<p class="take">Each question closes a gap shown above.</p>
+<ol class="q">
+<li>Does the owners corporation restrict short-term stays, by rule or by-law? Please send the current rules.</li>
+<li>What are the annual owners corporation fees, and are any special levies or major works planned?</li>
+<li>The unit has been advertised for 65 days at $675/wk. Is the landlord open to a longer lease or a lower rent?</li>
+<li>Is the unit furnished, and will the landlord consent to the intended use?</li>
+<li>Can you share the owners corporation certificate and the last two years of meeting minutes?</li>
+</ol>
+<div class="btns"><span class="btn">Add to call script</span></div>
+<div class="foot">Generated from the gaps in this report. Answers are recorded with a date and source.</div></section>
+
+<section class="card s-src" aria-labelledby="h-src"><h2 id="h-src">Sources and data quality</h2>
+<p class="take">Every figure above traces to one of these.</p>
+<table><thead><tr><th>Source</th><th>Retrieved</th><th>Match</th><th>Used for</th></tr></thead><tbody>
+<tr><td>Vicmap Address (state open data)</td><td>11 Nov 2026</td><td><span class="chip observed"><i></i>Exact unit</span></td><td>Identity, property ID, council</td></tr>
+<tr><td>Vicmap Planning</td><td>11 Nov 2026</td><td><span class="chip observed"><i></i>Point</span></td><td>Zone and overlays</td></tr>
+<tr><td>realestate.com.au via RapidAPI</td><td>11 Nov 2026</td><td><span class="chip observed"><i></i>Exact unit</span></td><td>Sales, rents, bond, agent</td></tr>
+<tr><td>AirDNA via RapidAPI</td><td>2 Nov 2026</td><td><span class="chip estimated"><i></i>Address, low conf.</span></td><td>Short-stay estimate, 50 comps</td></tr>
+<tr><td>City Retreats model and building register</td><td>19 Oct and 2 Nov 2026</td><td><span class="chip estimated"><i></i>Building tier</span></td><td>Own estimate, Airbnb activity</td></tr>
+<tr><td>Owners corporation records</td><td>n/a</td><td><span class="chip unknown"><i></i>Unknown</span></td><td>Not connected</td></tr>
+<tr><td>Automated valuation (e.g. Microburbs)</td><td>n/a</td><td><span class="chip unknown"><i></i>Unknown</span></td><td>Not connected; key needed</td></tr>
+</tbody></table></section>
+
+</main>
+<aside aria-label="Summary"><div class="rail r1">
+  <div class="tile"><div class="cap">Short-stay income, per year</div><div class="fig">$60,836</div><div class="sub">$59,647 to $68,917 (25th to 75th percentile)</div><div class="row"><span class="chip estimated"><i></i>Estimated, strong</span></div><div class="src">Our building-tier estimate: 14 same-building 2-bed 1-bath listings, 19 Oct 2026</div></div>
+  <div class="tile"><div class="cap">Lease cost at asking rent, per year</div><div class="fig">$35,100</div><div class="sub">$675/wk · bond $2,933</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">Advertised on realestate.com.au, 11 Nov 2026</div></div>
+  <div class="tile"><div class="cap">Gross spread before running costs</div><div class="fig">$25,736</div><div class="row"><span class="chip estimated"><i></i>Estimated</span></div><div class="src">Short-stay estimate minus lease cost. Excludes cleaning, platform fees, utilities, furniture.</div></div>
+  <div class="gap"><b>Building short-stay rules: unknown</b><span>No owners corporation rule or flag is recorded for 628 Flinders Street.</span><em>Next step: Ask the agent or owners corporation before committing.</em></div>
+  <div class="btns"><span class="btn">Call agent</span><span class="btn o">Mark outcome</span></div>
+</div><div class="rail r2">
+  <div class="tile"><div class="cap">Like-for-like sales, same building</div><div class="fig">$510,000</div><div class="sub">Range $495,888 to $532,000</div><div class="row"><span class="chip observed"><i></i>Observed, median of 5</span></div><div class="src">Settled sales reported on realestate.com.au, May to Sep 2026</div></div>
+  <div class="tile"><div class="cap">Gross yield at median sale and asking rent</div><div class="fig">6.88%</div><div class="row"><span class="chip estimated"><i></i>Derived</span></div><div class="src">$35,100 advertised rent ÷ $510,000 median sale. Not a forecast.</div></div>
+  <div class="tile"><div class="cap">Asking rent vs building median</div><div class="fig">$675/wk</div><div class="row"><span class="chip observed"><i></i>Observed</span></div><div class="src">Building median for the same layout: $725/wk (11 listings)</div></div>
+  <div class="gap"><b>Net yield: owners corporation fees unknown</b><span>Fees, levies and planned works are not in any connected source.</span><em>Next step: Request the owners corporation certificate.</em></div>
+  <div class="btns"><span class="btn">Export report</span><span class="btn o">Edit offer price</span></div>
+</div><div class="rail r3">
+  <div class="tile"><div class="cap">Indicative value basis</div><div class="fig">$510,000</div><div class="sub">Range $495,888 to $532,000</div><div class="row"><span class="chip observed"><i></i>Observed, median of 5</span></div><div class="src">Comparable settled sales only. No automated valuation is connected.</div></div>
+  <div class="tile"><div class="cap">Rent assumption</div><div class="fig">$675/wk</div><div class="sub">$35,100 per year</div><div class="row"><span class="chip observed"><i></i>Advertised</span></div><div class="src">Not an actual lease. Building median $725/wk.</div></div>
+  <div class="gap"><b>Automated valuation: not connected</b><span>A model estimate would sit beside the comparable sales, never replace them.</span><em>Next step: Connect a valuation source.</em></div>
+  <div class="gap"><b>Lender valuation</b><span>The lender's own valuation decides lending value.</span><em>Next step: Order through the lender.</em></div>
+  <div class="btns"><span class="btn">Export client brief</span></div>
+</div></aside>
+</div></div></body></html>
