@@ -1,5 +1,5 @@
 import XLSX from "xlsx";
-const wb = XLSX.readFile("data/raw/dffh/moving_annual_rent_jun2026.xlsx");
+const wb = XLSX.readFile("data/raw/vic/rents-homes-victoria/moving_annual_rent_jun2026.xlsx");
 for (const s of ["1 bedroom flat", "2 bedroom flat"]) {
   const r = XLSX.utils.sheet_to_json(wb.Sheets[s], { header: 1, defval: "" });
   const h = r[1], t = r[2], med = [];

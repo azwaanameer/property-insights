@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vicprop",
+  "compatibility_date": "2026-11-13",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": { "enabled": true }
+  // Secrets (never in this file): DATABASE_URL via `wrangler secret put DATABASE_URL`; local dev uses .dev.vars.
+}

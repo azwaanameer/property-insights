@@ -1,17 +1,40 @@
 {
   "name": "property-insights",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "VicProp: Melbourne apartment due-diligence reports",
+  "private": true,
   "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "node db/migrate.mjs",
+    "pipeline:sal": "node pipeline/ingest/suburbs-sal.mjs",
+    "pipeline:gnaf": "python -I pipeline/ingest/gnaf-extract.py && node pipeline/ingest/gnaf-load.mjs"
+  },
   "dependencies": {
+    "@cloudflare/vite-plugin": "^1.25.5",
     "@neondatabase/serverless": "^1.2.0",
-    "xlsx": "^0.18.5"
+    "@tanstack/react-router": "1.170.41",
+    "@tanstack/react-start": "1.168.60",
+    "@vitejs/plugin-react": "^5.0.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "vite": "^7.3.1",
+    "xlsx": "^0.18.5",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "@types/node": "^22.16.5",
+    "@types/pg": "^8.15.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "pg": "^8.16.0",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.12",
+    "wrangler": "^4.0.0"
   }
 }

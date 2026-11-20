@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { neon } from "@neondatabase/serverless";
 const require = createRequire(import.meta.url); const X = require("xlsx");
-const wb = X.readFile("data/raw/dffh/moving_annual_rent_jun2026.xlsx");
+const wb = X.readFile("data/raw/vic/rents-homes-victoria/moving_annual_rent_jun2026.xlsx");
 const rows = X.utils.sheet_to_json(wb.Sheets["2 bedroom flat"], { header: 1, defval: "" });
 const hdr = rows[1]; const cols = hdr.map((h, i) => ({ h, i })).filter((c) => c.h);
 const last = 213; // last populated column = Jun 2026 median (verified)

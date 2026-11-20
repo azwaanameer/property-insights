@@ -34,10 +34,10 @@ Provenance: xlsx downloaded 2026-11-11 from https://www.dffh.vic.gov.au/sites/de
 for (const [k, v] of Object.entries(S.dffh)) m2 += `| ${k} | $${v.median_weekly} | ${v.lettings.toLocaleString("en-AU")} | $${v.median_year_ago} | ${v.change_pct >= 0 ? "+" : ""}${v.change_pct.toFixed(1)}% |\n`;
 writeFileSync(`${D}/imports/homes-victoria-jun2026-2bed-flat.md`, m2);
 
-const cat = JSON.parse(readFileSync("data/raw/vgv/search.json", "utf8")).result.results.filter((p) => /median-unit-by-suburb$|moving-annual-rents/.test(p.name));
+const cat = JSON.parse(readFileSync("data/raw/vic/sales-valuer-general/search.json", "utf8")).result.results.filter((p) => /median-unit-by-suburb$|moving-annual-rents/.test(p.name));
 let m3 = `# Import: DataVic catalogue records (CKAN API), licence fields
 
-Provenance: https://discover.data.vic.gov.au/api/3/action/package_search, retrieved 2026-11-11 (saved at data/raw/vgv/search.json). Records:
+Provenance: https://discover.data.vic.gov.au/api/3/action/package_search, retrieved 2026-11-11 (saved at data/raw/vic/sales-valuer-general/search.json). Records:
 
 `;
 for (const p of cat) m3 += `- ${p.title} | publisher: ${p.organization?.title} | licence: ${p.license_title} (${p.license_url}) | record modified ${p.metadata_modified?.slice(0, 10)} | latest resource listed: ${p.resources[p.resources.length - 1].name}\n`;

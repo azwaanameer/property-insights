@@ -3,13 +3,13 @@ import XLSX from "xlsx";
 import { writeFileSync } from "node:fs";
 const num = (v) => { const n = parseFloat(String(v).replace(/,/g, "")); return Number.isFinite(n) ? n : null; };
 // annual series
-const a = XLSX.utils.sheet_to_json(XLSX.readFile("data/raw/vgv/units-by-suburb-2015-2025.xlsx").Sheets.Sheet1, { header: 1, defval: "" });
+const a = XLSX.utils.sheet_to_json(XLSX.readFile("data/raw/vic/sales-valuer-general/units-by-suburb-2015-2025.xlsx").Sheets.Sheet1, { header: 1, defval: "" });
 const hdr = a.find((r) => r[0] === "Locality");
 const years = []; hdr.forEach((v, i) => { if (/^\d{4}$/.test(String(v))) years.push([+v, i]); });
 const ann = {};
 for (const r of a) { if (!r[0] || r[0] === "Locality" || !/[A-Z]/.test(r[0])) continue; ann[r[0]] = Object.fromEntries(years.map(([y, i]) => [y, num(r[i])])); }
 // quarterly (5 quarters to Mar 2026)
-const q = XLSX.utils.sheet_to_json(XLSX.readFile("data/raw/vgv/median-unit-march-quarter-2026.xls").Sheets.Sheet1, { header: 1, defval: "" });
+const q = XLSX.utils.sheet_to_json(XLSX.readFile("data/raw/vic/sales-valuer-general/median-unit-march-quarter-2026.xls").Sheets.Sheet1, { header: 1, defval: "" });
 const qs = {};
 for (const r of q.slice(7)) { if (!r[0] || !/[A-Z]/.test(r[0])) continue; qs[r[0]] = { q: [1, 3, 5, 7, 9].map((i) => num(r[i])), sales_q1_26: num(r[11]), yoy_pct: num(r[13]), qoq_pct: num(r[14]) }; }
 const cagr = (p0, p1, n) => (p0 && p1 && p0 > 0 ? (Math.pow(p1 / p0, 1 / n) - 1) * 100 : null);

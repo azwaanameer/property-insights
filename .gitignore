@@ -12,3 +12,10 @@ data/vicmap_match.json
 data/planning.log
 # Large local downloads and renders
 *.zip
+
+# Build, local worker state and pipeline output
+.wrangler
+.output
+dist
+data/out
+.dev.vars

@@ -2,7 +2,7 @@
 import XLSX from "xlsx";
 import { readFileSync, writeFileSync } from "node:fs";
 const G = JSON.parse(readFileSync("data/vgv_unit_growth.json", "utf8"));
-const wb = XLSX.readFile("data/raw/dffh/moving_annual_rent_jun2026.xlsx");
+const wb = XLSX.readFile("data/raw/vic/rents-homes-victoria/moving_annual_rent_jun2026.xlsx");
 const num = (v) => { const n = parseFloat(v); return Number.isFinite(n) ? n : null; };
 const rents = {};
 for (const sheet of ["1 bedroom flat", "2 bedroom flat"]) {
