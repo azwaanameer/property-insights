@@ -10,6 +10,7 @@ import { QuestionsList } from "./QuestionsList";
 import { RatingPanel } from "./RatingPanel";
 import { SafetyPanel } from "./SafetyPanel";
 import { SalesPanel } from "./SalesPanel";
+import { ShortStayPanel } from "./ShortStayPanel";
 import { ReturnCalculator } from "./ReturnCalculator";
 import { CompareTable, HistoryTable } from "./tables";
 
@@ -31,6 +32,7 @@ function Extras({ layer }: { layer: LayerResult }) {
   if (layer.layer_id === "L07-history") return <HistoryTable payload={layer.payload} />;
   if (layer.layer_id === "L09-suburb-compare") return <CompareTable payload={layer.payload} />;
   if (layer.layer_id === "L05-return") return <ReturnCalculator payload={layer.payload} />;
+  if (layer.layer_id === "L06-shortstay") return <ShortStayPanel payload={layer.payload} />;
   if (layer.layer_id === "L15-conditions") return <RatingPanel payload={layer.payload} />;
   if (layer.layer_id === "L13-questions") return <QuestionsList payload={layer.payload} />;
   if (layer.layer_id === "L19-photos") return <PhotosPanel payload={layer.payload} />;
@@ -52,6 +54,15 @@ function Extras({ layer }: { layer: LayerResult }) {
  * never a value (AD-3); gap, not_covered and error layers say why in place and leave every other section alone (AD-9).
  */
 export function ReportSection({ layer, pid }: { layer: LayerResult; pid: string }) {
+  // Short-stay income is shown only where it clears the cutoff. Anywhere else (a house, below the cutoff, no data, the vendor down) the whole
+  // section is one quiet line saying why, not a card with a heading and a gap notice.
+  if (layer.layer_id === "L06-shortstay" && layer.status === "gap") {
+    return (
+      <p className="rquiet" id={`r-${layer.layer_id}`} data-layer={layer.layer_id} data-status={layer.status} role="note">
+        {layer.message}
+      </p>
+    );
+  }
   // L15 outside the validated scope is a descriptive profile, and its heading says so (AD-5).
   const profile = layer.layer_id === "L15-conditions" && layer.payload.mode === "profile";
   const heading = profile ? PROFILE_HEADING : (SECTION_QUESTIONS[layer.layer_id] ?? layer.title);

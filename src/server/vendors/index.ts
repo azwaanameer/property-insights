@@ -2,6 +2,7 @@
 import type { Db } from "../db";
 import type { Env } from "../config";
 import type { FetchFn } from "./cache";
+import { fetchShortStay } from "./airdna";
 import { fetchStreetImages } from "./mapillary";
 import { fetchPlaceImages } from "./wikimedia";
 import type { VendorAdapters } from "./types";
@@ -15,15 +16,22 @@ export interface VendorOptions {
   fetch?: FetchFn;
   now?: () => Date;
   timeout_ms?: number;
+  /** Replaces the wait before the one AirDNA retry (tests). */
+  sleep?: (ms: number) => Promise<void>;
 }
 
-/** The Mapillary token comes from `MAPILLARY_ACCESS_TOKEN` (a Cloudflare secret). Without it the street-image adapter reports `no_key`. */
+/**
+ * The Mapillary token comes from `MAPILLARY_ACCESS_TOKEN` and the AirDNA key from `RAPIDAPI_KEY` (Cloudflare secrets). Without its secret an adapter reports
+ * `no_key` and makes no call.
+ */
 export function createVendors(opts: VendorOptions): VendorAdapters {
   const fetchFn: FetchFn = opts.fetch ?? ((url, init) => fetch(url, init));
   const common = { db: opts.db, fetchFn, now: opts.now, timeout_ms: opts.timeout_ms };
   const token = opts.env.MAPILLARY_ACCESS_TOKEN?.trim() || undefined;
+  const rapidKey = opts.env.RAPIDAPI_KEY?.trim() || undefined;
   return {
     streetImages: (lat, lon) => fetchStreetImages({ ...common, token, lat, lon }),
     placeImages: (lat, lon) => fetchPlaceImages({ ...common, lat, lon }),
+    shortStay: (query) => fetchShortStay({ ...common, key: rapidKey, query, sleep: opts.sleep }),
   };
 }

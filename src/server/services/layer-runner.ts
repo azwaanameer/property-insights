@@ -114,15 +114,23 @@ export async function runLayer(layer: LayerDef, input: RunLayersInput): Promise<
 }
 
 /**
- * Two passes. Every ordinary layer runs in parallel first; then each synthesis layer runs with those results as `siblings`, so a
- * layer such as L13 reads sibling results only after they ran and never calls another layer (AD-1). Results come back in the order
- * the layers were given. Gate, entitlement and failure isolation apply to both passes alike.
+ * Three passes. Every ordinary layer runs in parallel first; then each synthesis layer runs with those results as `siblings`, so a
+ * layer such as L13 reads sibling results only after they ran and never calls another layer (AD-1). A synthesis layer that sets
+ * `after_synthesis` (L14 attribution, which credits a source only where a section that came from a synthesis layer, L06, showed data) runs last
+ * and also sees the results of the other synthesis layers. Results come back in the order the layers were given. Gate, entitlement and
+ * failure isolation apply to every pass alike.
  */
 export async function runLayers(layers: LayerDef[], input: RunLayersInput): Promise<LayerResult[]> {
   const first = layers.filter((l) => !l.synthesis);
-  const second = layers.filter((l) => l.synthesis);
-  const firstResults = await Promise.all(first.map((layer) => runLayer(layer, input)));
-  const secondResults = await Promise.all(second.map((layer) => runLayer(layer, { ...input, siblings: firstResults })));
-  const byLayer = new Map<LayerDef, LayerResult>([...first.map((l, i) => [l, firstResults[i]] as const), ...second.map((l, i) => [l, secondResults[i]] as const)]);
+  const second = layers.filter((l) => l.synthesis && !l.after_synthesis);
+  const third = layers.filter((l) => l.synthesis && l.after_synthesis);
+  const byLayer = new Map<LayerDef, LayerResult>();
+  const remember = (defs: LayerDef[], results: LayerResult[]) => defs.forEach((l, i) => byLayer.set(l, results[i]));
+  remember(first, await Promise.all(first.map((layer) => runLayer(layer, input))));
+  const firstResults = layers.filter((l) => byLayer.has(l)).map((l) => byLayer.get(l)!);
+  remember(second, await Promise.all(second.map((layer) => runLayer(layer, { ...input, siblings: firstResults }))));
+  // Registry order, so a layer sees its siblings in the order of the page.
+  const earlier = layers.filter((l) => byLayer.has(l)).map((l) => byLayer.get(l)!);
+  remember(third, await Promise.all(third.map((layer) => runLayer(layer, { ...input, siblings: earlier }))));
   return layers.map((l) => byLayer.get(l)!);
 }

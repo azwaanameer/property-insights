@@ -55,11 +55,11 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `src/server/vendors/airdna.ts` + wiring + fakes + adapter tests
-- [ ] `db/migrations/...shortstay.sql`, pinned lists, web-lookup spec renumber
-- [ ] `src/server/layers/L06-shortstay`, registry, L14 credit
-- [ ] Render panel and quiet line, `pine.css`, `copy.ts`, render tests
-- [ ] Layer tests for every matrix row; `RUNBOOK.md` section 14 (secret `RAPIDAPI_KEY` is read from the Worker secrets, run order), `deferred-work.md`, Implementation Notes; do NOT call real APIs, Neon or Cloudflare; do not commit
+- [x] `src/server/vendors/airdna.ts` + wiring + fakes + adapter tests
+- [x] `db/migrations/...shortstay.sql`, pinned lists, web-lookup spec renumber
+- [x] `src/server/layers/L06-shortstay`, registry, L14 credit
+- [x] Render panel and quiet line, `pine.css`, `copy.ts`, render tests
+- [x] Layer tests for every matrix row; `RUNBOOK.md` section 14 (secret `RAPIDAPI_KEY` is read from the Worker secrets, run order), `deferred-work.md`, Implementation Notes; do NOT call real APIs, Neon or Cloudflare; do not commit
 
 **Acceptance Criteria:**
 - Given an apartment where AirDNA reports High confidence and income at least 1.4 times annual rent, when the report loads, then L06 shows AirDNA's figures labelled as such with Estimated chips.
@@ -69,6 +69,21 @@ context:
 - Given `npm test` (PowerShell), `npx tsc --noEmit` and `npm run build`, then all pass.
 
 ## Implementation Notes
+
+**Built.** Adapter `src/server/vendors/airdna.ts` (`fetchShortStay`, `parseRentalizer`, `buildRentalizerUrl`), wired into `createVendors` as `shortStay(query)` (key from `RAPIDAPI_KEY`), `UNAVAILABLE_VENDORS` and the fakes (`shortStayEstimate`, `strongComps` in `src/server/testing/fake-vendors.ts`). Method in `src/server/layers/shared/shortstay.ts` (strong comp, nearest 15, percentile, High versus own versus fallback, integer cutoff test) and layer `src/server/layers/L06-shortstay/index.ts` (synthesis, `timeout_ms: 10000`, registered right after L05-return). Migration `db/migrations/0012_shortstay.sql` (next free number after 0011): source `airdna_rentalizer` (cleared, the credit text, 30 days), then layer_config `L06-shortstay` (free, enabled, `airdna_rentalizer` and `gnaf`); the web-lookup spec's migration reference is renumbered to 0013. Render: `ShortStayPanel.tsx`, the quiet line in `ReportSection.tsx` (`.rquiet`), `pine.css`, `copy.ts` (heading, layer name, source name, panel wording, footer data line). Docs: RUNBOOK section 14 and `deferred-work.md`.
+
+**Decisions made without asking.**
+- Retry and budget (orchestrator note, 2026-11-21): one retry after 1.5 s on a 429 or a 5xx only (not a timeout, not a 4xx), only if at least a second of a 9 second budget is left, then a gap; a failure is never cached; the `x-ratelimit-requests-remaining` and `-limit` headers are logged as `airdna_quota` (never the key). `fetchJson` got an optional `onResponse` callback and `VendorError` an optional `status` for this; other adapters are unaffected.
+- L14 must credit AirDNA only when L06 returned data, but a synthesis layer could not see another synthesis layer's result. Added `LayerDef.after_synthesis` and a third runner pass; only L14 sets it. L13 is unchanged and does not see L06 (the spec allowed no new question).
+- Bedrooms and bathrooms: the report has no choice, so 2 bedrooms (`FAMILY.unit.primary_bedrooms`, the size L02 and L05 use; the rent compared with is L02's `rent_2bed_flat`) and 2 bathrooms (AirDNA's own default; nothing in the report gives a bathroom count). Always sent, and the figure, the panel and the notes say they are assumed.
+- The comparison rent is shown as its own tile ("Long-term rent for the same home, a year") with L02's own chip and source (Observed or Estimated as L02 gave it), so the ratio can be checked; every figure that comes from AirDNA is Estimated.
+- Occupancy and nightly rate are AirDNA's own statistics, so they are shown only beside AirDNA's figure (High, or the fallback), not beside our comp-based one.
+- The range (25th to 75th percentile) is worked from the comparable listings used, also when AirDNA's figure is used; with no comparable listings it is omitted. A comp with zero revenue is not a comp "with revenue". Any one comp with revenue is enough for our own estimate (the spec sets no minimum); fewer than 5 strong ones is labelled "few comparable listings".
+- A comp's link is kept only if it is on airbnb.com or airbnb.com.au (the CRM reads `airbnb_listing_url` then `listing_url`), and the panel checks again before drawing it as a link.
+- Money is whole Australian dollars from AirDNA (`currency=native`), stored as integer cents in figures. `occupancy.ltm` is read as a fraction as the CRM does (unconfirmed against a real answer).
+- The existing AD-4 migration test used `L06-shortstay` as a throwaway layer id; it now uses `L98-test`. The coverage endpoint test's "no vendor names" pattern now forbids `shortstay_vendor|airdna` instead of the bare word `shortstay`, which is now a real layer id.
+
+**Not done / for the orchestrator.** Run migration 0012 on Neon, `wrangler secret put RAPIDAPI_KEY`, deploy, and a real-API smoke test (the adapter has only run against fakes built from the CRM's field names; AirDNA answered 503 on the 2026-11-21 probe, so the real response shape is unconfirmed). Browser check GAVIC720519114 at 1200 px and 390 px: the card or the quiet line. Nothing was committed and no network, Neon or Cloudflare was used.
 
 ## Spec Change Log
 

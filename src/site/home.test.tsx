@@ -103,6 +103,7 @@ describe("photos and credits", () => {
     expect(footer).toContain("Place data © OpenStreetMap contributors (ODbL).");
     expect(footer).toContain("Street and neighbourhood photos from Mapillary and Wikimedia Commons contributors, credited on each photo.");
     expect(footer).toContain("Recent sales as reported on realestate.com.au listings, retrieved by VicProp.");
+    expect(footer).toContain("Short-stay estimates use AirDNA market data (RapidAPI).");
     for (const gone of ["Vicmap"]) expect(footer).not.toContain(gone);
   });
   it("the footer credits every photo with author and licence", () => {

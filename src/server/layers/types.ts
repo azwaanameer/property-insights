@@ -12,7 +12,7 @@ export interface LayerContext {
   /** Outside-service adapters (AD-8). A layer never fetches itself: it asks these, and a failure comes back as a value. */
   vendors: VendorAdapters;
   /**
-   * Only for a `synthesis` layer: the results of every non-synthesis layer, after they ran (in registry order, whatever their status; other synthesis layers are not included).
+   * Only for a `synthesis` layer: the results of every non-synthesis layer, after they ran (in registry order, whatever their status; other synthesis layers are not included unless this layer sets `after_synthesis`).
    * A synthesis layer reads these results and nothing else of theirs; it never calls them (AD-1). Undefined for every other layer.
    */
   siblings?: LayerResult[];
@@ -41,6 +41,11 @@ export interface LayerDef {
   timeout_ms?: number;
   /** Runs in a second pass, after every non-synthesis layer, and receives their results as `ctx.siblings`. Reads results only (AD-1). */
   synthesis?: true;
+  /**
+   * Only with `synthesis`: runs in a third pass, after the other synthesis layers, and its `siblings` then include their results too (registry order).
+   * For a layer such as L14 that reads what another synthesis layer produced.
+   */
+  after_synthesis?: true;
   /** Hand-written headline sentence shown instead of figures when locked. Must not contain a figure value. */
   teaser: string;
   run(ctx: LayerContext): Promise<LayerRunOutput>;

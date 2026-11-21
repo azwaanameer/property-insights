@@ -184,7 +184,7 @@ describe("GET /coverage", () => {
     expect(vic.validation[0]).toMatchObject({ dwelling_type: "unit", status: "validated", pairwise_score_low: 0.74, pairwise_score_high: 0.8 });
     expect(body.states.find((s: any) => s.state === "NSW")).toMatchObject({ loaded: false, market_tier: "C" });
     expect(body.layers[0]).toEqual({ layer_id: "L01-property", title: "Property", tier: "free", status: "live" });
-    expect(JSON.stringify(body.layers)).not.toMatch(/source|reason|rights|pending|shortstay/);
+    expect(JSON.stringify(body.layers)).not.toMatch(/source|reason|rights|pending|shortstay_vendor|airdna/);
     expect(body.datasets.map((d: any) => d.source_id).sort()).toEqual(["abs_asgs_2021", "gnaf"]);
   });
 });

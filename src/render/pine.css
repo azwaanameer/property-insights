@@ -288,6 +288,11 @@ tr.divrow th { font-weight: 700; color: var(--accent); background: rgb(var(--acc
 .smap svg { width: 100%; height: auto; max-width: 340px; background: var(--cell); border: 1px solid var(--rule); border-radius: var(--rs); }
 .smap figcaption { color: var(--mute); font-size: 0.82rem; display: grid; gap: 8px; align-content: start; }
 .smap figcaption b { color: var(--ink); }
+/* Short-stay income (L06): a section that does not apply is one quiet line, never a card */
+.rquiet { margin: 0 0 var(--gap); padding: 0 4px; color: var(--mute); font-size: 0.85rem; }
+[data-panel="shortstay"] td a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+[data-panel="shortstay"] td:last-child { min-width: 9ch; }
+[data-panel="shortstay"] tr[data-weak] td { color: var(--mute); }
 /* Reported recent sales (L21) and price drivers (L04): listing links read as links; the wide label columns do not squeeze to nothing */
 [data-panel="sales"] td a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 [data-panel="sales"] td:nth-child(6) { min-width: 12ch; }

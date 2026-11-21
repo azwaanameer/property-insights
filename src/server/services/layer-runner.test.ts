@@ -230,6 +230,21 @@ describe("synthesis layers (two-pass run)", () => {
     spy.mockRestore();
   });
 
+  it("a synthesis layer marked after_synthesis runs after the other synthesis layers and sees their results too, in registry order; the others still do not", async () => {
+    const order: string[] = [];
+    const a = makeLayer({ layer_id: "LS-a2", run: async () => (order.push("a"), { status: "ok", figures: [], payload: {} }) });
+    let early: string[] = [];
+    let late: string[] = [];
+    const early1 = makeLayer({ layer_id: "LS-early", synthesis: true, run: async (ctx) => (order.push("early"), (early = (ctx.siblings ?? []).map((s) => s.layer_id)), { status: "ok", figures: [], payload: { fact: 1 } }) });
+    const last = makeLayer({ layer_id: "LS-last", synthesis: true, after_synthesis: true, run: async (ctx) => (order.push("last"), (late = (ctx.siblings ?? []).map((s) => s.layer_id)), { status: "ok", figures: [], payload: {} }) });
+    // The after_synthesis layer is listed before the layer it reads; results still come back in the order given.
+    const out = await runLayers([last, a, early1], await input([last, a, early1]));
+    expect(out.map((l) => l.layer_id)).toEqual(["LS-last", "LS-a2", "LS-early"]);
+    expect(order).toEqual(["a", "early", "last"]);
+    expect(early).toEqual(["LS-a2"]);
+    expect(late).toEqual(["LS-a2", "LS-early"]);
+  });
+
   it("a synthesis layer passes through the same rights gate and entitlement as any other", async () => {
     const run = vi.fn();
     const synth = makeLayer({ layer_id: "LS-synth5", synthesis: true, source_ids: ["gnaf", "shortstay_vendor"], run });

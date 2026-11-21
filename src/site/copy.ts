@@ -309,7 +309,7 @@ export const FOOTER = {
   disclaimer:
     "General information only. Not financial, legal, planning or valuation advice. Some details come from public listings and are not checked against the title.",
   // Only the sources the built layers use. Add a source here when a layer that uses it ships.
-  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education, the City of Melbourne and the Crime Statistics Agency, used under Creative Commons Attribution licences. Place data © OpenStreetMap contributors (ODbL). Street and neighbourhood photos from Mapillary and Wikimedia Commons contributors, credited on each photo. Recent sales as reported on realestate.com.au listings, retrieved by VicProp.",
+  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education, the City of Melbourne and the Crime Statistics Agency, used under Creative Commons Attribution licences. Place data © OpenStreetMap contributors (ODbL). Street and neighbourhood photos from Mapillary and Wikimedia Commons contributors, credited on each photo. Recent sales as reported on realestate.com.au listings, retrieved by VicProp. Short-stay estimates use AirDNA market data (RapidAPI).",
 };
 
 // ----- Report page -----
@@ -322,6 +322,7 @@ export const SECTION_QUESTIONS: Record<string, string> = {
   "L21-sales": "What have nearby homes sold for?",
   "L04-drivers": "What makes it worth more or less?",
   "L05-return": "What could it return?",
+  "L06-shortstay": "What could it earn as a short stay?",
   "L07-history": "How have prices moved?",
   "L09-suburb-compare": "How does the suburb compare with nearby ones?",
   "L15-conditions": "What are the suburb's conditions?",
@@ -355,6 +356,7 @@ export const SOURCE_NAMES: Record<string, string> = {
   vic_school_locations_2026: "Department of Education school locations 2026",
   com_open_data: "City of Melbourne",
   csa_crime_incidents: "Crime Statistics Agency Victoria",
+  airdna_rentalizer: "AirDNA market data (RapidAPI)",
   mapillary: "Mapillary contributors",
   wikimedia_commons: "Wikimedia Commons",
   openstreetmap: "OpenStreetMap contributors",
@@ -526,6 +528,22 @@ export const DRIVERS = {
   windowLine: (used: string, total: string, from: string, to: string) => `Based on ${used} of ${total} apartment sales, sold ${from} to ${to}.`,
 };
 
+/** The short-stay income section (L06). Every figure says which method produced it; the credit is fixed text, so a payload change cannot drop it. */
+export const SHORTSTAY = {
+  methodLabel: "How this was worked out",
+  assumedLine: (beds: number, baths: number) => `Worked for a ${beds}-bedroom, ${baths}-bathroom apartment. The report does not know this home's bedrooms or bathrooms, so these are assumed.`,
+  ratioLine: (ratio: string) => `The estimated short-stay income is ${ratio} times the long-term rent for the same home.`,
+  notesLabel: "About this estimate",
+  compsCaption: "The nearest comparable listings used",
+  head: { distance: "Distance", beds: "Beds", baths: "Baths", income: "Income, a year", reviews: "Reviews", listing: "Listing" },
+  straightLine: "Distances are as AirDNA gives them.",
+  weak: "Made less than a full year of income or has few reviews.",
+  notListed: "Not listed",
+  linkText: "Airbnb listing",
+  linkTitle: "Opens the listing's public page. Not checked by VicProp.",
+  credit: "Short-stay estimates use AirDNA market data (RapidAPI).",
+};
+
 /** The street and neighbourhood photos (L19). Every image shows who took it, its licence and where it came from. */
 export const PHOTOS = {
   streetHeading: "The street",
@@ -572,6 +590,7 @@ export const LAYER_NAMES: Record<string, string> = {
   "L11-building": "Building",
   "L08-supply": "New supply",
   "L05-return": "Return",
+  "L06-shortstay": "Short-stay income",
   "L07-history": "Price history",
   "L09-suburb-compare": "Suburb comparison",
   "L10-screener": "Nearby suburbs",

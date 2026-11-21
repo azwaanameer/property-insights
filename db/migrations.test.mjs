@@ -14,7 +14,7 @@ afterAll(() => close());
 
 describe("migrations", () => {
   it("apply once, record themselves, and are idempotent", async () => {
-    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql", "0009_photos_places.sql", "0010_places_dataset.sql", "0011_sold_dataset.sql"]);
+    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql", "0009_photos_places.sql", "0010_places_dataset.sql", "0011_sold_dataset.sql", "0012_shortstay.sql"]);
     expect(await applyMigrations(db)).toEqual([]);
   });
 
@@ -234,6 +234,26 @@ describe("migrations", () => {
     await db.query("DELETE FROM src_dataset_version WHERE dataset_version_id = $1", [v.id]);
   });
 
+  it("0012 adds the cleared AirDNA source (with the owner's ruling and the credit) before the free L06 switch, and the older pending vendor row is untouched", async () => {
+    const [src] = await db.query("SELECT licence, rights_status, attribution_text, max_cache_days, display_scope, notes FROM src_source WHERE source_id = 'airdna_rentalizer'");
+    expect(src).toMatchObject({
+      rights_status: "cleared",
+      attribution_text: "Short-stay estimates use AirDNA market data (RapidAPI).",
+      max_cache_days: 30,
+      display_scope: "public",
+    });
+    expect(src.licence).toContain("owner 2026-11-21");
+    expect(src.notes).toMatch(/1.4 times/);
+    expect(src.notes).toMatch(/RAPIDAPI_KEY/);
+    expect((await db.query("SELECT rights_status FROM src_source WHERE source_id = 'shortstay_vendor'"))[0].rights_status).toBe("pending");
+    const [l] = await db.query("SELECT tier, enabled, source_ids FROM layer_config WHERE layer_id = 'L06-shortstay'");
+    expect(l).toMatchObject({ tier: "free", enabled: true });
+    expect([...l.source_ids].sort()).toEqual(["airdna_rentalizer", "gnaf"]);
+    await db.query("UPDATE src_source SET rights_status = 'pending' WHERE source_id = 'airdna_rentalizer'");
+    await expect(db.query("UPDATE layer_config SET enabled = true, updated_at = now() WHERE layer_id = 'L06-shortstay'")).rejects.toThrow(/not cleared: .*airdna_rentalizer/);
+    await db.query("UPDATE src_source SET rights_status = 'cleared' WHERE source_id = 'airdna_rentalizer'");
+  });
+
   it("the dev seed is idempotent on a migrated database", async () => {
     await applyDevSeed(db);
     expect((await db.query("SELECT rights_status FROM src_source WHERE source_id = 'gnaf'"))[0].rights_status).toBe("cleared");
@@ -253,11 +273,11 @@ describe("migrations", () => {
 
   it("AD-4: a layer cannot be enabled while a source is not cleared", async () => {
     await expect(
-      db.query("INSERT INTO layer_config (layer_id, tier, enabled, source_ids) VALUES ('L06-shortstay', 'paid', true, ARRAY['gnaf','shortstay_vendor'])"),
+      db.query("INSERT INTO layer_config (layer_id, tier, enabled, source_ids) VALUES ('L98-test', 'paid', true, ARRAY['gnaf','shortstay_vendor'])"),
     ).rejects.toThrow(/not cleared: .*shortstay_vendor/);
     // Disabled is fine; enabling later is refused too.
-    await db.query("INSERT INTO layer_config (layer_id, tier, enabled, source_ids) VALUES ('L06-shortstay', 'paid', false, ARRAY['gnaf','shortstay_vendor'])");
-    await expect(db.query("UPDATE layer_config SET enabled = true WHERE layer_id = 'L06-shortstay'")).rejects.toThrow(/not cleared/);
+    await db.query("INSERT INTO layer_config (layer_id, tier, enabled, source_ids) VALUES ('L98-test', 'paid', false, ARRAY['gnaf','shortstay_vendor'])");
+    await expect(db.query("UPDATE layer_config SET enabled = true WHERE layer_id = 'L98-test'")).rejects.toThrow(/not cleared/);
     await expect(
       db.query("INSERT INTO layer_config (layer_id, tier, enabled, source_ids) VALUES ('L99', 'free', true, ARRAY['no_such'])"),
     ).rejects.toThrow(/not cleared/);

@@ -39,15 +39,59 @@ export interface PlaceImage {
   lon: number | null;
 }
 
+/** One comparable short-stay listing from the AirDNA rentalizer. Only an id, the distance, the size, the annual revenue, the review count and the public link are kept: no photo, title or text. */
+export interface ShortStayComp {
+  id: string;
+  /** Metres from the address, as AirDNA gives it; null when it gives none. */
+  distance_m: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  /** Annual revenue in whole Australian dollars (the request asks for the native currency); null when AirDNA gives none. */
+  revenue: number | null;
+  reviews: number | null;
+  /** The listing's public page on airbnb.com or airbnb.com.au, as AirDNA gives it; null when none. */
+  url: string | null;
+}
+
+/** The AirDNA rentalizer's answer for one address, parsed from the field names the City Retreats CRM reads. Money is whole Australian dollars. */
+export interface ShortStayEstimate {
+  /** property_statistics.revenue.ltm: AirDNA's own last-12-months revenue estimate. */
+  annual_revenue: number | null;
+  /** property_statistics.occupancy.ltm, as a fraction (0.72). */
+  occupancy: number | null;
+  /** property_statistics.adr.ltm: average nightly rate. */
+  adr: number | null;
+  /** property_statistics.confidence_score.level ("High", "Medium", "Low") and .score. */
+  confidence_level: string | null;
+  confidence_score: number | null;
+  total_comps: number | null;
+  /** The bedrooms and bathrooms AirDNA says it used (property_details); AirDNA assumes 2 and 2 when it is told nothing. */
+  used_bedrooms: number | null;
+  used_bathrooms: number | null;
+  comps: ShortStayComp[];
+}
+
+/** What the adapter is asked: the report's own bedrooms and bathrooms are always sent, because AirDNA assumes 2 bed 2 bath when told nothing. */
+export interface ShortStayQuery {
+  gnaf_pid: string;
+  /** The full address as AirDNA geocodes it, e.g. "310/628 Flinders St, Docklands VIC 3008, Australia". */
+  address: string;
+  bedrooms: number;
+  bathrooms: number;
+}
+
 export interface VendorAdapters {
   /** Mapillary images around the point (the adapter looks wider than the layer needs; the layer filters by true distance). */
   streetImages(lat: number, lon: number): Promise<VendorResult<StreetImage[]>>;
   /** Wikimedia Commons photos around the point. */
   placeImages(lat: number, lon: number): Promise<VendorResult<PlaceImage[]>>;
+  /** The AirDNA rentalizer for one address (RapidAPI, cached up to 30 days by address pid, bedrooms and bathrooms). */
+  shortStay(query: ShortStayQuery): Promise<VendorResult<ShortStayEstimate>>;
 }
 
 /** What a layer sees when no adapters were handed in (tests, or a caller that did not set them up): every call fails, none touches the network. */
 export const UNAVAILABLE_VENDORS: VendorAdapters = {
   streetImages: async () => ({ ok: false, reason: "unavailable" }),
   placeImages: async () => ({ ok: false, reason: "unavailable" }),
+  shortStay: async () => ({ ok: false, reason: "unavailable" }),
 };

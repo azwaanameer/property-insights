@@ -1,5 +1,5 @@
 // L14 Attribution: where all of this came from. A synthesis layer (AD-1): it runs after the others and reads their RESULTS (`ctx.siblings`),
-// never calling them. It credits a source only where a section that is ok shows at least one figure with a value taken from it: a gap, locked,
+// never calling them (it also reads the other synthesis layer, L06 short-stay, which ran before it). It credits a source only where a section that is ok shows at least one figure with a value taken from it: a gap, locked,
 // not-covered or failed section credits nothing, and neither does a section that merely names the source in a note or an empty figure.
 // Each credit carries the attribution text and licence from the source registry (AD-4), the licence link, whether VicProp changed the data
 // (CC BY asks that changes are indicated) and the as-of date of the dataset behind it (AD-7).
@@ -64,6 +64,8 @@ export const L14Attribution: LayerDef = {
   title: "Attribution",
   tier: "free",
   synthesis: true,
+  // Reads L06's result too, so AirDNA is credited only when the short-stay section returned data.
+  after_synthesis: true,
   source_ids: L14_SOURCE_IDS,
   teaser: "The data this report was built from, with its licence and date.",
   async run({ db, siblings }): Promise<LayerRunOutput> {

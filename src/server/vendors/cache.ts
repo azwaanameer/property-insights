@@ -28,9 +28,12 @@ export function cacheKey(vendor: string, lat: number, lon: number, params = ""):
 }
 
 export class VendorError extends Error {
-  constructor(message: string) {
+  /** The HTTP status when the vendor answered with something other than 200 (a caller may retry a 429 or a 5xx). */
+  readonly status?: number;
+  constructor(message: string, status?: number) {
     super(message);
     this.name = "VendorError";
+    this.status = status;
   }
 }
 
@@ -40,7 +43,14 @@ export type FetchFn = (url: string, init?: RequestInit) => Promise<Response>;
  * One outside call with a hard time limit. Throws VendorError (its message never contains the URL, which may carry a key) on a timeout, a
  * non-200 answer or a body that is not JSON.
  */
-export async function fetchJson(fetchFn: FetchFn, url: string, init: RequestInit = {}, timeoutMs = VENDOR_TIMEOUT_MS): Promise<unknown> {
+export async function fetchJson(
+  fetchFn: FetchFn,
+  url: string,
+  init: RequestInit = {},
+  timeoutMs = VENDOR_TIMEOUT_MS,
+  /** Called with every answer that came back, before its status is checked (for reading a quota header). A problem inside it is ignored. */
+  onResponse?: (res: Response) => void,
+): Promise<unknown> {
   const ctrl = new AbortController();
   let timer: ReturnType<typeof setTimeout> | undefined;
   const timeout = new Promise<never>((_, reject) => {
@@ -56,7 +66,12 @@ export async function fetchJson(fetchFn: FetchFn, url: string, init: RequestInit
     } catch (err) {
       throw new VendorError(`request failed (${err instanceof Error ? err.name : "error"})`);
     }
-    if (res.status !== 200) throw new VendorError(`status ${res.status}`);
+    try {
+      onResponse?.(res);
+    } catch {
+      // a logging problem never changes the answer
+    }
+    if (res.status !== 200) throw new VendorError(`status ${res.status}`, res.status);
     try {
       return await res.json();
     } catch {
