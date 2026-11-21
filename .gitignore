@@ -19,3 +19,5 @@ data/planning.log
 dist
 data/out
 .dev.vars
+data/rp_sold_harvest.json
+data/rp_suburb_priority.json

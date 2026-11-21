@@ -7,16 +7,19 @@ import { applyMigrations } from "../../db/migrate.mjs";
 import { openFromCli } from "./db.mjs";
 import { printSummary } from "./suburb-run.mjs";
 
-/** Open the database for a loader run. A real database must already have migration 0007 (the batch-2 tables). */
-export async function openForPoints({ argv = process.argv, env = process.env, log = () => {} } = {}) {
+/** The table and migration a real database must already have. Batch 2 loaders need 0007; the crime loader names its own (0008). */
+const BATCH2 = { table: "ref_transit_stop", migration: "0007" };
+
+/** Open the database for a loader run. A real database must already have the migration that creates `require.table` (default: 0007, the batch-2 tables). */
+export async function openForPoints({ argv = process.argv, env = process.env, log = () => {}, require = BATCH2 } = {}) {
   const opened = await openFromCli(argv, env);
   try {
     if (opened.kind === "pglite") {
       await applyMigrations(opened.db);
       log("pglite: migrations applied");
     } else {
-      const t = await opened.db.query("SELECT to_regclass('public.ref_transit_stop') AS t");
-      if (!t[0]?.t) throw new Error("migration 0007 has not been applied. Run `node --env-file=.env db/migrate.mjs` first.");
+      const t = await opened.db.query("SELECT to_regclass($1) AS t", [`public.${require.table}`]);
+      if (!t[0]?.t) throw new Error(`migration ${require.migration} has not been applied. Run \`node --env-file=.env db/migrate.mjs\` first.`);
     }
   } catch (err) {
     await opened.close();
@@ -26,9 +29,9 @@ export async function openForPoints({ argv = process.argv, env = process.env, lo
 }
 
 /** Standard main wrapper: open, run, print, close; non-zero exit on failure. Never prints connection details. */
-export async function runPointCli(run, { argv = process.argv } = {}) {
+export async function runPointCli(run, { argv = process.argv, require } = {}) {
   const log = (m) => console.log(m);
-  const opened = await openForPoints({ argv, log });
+  const opened = await openForPoints({ argv, log, ...(require ? { require } : {}) });
   try {
     const summaries = [].concat(await run(opened.db, { log, argv, kind: opened.kind }));
     for (const s of summaries) printSummary(s, log);

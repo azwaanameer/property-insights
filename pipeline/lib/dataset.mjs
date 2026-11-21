@@ -28,6 +28,9 @@ const LOADED_TABLES = [
   "ref_com_building_match",
   "ref_com_building",
   "fact_supply_project",
+  "fact_crime_suburb",
+  "fact_crime_lga",
+  "fact_crime_note",
   "src_dataset_unmatched",
 ];
 

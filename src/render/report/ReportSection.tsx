@@ -6,6 +6,7 @@ import { BuildingPanel, SchoolsPanel, SupplyPanel, TransportPanel } from "./Loca
 import { AttributionList, ScreenerTable } from "./NearbyPanels";
 import { QuestionsList } from "./QuestionsList";
 import { RatingPanel } from "./RatingPanel";
+import { SafetyPanel } from "./SafetyPanel";
 import { ReturnCalculator } from "./ReturnCalculator";
 import { CompareTable, HistoryTable } from "./tables";
 
@@ -31,6 +32,7 @@ function Extras({ layer }: { layer: LayerResult }) {
   if (layer.layer_id === "L13-questions") return <QuestionsList payload={layer.payload} />;
   if (layer.layer_id === "L16-transport") return <TransportPanel payload={layer.payload} />;
   if (layer.layer_id === "L17-schools") return <SchoolsPanel payload={layer.payload} />;
+  if (layer.layer_id === "L18-safety") return <SafetyPanel payload={layer.payload} />;
   if (layer.layer_id === "L11-building") return <BuildingPanel payload={layer.payload} />;
   if (layer.layer_id === "L08-supply") return <SupplyPanel payload={layer.payload} />;
   if (layer.layer_id === "L10-screener") return <ScreenerTable payload={layer.payload} />;

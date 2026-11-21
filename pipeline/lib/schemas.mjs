@@ -197,3 +197,51 @@ export const SupplyProjectRow = z.object({
   three_bed_dwellings: z.number().int().min(0),
   town_planning_application: z.string().nullable(),
 });
+
+// ---------------------------------------------------------------- recorded crime (batch 3)
+
+/** The offence divisions of the CSA classification: a letter, then the name as published. */
+const Division = z.string().regex(/^[A-F] \S/, "division is a letter then its name");
+
+/** One suburb or town, council area, offence subdivision and year (Table 03, subgroup rows added up). Counts are never negative. */
+export const CrimeSuburbRow = z.object({
+  year_ending: z.number().int().min(2000).max(2100),
+  lga: z.string().trim().min(1),
+  postcode: z.string().regex(/^\d{4}$/, "postcode is four digits"),
+  suburb: z.string().trim().min(1),
+  suburb_key: z.string().min(1),
+  division: Division,
+  subdivision: z.string().trim().min(1),
+  incidents: z.number().int().min(0),
+});
+
+/** One council area and year (Table 01, region "Total" rows removed). The two non-council rows have no rate. */
+export const CrimeLgaRow = z.object({
+  year_ending: z.number().int().min(2000).max(2100),
+  police_region: z.string().trim().min(1),
+  lga: z.string().trim().min(1),
+  incidents: z.number().int().min(0),
+  rate_per_100k: z.number().min(0).nullable(),
+});
+
+export const CrimeNoteRow = z.object({
+  note_key: z.string().min(1),
+  sheet: z.enum(["Contents", "Footnotes"]),
+  topic: z.string().min(1),
+  seq: z.number().int().min(1),
+  note_text: z.string().trim().min(1),
+});
+
+export const CrimeManifest = z.object({
+  source: z.literal("csa_crime_incidents"),
+  source_file: z.string().min(1),
+  as_of: IsoDate,
+  retrieved_at: z.string(),
+  file_sha256: z.string().regex(/^[0-9a-f]{64}$/),
+  row_count: z.number().int().nonnegative(),
+  lga_row_count: z.number().int().nonnegative(),
+  lga_source_rows: z.number().int().nonnegative(),
+  table03_source_rows: z.number().int().nonnegative(),
+  years: z.array(z.number().int()).min(1),
+  table03_totals: z.record(z.number().int().nonnegative()),
+});

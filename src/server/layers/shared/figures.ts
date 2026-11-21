@@ -40,6 +40,8 @@ export const UNIT = {
   /** A straight-line distance in whole metres; the renderer shows 230 m or 1.2 km. */
   metres: "metres",
   year: "year",
+  /** A rate for every 100,000 residents; the renderer shows 16,944 per 100,000. */
+  per100k: "per_100k",
 } as const;
 
 /** The answer for an address whose locality could not be matched to one ABS suburb: every suburb layer says so (AD-9). */

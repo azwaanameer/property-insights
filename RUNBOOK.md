@@ -134,4 +134,33 @@ Each prints its counts and exits non-zero if a check fails, leaving the old data
 
 **After a data refresh:** re-run the matching loader, `npm run pipeline:com`, whenever G-NAF is reloaded, because the match is made against the G-NAF version current at the time.
 
-**Not built in this batch (and why).** Planning, flood, bushfire and heritage (the Vicmap server returned 504 on every call on 2026-11-21; next batch, live through `vendor_cache`). Nearby amenities (no shops or cafes in Vicmap; OpenStreetMap or Overture needs a licence decision). Crime (file not downloaded). Short-stay (rights pending; needs a CRM sync and a decision). Sale history (reported web lookup, rights pending). Price drivers (the model came from Domain data). Photos (no licensed source). Base-map tiles (OpenStreetMap's tile policy bars bulk use).
+**Not built in this batch (and why).** Planning, flood, bushfire and heritage (the Vicmap server returned 504 on every call on 2026-11-21; next batch, live through `vendor_cache`). Nearby amenities (no shops or cafes in Vicmap; OpenStreetMap or Overture needs a licence decision). Crime (built in batch 3, section 11). Short-stay (rights pending; needs a CRM sync and a decision). Sale history (reported web lookup, rights pending). Price drivers (the model came from Domain data). Photos (no licensed source). Base-map tiles (OpenStreetMap's tile policy bars bulk use).
+
+
+## 11. Report batch 3: recorded crime (built 2026-11-21; Neon load, deploy and browser check still to run)
+
+One new section, free for now like the others: `L18-safety` What does recorded crime look like?, between schools and the building. The report page order is now L01, L02, L03, L16, L17, L18, L11, L08, L05, L07, L09, L10, L15, then L13 and L14. The layer id keeps the word "safety" (the registry id); nothing the reader sees says safe or unsafe.
+
+**Order to run (PowerShell, repo root, `.env` holding `DATABASE_URL`).** G-NAF must already be published (the address supplies the suburb name and postcode).
+
+```powershell
+node --env-file=.env db/migrate.mjs      # migration 0008: source csa_crime_incidents, 3 tables, the L18 switch
+npm run pipeline:crime                   # extract (python, openpyxl, about 20 seconds) then load and publish
+```
+
+`npm run pipeline:crime` is `python -I pipeline/ingest/crime-extract.py && node pipeline/ingest/crime.mjs`, like the other pipeline scripts it does not read `.env` itself, so with `.env` run the two steps by hand: `python -I pipeline/ingest/crime-extract.py` (writes `data/out/crime-vic/`, gitignored), then `node --env-file=.env pipeline/ingest/crime.mjs`. Dry run in memory, no database needed: `python -I pipeline/ingest/crime-extract.py` then `node pipeline/ingest/crime.mjs --pglite` (add `--dir DIR` for another extract). The loader prints its counts and exits non-zero if a check fails, leaving the old dataset live.
+
+**Source.** `data/raw/vic/crime/Data_Tables_LGA_Criminal_Incidents_Year_Ending_June_2026.xlsx` (17 MB, already downloaded; page https://www.crimestatistics.vic.gov.au/crime-statistics/latest-victorian-crime-data/download-data, files need a browser User-Agent). Licence: CC BY 4.0, stated in the workbook's own Notes ("When reporting this data you must attribute the Crime Statistics Agency (or CSA) as the source"). The loader refuses a workbook whose notices do not carry that sentence, because the source is cleared on it. The other three workbooks in that folder are not used.
+
+**What is loaded.** Table 01 (council area, count and rate per 100,000, years ending June 2017 to 2026) and Table 03 (suburb or town and postcode by offence, added up to the 25 offence subdivisions). Tables 02, 04 and 05 (by offence group and police service area, location type, charge status) and the victim, offender and family-incident workbooks are not loaded.
+
+**Counts the checks expect (workbook saved 2026-11-21).** Table 01: 870 rows (87 a year for 10 years: 79 council areas, 2 non-council rows and 6 region "Total" rows); the Total rows are checked against the rows they add up (a mismatch fails the load) and are not stored, because they carry a rate and would double count. Table 03: 341,869 rows, 181,147 once added up to subdivision; the sum for each year must equal the extractor's control total and the council counts within 1% (in the real file they are equal: 465,100 for 2026). Every Table 03 council area must be in Table 01. Dataset 181,957 rows (181,147 suburb, 810 council), 14 notices.
+
+**What it shows.** For the address's suburb (matched on the normalised G-NAF locality name AND the postcode; no match is a gap): the incidents recorded in the latest year in total and by the six divisions, the change on the year before, the offence table (this year and last), the five-year totals, then the council area's rate per 100,000 residents beside the Victorian rate, and the CSA's notices word for word. A suburb in two councils has its counts added and one rate row for each council. No suburb rate (the CSA publishes none; its suburb boundaries are not the ABS ones), no score, label, ranking or forecast. Chips: the council rate as published is Observed; anything added up, subtracted or divided is Estimated (the suburb totals, the year change, the Victorian rate). The Victorian rate is worked out from the council rows so the top and bottom match: each area's residents are its incidents times 100,000 divided by its rate.
+
+**Known limits.** The agency lists only offences that occurred, so a division with no row shows 0 and a year with no row shows "None listed". Some agency suburb and postcode pairs differ from G-NAF (for example Windsor appears under 3004), and those addresses get an honest gap. The newest year's rates use Victoria in Future population estimates (the CSA says so, and the section carries the note).
+
+**Roll back without code:** `UPDATE layer_config SET enabled = false WHERE layer_id = 'L18-safety';`.
+
+**Orchestrator steps still to run:** migration 0008 and the crime load on Neon, `npm run build` and `npx wrangler deploy`, then the browser check on GAVIC720519114 and GAVIC425618586 at 1200 px and 390 px.
+

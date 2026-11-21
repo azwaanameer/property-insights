@@ -14,12 +14,12 @@ afterAll(() => close());
 
 describe("migrations", () => {
   it("apply once, record themselves, and are idempotent", async () => {
-    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql"]);
+    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql"]);
     expect(await applyMigrations(db)).toEqual([]);
   });
 
   it("create every table the spec lists", async () => {
-    const want = ["src_source", "src_dataset_version", "src_dataset_current", "ref_suburb", "ref_building", "ref_address", "series_price", "series_rent", "derived_rating", "market_validation", "layer_config", "fact_suburb_marker", "ref_suburb_neighbour", "src_dataset_unmatched", "app_user", "app_org", "app_subscription", "app_report", "app_lookup_log", "app_purchase", "app_webhook_event", "vendor_cache", "ref_transit_stop", "ref_school_zone", "ref_school", "ref_com_building", "ref_com_building_match", "fact_supply_project"];
+    const want = ["src_source", "src_dataset_version", "src_dataset_current", "ref_suburb", "ref_building", "ref_address", "series_price", "series_rent", "derived_rating", "market_validation", "layer_config", "fact_suburb_marker", "ref_suburb_neighbour", "src_dataset_unmatched", "app_user", "app_org", "app_subscription", "app_report", "app_lookup_log", "app_purchase", "app_webhook_event", "vendor_cache", "ref_transit_stop", "ref_school_zone", "ref_school", "ref_com_building", "ref_com_building_match", "fact_supply_project", "fact_crime_suburb", "fact_crime_lga", "fact_crime_note"];
     const have = new Set((await db.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")).map((r) => r.table_name));
     for (const t of want) expect(have.has(t), t).toBe(true);
   });
@@ -108,6 +108,29 @@ describe("migrations", () => {
        WHERE i.indrelid = 'ref_com_building_match'::regclass AND i.indisprimary ORDER BY a.attname`,
     );
     expect(pk.map((r) => r.attname)).toEqual(["dataset_version_id", "gnaf_building_id"]);
+  });
+
+  it("0008 adds the cleared Crime Statistics Agency source (CC BY 4.0, with the credit and 'Adapted by VicProp') and switches on L18 as a free layer", async () => {
+    const [src] = await db.query("SELECT licence, rights_status, attribution_text, notes FROM src_source WHERE source_id = 'csa_crime_incidents'");
+    expect(src).toMatchObject({ licence: "CC BY 4.0", rights_status: "cleared", attribution_text: "Source: Crime Statistics Agency, Victoria. Adapted by VicProp." });
+    expect(src.notes).toContain("https://creativecommons.org/licenses/by/4.0/");
+    const [l] = await db.query("SELECT tier, enabled, source_ids FROM layer_config WHERE layer_id = 'L18-safety'");
+    expect(l).toMatchObject({ tier: "free", enabled: true });
+    expect([...l.source_ids].sort()).toEqual(["csa_crime_incidents", "gnaf"]);
+    // L13 is left as batch 2 set it: crime does not prompt a question.
+    const [q] = await db.query("SELECT source_ids FROM layer_config WHERE layer_id = 'L13-questions'");
+    expect(q.source_ids).not.toContain("csa_crime_incidents");
+  });
+
+  it("0008: the source must be cleared before the layer can be on (AD-4), and the suburb table is keyed so one suburb in two councils has two rows", async () => {
+    await db.query("UPDATE src_source SET rights_status = 'pending' WHERE source_id = 'csa_crime_incidents'");
+    await expect(db.query("UPDATE layer_config SET enabled = true, updated_at = now() WHERE layer_id = 'L18-safety'")).rejects.toThrow(/not cleared: .*csa_crime_incidents/);
+    await db.query("UPDATE src_source SET rights_status = 'cleared' WHERE source_id = 'csa_crime_incidents'");
+    const pk = await db.query(
+      `SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey)
+       WHERE i.indrelid = 'fact_crime_suburb'::regclass AND i.indisprimary ORDER BY a.attname`,
+    );
+    expect(pk.map((r) => r.attname)).toEqual(["dataset_version_id", "lga", "postcode", "subdivision", "suburb", "year_ending"]);
   });
 
   it("the dev seed is idempotent on a migrated database", async () => {

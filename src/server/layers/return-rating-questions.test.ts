@@ -380,7 +380,7 @@ describe("registration and constants", () => {
     expect(LAYERS.filter((l) => l.synthesis).map((l) => l.layer_id)).toEqual(["L13-questions", "L14-attribution"]);
     expect(LAYERS.at(-2)).toBe(L13Questions);
     expect(LAYERS.map((l) => l.layer_id)).toEqual([
-      "L01-property", "L02-rent", "L03-price", "L16-transport", "L17-schools", "L11-building", "L08-supply", "L05-return", "L07-history", "L09-suburb-compare", "L10-screener", "L15-conditions", "L13-questions", "L14-attribution",
+      "L01-property", "L02-rent", "L03-price", "L16-transport", "L17-schools", "L18-safety", "L11-building", "L08-supply", "L05-return", "L07-history", "L09-suburb-compare", "L10-screener", "L15-conditions", "L13-questions", "L14-attribution",
     ]);
   });
 

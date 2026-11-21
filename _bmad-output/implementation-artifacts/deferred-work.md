@@ -140,3 +140,26 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-2-transport-schools-building-supply.md`
   summary: Copy numbers (1 km, 400 m, 800 m) are literal text next to constants in the layer files; the GTFS outer-zip branch has no committed nested-zip fixture or real-file test (a full real run takes minutes).
   evidence: Blind and gap reviews; a mismatch appears only if a constant changes.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: Add a suburb rate per 100,000 by joining the agency's suburb counts to ABS populations, and say how the two sets of suburb boundaries differ.
+  evidence: The agency publishes counts only for suburbs (and a rate only for council areas); its suburb and postcode list is not the ABS SAL list, so a join needs a name and postcode to SAL match stored with its match type (AD-6) and a population per SAL from the Census.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: Some G-NAF suburb and postcode pairs do not match the agency's list (for example Windsor appears under 3004 in the file), so those addresses get a gap. A hand-checked alias table, stored with its match type, would recover them without guessing.
+  evidence: Matching is on normalised name AND postcode by design (no match is a gap). Count how many Victorian G-NAF localities miss after the Neon load and decide whether an alias table is worth it.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: Load the agency's offence subgroup level (for example residential against non-residential burglary, theft from a motor vehicle) and Table 02's police service area rates; only subdivisions and council areas are stored now.
+  evidence: The extractor adds subgroup rows up to subdivision to keep the table near 180,000 rows. Subgroups would roughly double it.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: The loader reads one fixed workbook name and the agency publishes a new file every quarter; make the input path an argument, keep earlier years' versions comparable, and add a freshness line to the report ("data to June 2026, next release due").
+  evidence: `DEFAULT_XLSX` in `pipeline/ingest/crime.mjs` and the 2026 file name in `pipeline/ingest/crime-extract.py`; the section states the year ending from the data but has no release schedule.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: The Victorian rate is worked out from the council rows because the workbook has no state total row, and the newest year's rates use Victoria in Future estimates (the agency's note). Cross-check against the agency's published state rate when it is loaded.
+  evidence: Design decision in the spec; `getVictorianRate` in `src/server/repos/crime.ts`.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: `npm run pipeline:crime` hard-codes `python` and does not read `.env`; the layer is not state-aware (only Victoria is loaded).
+  evidence: Same as the batch 2 loaders (`pipeline:gtfs`); needed before another state or a machine without `python` on PATH.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: The offence table is the agency's own offence names. One of them, "A80 Dangerous and negligent acts endangering people", contains the word "dangerous", so a literal search of the section for that word finds it. It is the agency's classification name, shown as published.
+  evidence: The acceptance criterion bars verdict wording; the owner may prefer a shortened label, which would stop it being the agency's name.
+

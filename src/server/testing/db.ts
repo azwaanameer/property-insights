@@ -16,6 +16,8 @@ import { runRating } from "../../../pipeline/derive/rating.mjs";
 import { FIXTURE_AS_OF as GTFS_FIXTURE_AS_OF, FIXTURE_FEED, runExtractor, runGtfsStops } from "../../../pipeline/ingest/gtfs-stops.mjs";
 import { runSchoolZones } from "../../../pipeline/ingest/school-zones.mjs";
 import { runComData } from "../../../pipeline/ingest/com-buildings.mjs";
+import { runCrime } from "../../../pipeline/ingest/crime.mjs";
+import { CRIME_OPTIONS, crimeFixtureDir } from "../../../pipeline/ingest/fixtures/crime.mjs";
 import { COM_AS_OF, COM_TEXTS } from "../../../pipeline/ingest/fixtures/com.mjs";
 import { SCHOOL_AS_OF, SCHOOL_LOCATIONS_TEXT, SCHOOL_ZONE_TEXTS } from "../../../pipeline/ingest/fixtures/schools.mjs";
 import { mkdtemp } from "node:fs/promises";
@@ -45,7 +47,7 @@ export async function createLoadedTestDb() {
   return t;
 }
 
-export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating" | "transit" | "schools" | "com";
+export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating" | "transit" | "schools" | "com" | "crime";
 
 /** The fixture transport feed is extracted once per test file (it runs python), then loaded into each database. */
 let fixtureStops: Promise<string> | undefined;
@@ -81,5 +83,7 @@ export async function createSuburbDataTestDb(opts: { omit?: SuburbDataset[] } = 
   if (!omit.has("transit")) await runGtfsStops(t.db, { dir: await fixtureStopsDir(), minimum: 10, bounds: anyMode });
   if (!omit.has("schools")) await runSchoolZones(t.db, { zoneTexts: SCHOOL_ZONE_TEXTS, locationsText: SCHOOL_LOCATIONS_TEXT, as_of: SCHOOL_AS_OF, minimumSchools: 10, minimumZones: 5 });
   if (!omit.has("com")) await runComData(t.db, { texts: COM_TEXTS, as_of: COM_AS_OF, minimumBuildings: 20, minimumProjects: 20, minimumMatches: 1 });
+  // Batch 3: recorded crime, a real excerpt of the Crime Statistics Agency workbook through the real extractor and loader.
+  if (!omit.has("crime")) await runCrime(t.db, { dir: await crimeFixtureDir(), ...CRIME_OPTIONS });
   return t;
 }

@@ -309,7 +309,7 @@ export const FOOTER = {
   disclaimer:
     "General information only. Not financial, legal, planning or valuation advice. Some details come from public listings and are not checked against the title.",
   // Only the sources the built layers use. Add a source here when a layer that uses it ships.
-  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education and the City of Melbourne, used under Creative Commons Attribution licences.",
+  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education, the City of Melbourne and the Crime Statistics Agency, used under Creative Commons Attribution licences.",
 };
 
 // ----- Report page -----
@@ -326,6 +326,7 @@ export const SECTION_QUESTIONS: Record<string, string> = {
   "L13-questions": "What should I ask next?",
   "L16-transport": "How do you get around?",
   "L17-schools": "Which schools is it zoned for?",
+  "L18-safety": "What does recorded crime look like?",
   "L11-building": "What do we know about the building?",
   "L08-supply": "What new apartments are coming?",
   "L10-screener": "Where else could you invest?",
@@ -349,6 +350,7 @@ export const SOURCE_NAMES: Record<string, string> = {
   vic_school_zones_2026: "Department of Education school zones 2026",
   vic_school_locations_2026: "Department of Education school locations 2026",
   com_open_data: "City of Melbourne",
+  csa_crime_incidents: "Crime Statistics Agency Victoria",
   vicprop_registry: "VicProp",
 };
 
@@ -471,6 +473,22 @@ export const LOCATION = {
   council: "City of Melbourne data covers the City of Melbourne only.",
 };
 
+/** The recorded crime section (L18). Counts and rates only; the section gives no verdict on an area. */
+export const CRIME = {
+  offenceCaption: (suburb: string, postcode: string, year: number) => `Incidents recorded in ${suburb} ${postcode} by offence type, year ending June ${year}`,
+  offenceHead: { type: "Offence type", year: (y: number) => `Year ending June ${y}` },
+  noneListed: "None listed",
+  seriesCaption: (suburb: string) => `Incidents recorded in ${suburb}, all offence types, by year`,
+  seriesHead: { year: "Year ending June", total: "Incidents recorded" },
+  rateCaption: (year: number) => `Incidents for every 100,000 residents, year ending June ${year}`,
+  rateHead: { area: "Area", incidents: "Incidents recorded", rate: "For every 100,000 residents" },
+  councilArea: (lga: string) => `${lga} council area`,
+  victoria: "Victoria, all council areas combined",
+  noticesLabel: "Read this first",
+  noticesFrom: "From the Crime Statistics Agency:",
+  scopeLabel: "About these figures",
+};
+
 /** The screener table (L10). */
 export const SCREENER = {
   caption: "Nearby suburbs side by side, ordered by gross yield before costs",
@@ -488,6 +506,7 @@ export const LAYER_NAMES: Record<string, string> = {
   "L03-price": "Price",
   "L16-transport": "Transport",
   "L17-schools": "Schools",
+  "L18-safety": "Recorded crime",
   "L11-building": "Building",
   "L08-supply": "New supply",
   "L05-return": "Return",

@@ -14,6 +14,7 @@ import { L14Attribution } from "./L14-attribution";
 import { L15Conditions } from "./L15-conditions";
 import { L16Transport } from "./L16-transport";
 import { L17Schools } from "./L17-schools";
+import { L18Safety } from "./L18-safety";
 import type { LayerDef } from "./types";
 
 export const LAYERS: LayerDef[] = [
@@ -22,6 +23,7 @@ export const LAYERS: LayerDef[] = [
   L03Price,
   L16Transport,
   L17Schools,
+  L18Safety,
   L11Building,
   L08Supply,
   L05Return,

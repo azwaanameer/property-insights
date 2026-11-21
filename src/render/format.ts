@@ -9,6 +9,7 @@
 //   rank                 a ready string         -> 3 of 8
 //   metres               whole metres           -> 230 m, 1.2 km (a straight line, never a walk)
 //   year                 a calendar year        -> 2018 (no thousands separator)
+//   per_100k             a rate for each 100,000 residents -> 16,944 per 100,000
 import type { Figure } from "../server/contracts/layer";
 
 const WHOLE = new Intl.NumberFormat("en-AU", { maximumFractionDigits: 0 });
@@ -58,6 +59,8 @@ export function formatValue(value: Figure["value"] | undefined, unit?: string, o
     }
     case "year":
       return String(Math.round(value));
+    case "per_100k":
+      return `${WHOLE.format(value)} per 100,000`;
     default:
       return String(value);
   }

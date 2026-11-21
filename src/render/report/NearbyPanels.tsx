@@ -104,7 +104,7 @@ export function AttributionList({ payload }: { payload: Record<string, unknown> 
           return (
             <li key={String(s.source_id)} data-source={String(s.source_id)}>
               <b>{String(s.name)}.</b> {typeof s.attribution_text === "string" ? s.attribution_text : ""}
-              {s.adapted === true ? ` ${ATTRIBUTION.adapted}` : ""}
+              {s.adapted === true && !(typeof s.attribution_text === "string" && s.attribution_text.includes(ATTRIBUTION.adapted.replace(/\.$/, ""))) ? ` ${ATTRIBUTION.adapted}` : ""}
               <span className="meta">
                 {ATTRIBUTION.licence}: {typeof s.licence === "string" ? s.licence : ""}
                 {typeof s.licence_url === "string" && s.licence_url.startsWith("https://") ? (

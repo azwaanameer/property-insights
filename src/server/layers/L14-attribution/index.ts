@@ -18,10 +18,11 @@ export const CC_BY_4_URL = "https://creativecommons.org/licenses/by/4.0/";
 
 /**
  * Sources VicProp always transforms before showing: stops grouped into stations, zones tested against the address, schools filtered to open
- * ones, council records matched to addresses, a conditions rating derived from Census shares, neighbours matched to suburbs by name.
+ * ones, council records matched to addresses, a conditions rating derived from Census shares, neighbours matched to suburbs by name, and crime
+ * counts added up by suburb and rates worked out for Victoria.
  * Any source behind an Estimated figure is also credited as adapted.
  */
-export const ADAPTED_SOURCES = new Set(["gtfs_vic", "vic_school_zones_2026", "vic_school_locations_2026", "com_open_data", "gnaf_neighbours", "conditions_rating"]);
+export const ADAPTED_SOURCES = new Set(["gtfs_vic", "vic_school_zones_2026", "vic_school_locations_2026", "com_open_data", "gnaf_neighbours", "conditions_rating", "csa_crime_incidents"]);
 
 export interface Citation {
   layers: string[];
