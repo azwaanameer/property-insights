@@ -6,6 +6,7 @@ import type { Db } from "../db";
 import type { LayerDef } from "../layers/types";
 import { errorFields, log } from "../log";
 import type { LayerTier } from "../contracts/layer";
+import { requestScoped } from "../repos/request-scope";
 import type { LayerConfigRow, SourceRow } from "../repos/source";
 import { UNAVAILABLE_VENDORS, type VendorAdapters } from "../vendors/types";
 import { entitlements } from "./entitlements";
@@ -120,7 +121,9 @@ export async function runLayer(layer: LayerDef, input: RunLayersInput): Promise<
  * and also sees the results of the other synthesis layers. Results come back in the order the layers were given. Gate, entitlement and
  * failure isolation apply to every pass alike.
  */
-export async function runLayers(layers: LayerDef[], input: RunLayersInput): Promise<LayerResult[]> {
+export async function runLayers(layers: LayerDef[], runInput: RunLayersInput): Promise<LayerResult[]> {
+  // One request-scoped Db for the whole report, so a read two layers both make (the sales dataset) is done once (repos/request-scope.ts).
+  const input: RunLayersInput = { ...runInput, db: requestScoped(runInput.db) };
   const first = layers.filter((l) => !l.synthesis);
   const second = layers.filter((l) => l.synthesis && !l.after_synthesis);
   const third = layers.filter((l) => l.synthesis && l.after_synthesis);

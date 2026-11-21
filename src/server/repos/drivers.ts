@@ -14,7 +14,7 @@ export interface DriverRow {
   /** The suburb every other suburb is measured against (its own effect is 0). */
   is_reference: boolean;
   effect_pct: number;
-  /** The coefficient's standard error x 100, on the log-price scale. */
+  /** The standard error of effect_pct, on the same scale (percentage points of sale price): exp(coefficient) x the coefficient's standard error x 100 (delta method). */
   se_pct: number;
   n_used: number;
   n_total: number;

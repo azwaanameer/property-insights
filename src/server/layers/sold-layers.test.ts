@@ -11,9 +11,10 @@ import { createSuburbDataTestDb, type SuburbDataset, type TestDb } from "../test
 import { UNAVAILABLE_VENDORS } from "../vendors/types";
 import { LAYERS } from ".";
 import { ASSOCIATION_NOTE, HOUSE_MESSAGE, L04Drivers, layoutLabel } from "./L04-drivers";
-import { L21Sales, MAX_SALES, NO_BUILDING_MESSAGE } from "./L21-sales";
+import { hasStreetSuffix, L21Sales, MAX_SALES, NO_BUILDING_MESSAGE, STREET_SUFFIX_MESSAGE } from "./L21-sales";
 import { SALES_CREDIT, coverageMessage, listingLink } from "./shared/sold";
 import { getSalesDataset } from "../repos/sale";
+import { memoPerRequest, requestScoped } from "../repos/request-scope";
 
 const DOCKLANDS_UNIT = "310/628 Flinders St Docklands";
 const CARLTON_HOUSE = "7 Smith Rd Carlton";
@@ -142,6 +143,17 @@ describe("L21: a house with sales on its street", () => {
     expect(out.message).toMatch(/No sale on NOWHERE STREET is in the reported sales dataset \(4 suburbs, sold \d{4}-\d{2}-\d{2} to \d{4}-\d{2}-\d{2}\)/);
   });
 
+  it("a street whose G-NAF suffix (North, South ...) the address carries is a gap, not the sales of the street without the suffix", async () => {
+    const out = await runWith(L21Sales, house("PARK STREET", { display_address: "1 PARK STREET North, South Melbourne VIC 3205" }));
+    expect(out).toMatchObject({ status: "gap", message: STREET_SUFFIX_MESSAGE, figures: [] });
+    expect(hasStreetSuffix({ street: "Park Street", display_address: "1 Park Street South, South Melbourne VIC 3205" })).toBe(true);
+    expect(hasStreetSuffix({ street: "Park Street", display_address: "Level 4, 405/12 Park Street, South Melbourne VIC 3205" })).toBe(false);
+    expect(hasStreetSuffix({ street: "Park Street", display_address: "1 Park Street" })).toBe(false);
+    expect(hasStreetSuffix({ street: null, display_address: "1 Park Street North, X VIC 3000" })).toBe(false);
+    // The ordinary house on the same street still gets its sales.
+    expect((await runWith(L21Sales, house("PARK STREET"))).status).toBe("ok");
+  });
+
   it("matches the street, the suburb and the postcode together: the same street name in another suburb is not this street", async () => {
     const out = await runWith(L21Sales, house("PARK STREET", { locality: "Docklands", postcode: "3008", sal_code: "20766" }));
     expect(out.status).toBe("gap");
@@ -224,6 +236,18 @@ describe("L04: price drivers for a Docklands apartment", () => {
     expect(f.effect_bed_2.note).toMatch(/Standard error [\d.]+ percentage points\. \d+ of the \d+ sales used/);
   });
 
+  it("states the standard error on the scale of the effect (delta method): the 3-bedroom error is about twice the log-scale one because the effect is nearly +100%", () => {
+    const drivers = (l04.payload as { drivers: { key: string; effect_pct: number; se_pct: number }[] }).drivers;
+    const bed3 = drivers.find((d) => d.key === "bed_3")!;
+    // The fixture fit gives a log-scale error of about 6.3 for 3 bedrooms (the old figure); times exp(b) = 1 + effect_pct / 100 = 1.98 it is about 12.5 points.
+    expect(bed3.se_pct / (1 + bed3.effect_pct / 100)).toBeCloseTo(6.3, 0);
+    expect(bed3.se_pct).toBeCloseTo(12.5, 0);
+    expect(drivers.find((d) => d.key === "bed_2")!.se_pct).toBeCloseTo(4.2, 0);
+    const text = (l04.payload as { notes: string[] }).notes.join(" ");
+    expect(text).not.toMatch(/log-price|log scale|understates/i);
+    expect(text).toMatch(/on the same scale as the difference in sale price/);
+  });
+
   it("gives this suburb's difference against the reference suburb, with its standard error and its sales", () => {
     const f = figs(l04).effect_suburb;
     expect(f.label).toBe("Sale price difference, Docklands compared with Melbourne CBD");
@@ -251,6 +275,7 @@ describe("L04: price drivers for a Docklands apartment", () => {
     expect(f.value).toBe(p.model.n_used);
     expect(f.note).toContain(`Used ${p.model.n_used} of ${p.model.n_total} apartment sales`);
     expect(f.note).toMatch(/unit number has fewer than three digits/);
+    expect(f.note).toMatch(/the listing gave no parking count/);
   });
 
   it("shows the layout medians with their sales, only for layouts with at least 20 sales in the suburb", () => {
@@ -273,6 +298,17 @@ describe("L04: price drivers for a Docklands apartment", () => {
       expect(labels).toHaveLength(3);
       expect(labels).not.toContain("1 bed, 1 bath, no car space");
     });
+  });
+
+  it("has a teaser that says prices differ, not that they 'move', and carries no figure", () => {
+    expect(L04Drivers.teaser).toBe("How apartment sale prices differ by bedrooms, bathrooms, car space, floor and suburb, as associations in past sales.");
+    expect(L04Drivers.teaser).not.toMatch(/move/i);
+    expect(L04Drivers.teaser).not.toMatch(/\d/);
+  });
+
+  it("explains that 'no car space' is a recorded zero and that a sale with no parking count is left out of the layouts", () => {
+    const text = (l04.payload as { notes: string[] }).notes.join(" ");
+    expect(text).toMatch(/"no car space" means the listing recorded none; a sale with no parking count is left out/);
   });
 
   it("is a gap for a house in a harvested suburb, saying it covers apartments only", async () => {
@@ -371,5 +407,43 @@ describe("no agent data, and the wording guard", () => {
     const sold = new Set((await db.query("SELECT price_aud::int * 100 AS c FROM fact_reported_sale")).map((r) => r.c));
     const prices = (layers["L21-sales"].payload.sales as { price_cents: number }[]).map((s) => s.price_cents);
     for (const p of prices) expect(sold.has(p)).toBe(true);
+  });
+});
+
+describe("the sales dataset is read once per report, not once per layer (request-scoped memo)", () => {
+  /** A Db that counts the sales-dataset queries (the suburb list is one of the three that read the dataset). */
+  const counting = (inner: TestDb) => {
+    let n = 0;
+    const counted = { query: async (text: string, params?: unknown[]) => (text.includes("min(s.harvest_suburb)") && n++, inner.query(text, params)) };
+    return { db: counted as TestDb, count: () => n };
+  };
+
+  it("L21 and L04 together ask the dataset's three queries once in a report, and the report is the same", async () => {
+    const address = await resolveQuery(db, DOCKLANDS_UNIT);
+    const c = counting(db);
+    const model = await assembleReport({ db: c.db, address, principal: ANONYMOUS, request_id: "t", layers: LAYERS.filter((l) => ["L21-sales", "L04-drivers"].includes(l.layer_id)) });
+    expect(c.count()).toBe(1);
+    expect(model.layers.map((l) => l.status)).toEqual(["ok", "ok"]);
+  });
+
+  it("a Db that is not request-scoped is never memoised: two direct calls ask twice, and a later publish is seen", async () => {
+    const c = counting(db);
+    await getSalesDataset(c.db);
+    await getSalesDataset(c.db);
+    expect(c.count()).toBe(2);
+  });
+
+  it("two reports do not share the memo (each is its own scope), and a failed read is not remembered", async () => {
+    const address = await resolveQuery(db, DOCKLANDS_UNIT);
+    const c = counting(db);
+    const only = LAYERS.filter((l) => ["L21-sales", "L04-drivers"].includes(l.layer_id));
+    await assembleReport({ db: c.db, address, principal: ANONYMOUS, request_id: "a", layers: only });
+    await assembleReport({ db: c.db, address, principal: ANONYMOUS, request_id: "b", layers: only });
+    expect(c.count()).toBe(2);
+    const scoped = requestScoped(db);
+    let calls = 0;
+    await expect(memoPerRequest(scoped, "k", async () => { calls++; throw new Error("x"); })).rejects.toThrow("x");
+    expect(await memoPerRequest(scoped, "k", async () => { calls++; return 7; })).toBe(7);
+    expect(calls).toBe(2);
   });
 });

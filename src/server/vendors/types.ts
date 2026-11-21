@@ -74,18 +74,27 @@ export interface ShortStayEstimate {
 /** What the adapter is asked: the report's own bedrooms and bathrooms are always sent, because AirDNA assumes 2 bed 2 bath when told nothing. */
 export interface ShortStayQuery {
   gnaf_pid: string;
+  /** The address point. The cache is keyed on this point snapped to about 100 m, with the bedrooms and bathrooms, not on the pid. */
+  lat: number;
+  lon: number;
   /** The full address as AirDNA geocodes it, e.g. "310/628 Flinders St, Docklands VIC 3008, Australia". */
   address: string;
   bedrooms: number;
   bathrooms: number;
 }
 
+/**
+ * The most each adapter may take for one call, including its cache read and write. With the layers' own limits they keep the whole report
+ * under about 12 s when vendors hang: L19 waits for the street and place photos (5 s), then L06 waits for AirDNA (6 s).
+ */
+export const VENDOR_BUDGET_MS = { airdna: 6000, mapillary: 5000, wikimedia: 5000 } as const;
+
 export interface VendorAdapters {
   /** Mapillary images around the point (the adapter looks wider than the layer needs; the layer filters by true distance). */
   streetImages(lat: number, lon: number): Promise<VendorResult<StreetImage[]>>;
   /** Wikimedia Commons photos around the point. */
   placeImages(lat: number, lon: number): Promise<VendorResult<PlaceImage[]>>;
-  /** The AirDNA rentalizer for one address (RapidAPI, cached up to 30 days by address pid, bedrooms and bathrooms). */
+  /** The AirDNA rentalizer for one address (RapidAPI, cached up to 30 days by snapped point, bedrooms and bathrooms; a failure is remembered for 10 minutes). */
   shortStay(query: ShortStayQuery): Promise<VendorResult<ShortStayEstimate>>;
 }
 

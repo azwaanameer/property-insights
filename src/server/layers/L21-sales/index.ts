@@ -20,6 +20,21 @@ export const MAX_SALES = 8;
 export const NO_BUILDING_MESSAGE = "This address is not matched to a building, so sales in the same building cannot be listed.";
 export const NO_STREET_MESSAGE = "This address has no street name, so sales on the same street cannot be listed.";
 
+export const STREET_SUFFIX_MESSAGE = "This street name ends in a word such as North or South that the sales dataset does not carry, so sales on the same street cannot be listed.";
+
+/**
+ * True when the address's street has G-NAF's street suffix ("Little Dryburgh Street South"). `street` holds only the name and type, so the suffix
+ * is seen as text between the street and the comma that ends the street part of the displayed address. Without this a house on "X Street North"
+ * would be shown the sales on a different street, "X Street".
+ */
+export function hasStreetSuffix(a: { street: string | null; display_address: string }): boolean {
+  if (!a.street) return false;
+  const i = a.display_address.toLowerCase().indexOf(a.street.toLowerCase());
+  if (i < 0) return false;
+  const after = a.display_address.slice(i + a.street.length).trimStart();
+  return after !== "" && !after.startsWith(",");
+}
+
 export const SCOPE_NOTES = [
   "Each sale is a listing-site record as reported on realestate.com.au. It is not checked, and it is not a Victorian title record. The price, date and details are as that site gave them.",
 ];
@@ -66,6 +81,7 @@ export const L21Sales: LayerDef = {
       where = address.building_name ?? address.display_address;
     } else {
       if (!address.street || !address.postcode) return { status: "gap", figures: [], payload: {}, message: NO_STREET_MESSAGE };
+      if (hasStreetSuffix(address)) return { status: "gap", figures: [], payload: {}, message: STREET_SUFFIX_MESSAGE };
       // The street key is the street as the build plane writes it: upper case, apostrophes and full stops dropped, other punctuation a space.
       const street_key = suburbKey(address.street).toUpperCase();
       found = await listStreetSales(db, { street_key, suburb_key: suburbKey(address.locality), postcode: address.postcode }, STREET_TYPES, MAX_SALES);

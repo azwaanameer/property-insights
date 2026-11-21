@@ -12,7 +12,7 @@ import { createVendors } from "../vendors";
 import type { VendorAdapters } from "../vendors/types";
 import { LAYERS } from "./index";
 import { L14Attribution } from "./L14-attribution";
-import { L19Photos, MAX_PLACE_IMAGES, MAX_STREET_IMAGES, NO_PHOTOS_MESSAGE, OLD_STREET_NOTE, pickStreetImages, UNAVAILABLE_MESSAGE as PHOTOS_UNAVAILABLE } from "./L19-photos";
+import { L19Photos, MAX_PLACE_IMAGES, MAX_STREET_IMAGES, NO_PHOTOS_MESSAGE, OLD_STREET_NOTE, pickStreetImages, resetNoTokenWarning, UNAVAILABLE_MESSAGE as PHOTOS_UNAVAILABLE } from "./L19-photos";
 import { L20Places, NOT_LOADED_MESSAGE, NOTHING_MESSAGE, OSM_CREDIT, UNNAMED, VICTORIA_ONLY_MESSAGE } from "./L20-places";
 import { NO_COORDINATES_MESSAGE } from "./shared/location";
 import { UNAVAILABLE_VENDORS } from "../vendors/types";
@@ -106,15 +106,34 @@ describe("L19 photos", () => {
     expect(NO_PHOTOS_MESSAGE).toBe("No public photos found near this address.");
   });
 
-  it("with the token missing it uses Wikimedia only, and when that has none either it is the no-photos gap (no error)", async () => {
+  it("with the token missing the street source is unavailable: Wikimedia photos still show with the street note, and with none of those either it is the 'not available' gap, never 'No public photos found'", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const noKey = { streetImages: async () => ({ ok: false, reason: "no_key" }) as const };
     const withPhotos = await run(L19Photos, fakeVendors({ ...noKey, placeImages: async () => ok([placeImage({ title: "A.jpg", ...at(50, 0) })]) }));
     expect(withPhotos.status).toBe("ok");
     expect(withPhotos.payload.street).toEqual([]);
-    expect(withPhotos.payload.notes).not.toContain("Street photos are not available right now.");
+    expect(withPhotos.payload.notes).toContain("Street photos are not available right now.");
     expect(withPhotos.figures.map((f) => f.key)).toEqual(["place_photos"]);
     const none = await run(L19Photos, fakeVendors(noKey));
-    expect(none).toMatchObject({ status: "gap", message: NO_PHOTOS_MESSAGE });
+    expect(none).toMatchObject({ status: "gap", message: PHOTOS_UNAVAILABLE });
+    expect(none.message).not.toMatch(/No public photos found/);
+    // A missing token is a problem for the operator, not a "none found": the other source being empty does not change that.
+    const noneAtAll = await run(L19Photos, fakeVendors({ ...noKey, placeImages: async () => ok([]) }));
+    expect(noneAtAll).toMatchObject({ status: "gap", message: PHOTOS_UNAVAILABLE });
+  });
+
+  it("a missing Mapillary token logs one console warning for the process, not one per report, and never the token", async () => {
+    resetNoTokenWarning();
+    const lines: string[] = [];
+    vi.spyOn(console, "warn").mockImplementation((...a: unknown[]) => void lines.push(a.map(String).join(" ")));
+    const noKey = fakeVendors({ streetImages: async () => ({ ok: false, reason: "no_key" }) });
+    for (let i = 0; i < 3; i++) await run(L19Photos, noKey);
+    expect(lines.filter((l) => l.includes("mapillary_token_missing"))).toHaveLength(1);
+    // A failure that is not a missing token logs nothing here.
+    resetNoTokenWarning();
+    lines.length = 0;
+    await run(L19Photos, fakeVendors({ streetImages: async () => ({ ok: false, reason: "unavailable" }) }));
+    expect(lines.filter((l) => l.includes("mapillary_token_missing"))).toHaveLength(0);
   });
 
   it("with the vendors down it is the gap 'Photos are not available right now.'", async () => {
@@ -279,13 +298,24 @@ describe("in the assembled report", () => {
     vi.restoreAllMocks();
   });
 
-  it("a vendor method that throws is an error section for that layer only", async () => {
+  it("a vendor method that throws is a quiet gap for that layer only, never an error card", async () => {
     const boom = fakeVendors({ streetImages: async () => { throw new Error("boom"); } });
-    vi.spyOn(console, "error").mockImplementation(() => undefined);
     const layers = await report(boom);
-    expect(layers["L19-photos"].status).toBe("error");
+    expect(layers["L19-photos"]).toMatchObject({ status: "gap", message: PHOTOS_UNAVAILABLE });
     expect(layers["L01-property"].status).toBe("ok");
-    vi.restoreAllMocks();
+  });
+
+  it("vendors that never answer give the gap before the layer's own limit, so a hang is never an error card", async () => {
+    vi.useFakeTimers();
+    try {
+      const hang = () => new Promise<never>(() => {});
+      const pending = run(L19Photos, fakeVendors({ streetImages: hang, placeImages: hang }));
+      await vi.advanceTimersByTimeAsync(5300);
+      expect(await pending).toMatchObject({ status: "gap", message: PHOTOS_UNAVAILABLE });
+      expect(L19Photos.timeout_ms).toBe(5500);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("L14 credits OpenStreetMap, Mapillary and Wikimedia Commons only when those sections returned data, with the OpenStreetMap credit linked", async () => {

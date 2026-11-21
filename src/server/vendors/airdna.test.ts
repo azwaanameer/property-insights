@@ -3,8 +3,8 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { createTestDb, type TestDb } from "../testing/db";
 import { fakeFetch, json } from "../testing/fake-vendors";
-import { USER_AGENT } from "./cache";
-import { AIRDNA_HOST, buildRentalizerUrl, parseRentalizer, RETRY_WAIT_MS } from "./airdna";
+import { FAILED_MARKER, NEGATIVE_CACHE_SECONDS, USER_AGENT } from "./cache";
+import { AIRDNA_HOST, airdnaCacheKey, buildRentalizerUrl, fetchShortStay, isEmptyEstimate, parseRentalizer, RETRY_WAIT_MS, TOTAL_BUDGET_MS } from "./airdna";
 import { createVendors } from "./index";
 import type { ShortStayQuery } from "./types";
 
@@ -14,13 +14,17 @@ beforeAll(async () => {
   ({ db, close } = await createTestDb({ devSeed: false }));
 });
 afterAll(() => close());
+/** The cache rows that hold an answer (not a failure marker). */
+const dataRows = () => db.query(`SELECT 1 FROM vendor_cache WHERE NOT (payload ? '${FAILED_MARKER}')`);
+const markerRows = () => db.query(`SELECT cache_key, EXTRACT(EPOCH FROM (expires_at - fetched_at)) AS seconds FROM vendor_cache WHERE payload ? '${FAILED_MARKER}'`);
+
 afterEach(async () => {
   await db.query("DELETE FROM vendor_cache");
   vi.restoreAllMocks();
 });
 
 const KEY = "rapid-key-do-not-leak-9f3a";
-const QUERY: ShortStayQuery = { gnaf_pid: "GAVIC720519114", address: "310/628 Flinders St, Docklands VIC 3008, Australia", bedrooms: 2, bathrooms: 2 };
+const QUERY: ShortStayQuery = { gnaf_pid: "GAVIC720519114", lat: -37.8142, lon: 144.9528, address: "310/628 Flinders St, Docklands VIC 3008, Australia", bedrooms: 2, bathrooms: 2 };
 
 /** A small answer that follows the field names the City Retreats CRM reads (property_statistics, property_details, comps, comps_revenues). */
 const body = (over: Record<string, unknown> = {}) => ({
@@ -105,31 +109,34 @@ describe("AirDNA adapter", () => {
     expect(u.searchParams.get("currency")).toBe("native");
   });
 
-  it("caches for 30 days by address pid, bedrooms and bathrooms, with no principal and without the key, and a second call makes no outside call", async () => {
+  it("caches for 30 days by the snapped point, bedrooms and bathrooms, with no principal and without the key, and a second call makes no outside call", async () => {
     const f = fakeFetch({ rentalizer: () => json(body()) });
     const v = make(f);
     await v.shortStay(QUERY);
     const rows = await db.query("SELECT cache_key, vendor, principal_id, payload::text AS payload, EXTRACT(EPOCH FROM (expires_at - fetched_at)) / 86400 AS ttl_days FROM vendor_cache");
     expect(rows).toHaveLength(1);
-    expect(rows[0]).toMatchObject({ cache_key: "airdna_rentalizer:GAVIC720519114:b2:ba2", vendor: "airdna_rentalizer", principal_id: null });
+    expect(rows[0]).toMatchObject({ cache_key: "airdna_rentalizer:-37.814,144.953:b2:ba2", vendor: "airdna_rentalizer", principal_id: null });
+    expect(rows[0].cache_key).not.toContain("GAVIC");
     expect(Number(rows[0].ttl_days)).toBe(30);
     expect(rows[0].payload).not.toContain(KEY);
     expect(rows[0].payload).not.toMatch(/muscache|Bright Docklands/);
-    const again = await v.shortStay({ ...QUERY, address: "a different spelling of the same address" });
+    // Another address pid and another spelling on the same block (about 25 m away) share the row: one paid call for the block.
+    const again = await v.shortStay({ ...QUERY, gnaf_pid: "GAVIC720519999", lat: QUERY.lat + 0.0002, lon: QUERY.lon + 0.0002, address: "a different spelling of a neighbouring address" });
     expect(again.ok && again.cached).toBe(true);
     expect(again.ok && again.data.annual_revenue).toBe(60812);
     expect(f.calls).toHaveLength(1);
   });
 
-  it("a different bedroom or bathroom count, or another address pid, is another cache entry and another call", async () => {
+  it("a different bedroom or bathroom count, or a point in another 100 m cell, is another cache entry and another call", async () => {
     const f = fakeFetch({ rentalizer: () => json(body()) });
     const v = make(f);
     await v.shortStay(QUERY);
     await v.shortStay({ ...QUERY, bedrooms: 1 });
     await v.shortStay({ ...QUERY, bathrooms: 1 });
-    await v.shortStay({ ...QUERY, gnaf_pid: "GAVIC720519115" });
+    await v.shortStay({ ...QUERY, lat: QUERY.lat + 0.01 });
     expect(f.calls).toHaveLength(4);
     expect(await db.query("SELECT 1 FROM vendor_cache")).toHaveLength(4);
+    expect(airdnaCacheKey({ lat: -37.81421, lon: 144.95283, bedrooms: 2.4, bathrooms: 1.6 })).toBe(airdnaCacheKey({ lat: -37.81399, lon: 144.95301, bedrooms: 2, bathrooms: 2 }));
   });
 
   it("refetches once the 30 day row has expired", async () => {
@@ -159,14 +166,20 @@ describe("AirDNA adapter", () => {
     ["a 401", () => json({ message: "Invalid API key" }, 401)],
     ["a body that is not JSON", () => new Response("<html>nope</html>", { status: 200 })],
     ["JSON of the wrong shape", () => json({ hello: "world" })],
-  ])("%s is unavailable, is not retried and is never cached", async (_name, answer) => {
+  ])("%s is unavailable, is not retried, is never cached as data and is remembered as a failure for 10 minutes", async (_name, answer) => {
     const f = fakeFetch({ rentalizer: answer });
     const sleep = vi.fn(async () => {});
-    const r = await make(f, { sleep }).shortStay(QUERY);
-    expect(r).toEqual({ ok: false, reason: "unavailable" });
+    const v = make(f, { sleep });
+    expect(await v.shortStay(QUERY)).toEqual({ ok: false, reason: "unavailable" });
     expect(f.calls).toHaveLength(1);
     expect(sleep).not.toHaveBeenCalled();
-    expect(await db.query("SELECT 1 FROM vendor_cache")).toHaveLength(0);
+    expect(await dataRows()).toHaveLength(0);
+    const [marker] = await markerRows();
+    expect(Number(marker.seconds)).toBe(NEGATIVE_CACHE_SECONDS);
+    expect(NEGATIVE_CACHE_SECONDS).toBe(600);
+    // A second request, and a crawler's hundredth, make no paid call while the marker lives.
+    for (let i = 0; i < 3; i++) expect(await v.shortStay(QUERY)).toEqual({ ok: false, reason: "unavailable" });
+    expect(f.calls).toHaveLength(1);
   });
 
   it("a 503 (AirDNA's authentication_unavailable) is retried once after about 1.5 s, and a success then is returned and cached", async () => {
@@ -179,36 +192,117 @@ describe("AirDNA adapter", () => {
     expect(sleep).toHaveBeenCalledTimes(1);
     expect(sleep).toHaveBeenCalledWith(RETRY_WAIT_MS);
     expect(RETRY_WAIT_MS).toBe(1500);
-    expect(await db.query("SELECT 1 FROM vendor_cache")).toHaveLength(1);
+    expect(await dataRows()).toHaveLength(1);
+    expect(await markerRows()).toHaveLength(0);
   });
 
-  it.each([[429], [500], [503]])("a %s twice gives up after exactly two calls (never a loop), is unavailable and is never cached", async (status) => {
+  it.each([[429], [500], [503]])("a %s twice gives up after exactly two calls (never a loop), is unavailable, is not cached as data, and the next request makes no call", async (status) => {
     const f = fakeFetch({ rentalizer: () => json({ message: "You have exceeded the rate limit per second" }, status) });
     const sleep = vi.fn(async () => {});
-    const r = await make(f, { sleep }).shortStay(QUERY);
-    expect(r).toEqual({ ok: false, reason: "unavailable" });
+    const v = make(f, { sleep });
+    expect(await v.shortStay(QUERY)).toEqual({ ok: false, reason: "unavailable" });
     expect(f.calls).toHaveLength(2);
     expect(sleep).toHaveBeenCalledTimes(1);
-    expect(await db.query("SELECT 1 FROM vendor_cache")).toHaveLength(0);
+    expect(await dataRows()).toHaveLength(0);
+    expect(await markerRows()).toHaveLength(1);
+    expect(await v.shortStay(QUERY)).toEqual({ ok: false, reason: "unavailable" });
+    expect(f.calls).toHaveLength(2);
   });
 
-  it("a timeout is unavailable, is not retried and is never cached", async () => {
+  it("a 429 whose quota header says no requests remain is not retried at all", async () => {
+    const f = fakeFetch({ rentalizer: () => new Response("{}", { status: 429, headers: { "x-ratelimit-requests-remaining": "0", "x-ratelimit-requests-limit": "3000" } }) });
+    const sleep = vi.fn(async () => {});
+    expect(await make(f, { sleep }).shortStay(QUERY)).toEqual({ ok: false, reason: "unavailable" });
+    expect(f.calls).toHaveLength(1);
+    expect(sleep).not.toHaveBeenCalled();
+    expect(await markerRows()).toHaveLength(1);
+  });
+
+  it("a 429 with quota left (a per-second limit) is still retried once", async () => {
+    const answers = [() => new Response("{}", { status: 429, headers: { "x-ratelimit-requests-remaining": "2500" } }), () => json(body())];
+    const f = fakeFetch({ rentalizer: () => answers.shift()!() });
+    const r = await make(f).shortStay(QUERY);
+    expect(r.ok).toBe(true);
+    expect(f.calls).toHaveLength(2);
+  });
+
+  it("a timeout is unavailable, is not retried, is never cached as data and is remembered as a failure", async () => {
     const f = fakeFetch({ rentalizer: () => new Promise<Response>(() => {}) });
-    const r = await make(f, { timeout_ms: 25 }).shortStay(QUERY);
-    expect(r).toEqual({ ok: false, reason: "unavailable" });
+    const v = make(f, { timeout_ms: 25 });
+    expect(await v.shortStay(QUERY)).toEqual({ ok: false, reason: "unavailable" });
     expect(f.calls).toHaveLength(1);
-    expect(await db.query("SELECT 1 FROM vendor_cache")).toHaveLength(0);
+    expect(await dataRows()).toHaveLength(0);
+    expect(await markerRows()).toHaveLength(1);
+    expect(await v.shortStay(QUERY)).toEqual({ ok: false, reason: "unavailable" });
+    expect(f.calls).toHaveLength(1);
   });
 
-  it("does not retry when too little of the time budget is left, so two calls and the wait never outlast the layer", async () => {
-    const f = fakeFetch({ rentalizer: () => json({ error: "Service temporarily unavailable" }, 503) });
+  it("the failure marker expires after 10 minutes and the vendor is asked again", async () => {
+    let now = new Date("2026-11-21T00:00:00Z");
+    const answers = [() => json({ message: "x" }, 500), () => json({ message: "x" }, 500), () => json(body())];
+    const f = fakeFetch({ rentalizer: () => answers.shift()!() });
+    const v = make(f, { now: () => now });
+    expect((await v.shortStay(QUERY)).ok).toBe(false); // 2 calls (one retry)
+    expect(f.calls).toHaveLength(2);
+    now = new Date("2026-11-21T00:09:00Z");
+    expect((await v.shortStay(QUERY)).ok).toBe(false);
+    expect(f.calls).toHaveLength(2);
+    now = new Date("2026-11-21T00:11:00Z");
+    const r = await v.shortStay(QUERY);
+    expect(r.ok && r.cached).toBe(false);
+    expect(f.calls).toHaveLength(3);
+  });
+
+  it("an answer with no income and no comparable listing with income is cached for 1 day, not 30", async () => {
+    const empty = { data: { property_statistics: { revenue: { ltm: null }, confidence_score: { level: "Low", score: 10 } }, comps: [], comps_revenues: [] } };
+    expect(isEmptyEstimate(parseRentalizer(empty))).toBe(true);
+    expect(isEmptyEstimate(parseRentalizer(body()))).toBe(false);
+    expect(isEmptyEstimate(parseRentalizer({ data: { property_statistics: {}, comps: [{ airbnb_property_id: 1 }], comps_revenues: [0] } }))).toBe(true);
+    expect(isEmptyEstimate(parseRentalizer({ data: { property_statistics: {}, comps: [{ airbnb_property_id: 1 }], comps_revenues: [30000] } }))).toBe(false);
+    const f = fakeFetch({ rentalizer: () => json(empty) });
+    const r = await make(f).shortStay(QUERY);
+    expect(r.ok).toBe(true);
+    const [row] = await db.query("SELECT EXTRACT(EPOCH FROM (expires_at - fetched_at)) / 86400 AS ttl_days FROM vendor_cache");
+    expect(Number(row.ttl_days)).toBe(1);
+  });
+
+  it("the whole call, cache read and write included, is held to the 6 s budget: a hung vendor or database is unavailable by then", async () => {
+    expect(TOTAL_BUDGET_MS).toBe(6000);
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    // A vendor that hangs, with a long per-call limit: only the budget ends the call.
+    const hang = fakeFetch({ rentalizer: () => new Promise<Response>(() => {}) });
+    const t0 = Date.now();
+    expect(await fetchShortStay({ db, key: KEY, fetchFn: hang, query: QUERY, timeout_ms: 60_000, budget_ms: 60 })).toEqual({ ok: false, reason: "unavailable" });
+    expect(Date.now() - t0).toBeLessThan(1500);
+    // A database that hangs.
+    const slowDb = { query: () => new Promise<never[]>(() => {}) };
+    const f = fakeFetch({ rentalizer: () => json(body()) });
+    expect(await fetchShortStay({ db: slowDb, key: KEY, fetchFn: f, query: QUERY, budget_ms: 60 })).toEqual({ ok: false, reason: "unavailable" });
+  });
+
+  it("does not retry when too little of the time budget is left (the budget includes the cache read)", async () => {
     let t = 0;
-    // The first call "takes" 8 s of a 9 s budget: nothing worth retrying is left.
-    const { fetchShortStay } = await import("./airdna");
-    const clock = () => (t += 8000);
-    const r = await fetchShortStay({ db, key: KEY, fetchFn: f, query: QUERY, clock, sleep: async () => {} });
+    const clock = () => t;
+    // The first call "takes" 5 s of the 6 s budget before it fails: the wait and a second call no longer fit.
+    const f = fakeFetch({
+      rentalizer: () => {
+        t += 5000;
+        return json({ error: "Service temporarily unavailable" }, 503);
+      },
+    });
+    const sleep = vi.fn(async () => {});
+    const r = await fetchShortStay({ db, key: KEY, fetchFn: f, query: QUERY, clock, sleep });
     expect(r).toEqual({ ok: false, reason: "unavailable" });
     expect(f.calls).toHaveLength(1);
+    expect(sleep).not.toHaveBeenCalled();
+  });
+
+  it("makes no outside call when the cache read has already used up the budget", async () => {
+    let t = 0;
+    const clock = () => (t += 5800);
+    const f = fakeFetch({ rentalizer: () => json(body()) });
+    expect(await fetchShortStay({ db, key: KEY, fetchFn: f, query: QUERY, clock, sleep: async () => {} })).toEqual({ ok: false, reason: "unavailable" });
+    expect(f.calls).toHaveLength(0);
   });
 
   it("the key never appears in a log line, a cache row or an error, whatever the answer", async () => {

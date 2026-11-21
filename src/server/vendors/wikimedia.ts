@@ -2,9 +2,14 @@
 // and licence. Non-photos (SVG, maps, diagrams) are dropped by type and title. The images stay on Wikimedia's servers: only metadata is cached.
 import type { Db } from "../db";
 import { cacheKey, cached, fetchJson, SNAP_ERROR_M, snapPoint, VendorError, type FetchFn } from "./cache";
-import type { PlaceImage, VendorResult } from "./types";
+import { VENDOR_BUDGET_MS, type PlaceImage, type VendorResult } from "./types";
 
 export const WIKIMEDIA_TTL_DAYS = 30;
+/** A search that found no usable photo is kept this long only. */
+export const WIKIMEDIA_EMPTY_TTL_DAYS = 1;
+/** Files asked for from the geosearch (the filters below drop many), and the most photos kept after filtering. */
+export const WIKIMEDIA_SEARCH_LIMIT = 50;
+export const WIKIMEDIA_MAX_KEPT = 30;
 /** The layer shows photos within this distance; the search adds the snapping margin. */
 export const WIKIMEDIA_RADIUS_M = 1000;
 const ENDPOINT = "https://commons.wikimedia.org/w/api.php";
@@ -36,7 +41,9 @@ export function parseWikimedia(body: unknown): PlaceImage[] {
   const pages = q?.pages;
   if (typeof pages !== "object" || pages === null) throw new VendorError("unexpected response shape");
   const out: PlaceImage[] = [];
-  for (const p of Object.values(pages as Record<string, any>)) {
+  // The geosearch ranks its files by distance in `index`; keep that order so the cap below keeps the nearest.
+  const ranked = Object.values(pages as Record<string, any>).sort((a, b) => (typeof a?.index === "number" ? a.index : Infinity) - (typeof b?.index === "number" ? b.index : Infinity));
+  for (const p of ranked) {
     const info = Array.isArray(p?.imageinfo) ? p.imageinfo[0] : null;
     if (!info) continue;
     const title = typeof p.title === "string" ? p.title.replace(/^File:/, "") : "";
@@ -66,18 +73,19 @@ export function parseWikimedia(body: unknown): PlaceImage[] {
       lon: typeof coord?.lon === "number" ? coord.lon : null,
     });
   }
-  return out;
+  return out.slice(0, WIKIMEDIA_MAX_KEPT);
 }
 
-export async function fetchPlaceImages(opts: { db: Db; fetchFn: FetchFn; lat: number; lon: number; now?: () => Date; timeout_ms?: number }): Promise<VendorResult<PlaceImage[]>> {
+export async function fetchPlaceImages(opts: { db: Db; fetchFn: FetchFn; lat: number; lon: number; now?: () => Date; timeout_ms?: number; budget_ms?: number }): Promise<VendorResult<PlaceImage[]>> {
   const { db, fetchFn, lat, lon } = opts;
   const centre = snapPoint(lat, lon);
   return cached({
     db,
     vendor: "wikimedia_commons",
     key: cacheKey("wikimedia_commons", lat, lon, `r${WIKIMEDIA_RADIUS_M}`),
-    ttl_days: WIKIMEDIA_TTL_DAYS,
+    ttl_days: (images) => (images.length === 0 ? WIKIMEDIA_EMPTY_TTL_DAYS : WIKIMEDIA_TTL_DAYS),
     now: opts.now,
+    budget_ms: opts.budget_ms ?? VENDOR_BUDGET_MS.wikimedia,
     load: async () => {
       const radius = WIKIMEDIA_RADIUS_M + SNAP_ERROR_M;
       const params = new URLSearchParams({
@@ -86,14 +94,14 @@ export async function fetchPlaceImages(opts: { db: Db; fetchFn: FetchFn; lat: nu
         ggscoord: `${centre.lat}|${centre.lon}`,
         ggsradius: String(radius),
         ggsnamespace: "6",
-        ggslimit: "20",
+        ggslimit: String(WIKIMEDIA_SEARCH_LIMIT),
         prop: "imageinfo|coordinates",
         iiprop: "url|extmetadata|mime",
         iiurlwidth: "640",
         format: "json",
         origin: "*",
       });
-      return parseWikimedia(await fetchJson(fetchFn, `${ENDPOINT}?${params.toString()}`, {}, opts.timeout_ms));
+      return parseWikimedia(await fetchJson(fetchFn, `${ENDPOINT}?${params.toString()}`, {}, opts.timeout_ms ?? VENDOR_BUDGET_MS.wikimedia));
     },
   });
 }

@@ -7,12 +7,13 @@
 // The method is that of scripts/23-price-drivers.mjs (2026-11-11): ordinary least squares on log(sale price) with suburb fixed effects, over
 // apartments with a parseable price and unit number, here over every harvested suburb pooled instead of six. Its price and floor parsing is
 // shared (pipeline/lib/sold.mjs). A sale is USED when it is an apartment (apartment, unit or flat), priced $150,000 to $2,500,000, has 1 to 3
-// bedrooms and at least 1 bathroom, and a unit number of three digits or more (the floor is the hundreds: 2105 is floor 21), in a suburb with at
+// bedrooms, at least 1 bathroom, a recorded parking count (a missing count is not "no car space": only a recorded 0 is), and a unit number of three digits or more (the floor is the hundreds: 2105 is floor 21), in a suburb with at
 // least 20 such sales (a thinner suburb cannot carry its own effect). The rest are counted by reason, not hidden.
 //
 //   effect_pct = (exp(coefficient) - 1) x 100        the change in sale price, all else equal
-//   se_pct     = the coefficient's standard error x 100   on the log-price scale, as the script printed it. For a large effect (three
-//                bedrooms) it understates the spread in percent; the report says what it is.
+//   se_pct     = exp(coefficient) x the coefficient's standard error x 100   the delta-method standard error of effect_pct, so it is on the
+//                same scale as effect_pct (percentage points of sale price). The script printed the log-scale error, which understates the
+//                spread in percent for a large effect such as three bedrooms; this does not.
 //   Drivers: 2 bed and 3 bed (against 1), 2+ baths (against 1), a car space, floors 10-19, 20-29 and 30+ (against 1-9), and each suburb
 //   against the reference suburb (Melbourne CBD when it qualifies, else the suburb with the most sales).
 //
@@ -52,7 +53,7 @@ export const POOLED = [
   { driver: "bed_2", test: (r) => r.bed === 2 },
   { driver: "bed_3", test: (r) => r.bed === 3 },
   { driver: "bath_2plus", test: (r) => r.bath >= 2 },
-  { driver: "car_space", test: (r) => (r.park ?? 0) >= 1 },
+  { driver: "car_space", test: (r) => r.park >= 1 },
   { driver: "floor_10_19", test: (r) => r.floor >= 10 && r.floor < 20 },
   { driver: "floor_20_29", test: (r) => r.floor >= 20 && r.floor < 30 },
   { driver: "floor_30plus", test: (r) => r.floor >= 30 },
@@ -112,6 +113,14 @@ export function fitOls(X, y) {
   return { beta, se: inv.map((row, j) => Math.sqrt(Math.max(0, row[j] * sigma2))), r2: sst === 0 ? 0 : 1 - sse / sst, sigma: Math.sqrt(sigma2), n, k };
 }
 
+/**
+ * A log-price coefficient and its standard error as the report states them, both in percent of sale price: the effect is (exp(b) - 1) x 100 and
+ * its standard error, by the delta method, exp(b) x se(b) x 100.
+ */
+export function effectInPercent(beta, se) {
+  return { effect_pct: (Math.exp(beta) - 1) * 100, se_pct: Math.exp(beta) * se * 100 };
+}
+
 // ---------------------------------------------------------------- selecting and fitting
 
 /** Why an apartment sale is not used, or null when it is (before the suburb threshold). */
@@ -119,6 +128,7 @@ function exclusionReason(r, { priceMin, priceMax }) {
   if (r.price_aud < priceMin || r.price_aud > priceMax) return "price_out_of_range";
   if (r.bed === null || r.bed < 1 || r.bed > 3) return "bedrooms_out_of_range";
   if (r.bath === null || r.bath < 1) return "no_bathrooms";
+  if (r.park === null || r.park === undefined) return "no_parking_count";
   if (floorOf(r.address_text) === null) return "no_unit_number";
   return null;
 }
@@ -130,7 +140,7 @@ function exclusionReason(r, { priceMin, priceMax }) {
  */
 export function fitPriceModel(sales, { priceMin = MODEL.priceMin, priceMax = MODEL.priceMax, minSuburb = MODEL.minSuburb, referenceSal = REFERENCE_SAL } = {}) {
   const apartments = sales.filter((r) => APARTMENT_TYPES.has(String(r.property_type).toLowerCase()));
-  const excluded = { price_out_of_range: 0, bedrooms_out_of_range: 0, no_bathrooms: 0, no_unit_number: 0, thin_suburb: 0 };
+  const excluded = { price_out_of_range: 0, bedrooms_out_of_range: 0, no_bathrooms: 0, no_parking_count: 0, no_unit_number: 0, thin_suburb: 0 };
   const candidates = [];
   for (const r of apartments) {
     const why = exclusionReason(r, { priceMin, priceMax });
@@ -168,8 +178,7 @@ export function fitPriceModel(sales, { priceMin = MODEL.priceMin, priceMax = MOD
       sal_code: c.sal_code,
       suburb_name: c.sal_code ? nameOf(c.sal_code) : null,
       is_reference: false,
-      effect_pct: (Math.exp(fit.beta[i + 1]) - 1) * 100,
-      se_pct: fit.se[i + 1] * 100,
+      ...effectInPercent(fit.beta[i + 1], fit.se[i + 1]),
       n_group: used.filter(c.test).length,
       ...base,
     };
@@ -205,7 +214,7 @@ export function fitPriceModel(sales, { priceMin = MODEL.priceMin, priceMax = MOD
 
 /**
  * Pure. The median reported sale price of apartments by suburb and layout, only where a suburb has at least `minLayout` sales of the layout.
- * Uses every apartment sale with a price in range, 1 to 3 bedrooms and at least one bathroom (no floor needed). Baths is 1 or 2 (two or more).
+ * Uses every apartment sale with a price in range, 1 to 3 bedrooms, at least one bathroom and a recorded parking count (no floor needed). Baths is 1 or 2 (two or more).
  */
 export function layoutMedians(sales, { priceMin = MODEL.priceMin, priceMax = MODEL.priceMax, minLayout = MODEL.minLayout } = {}) {
   const cells = new Map();
@@ -213,8 +222,9 @@ export function layoutMedians(sales, { priceMin = MODEL.priceMin, priceMax = MOD
     if (!APARTMENT_TYPES.has(String(r.property_type).toLowerCase())) continue;
     if (r.price_aud < priceMin || r.price_aud > priceMax) continue;
     if (r.bed === null || r.bed < 1 || r.bed > 3 || r.bath === null || r.bath < 1) continue;
+    if (r.park === null || r.park === undefined) continue; // "no car space" means a recorded 0, not a missing count
     const baths = r.bath >= 2 ? 2 : 1;
-    const has_car = (r.park ?? 0) >= 1;
+    const has_car = r.park >= 1;
     const key = `${r.sal_code}|${r.bed}|${baths}|${has_car}`;
     if (!cells.has(key)) cells.set(key, { sal_code: r.sal_code, beds: r.bed, baths, has_car, prices: [] });
     cells.get(key).prices.push(r.price_aud);

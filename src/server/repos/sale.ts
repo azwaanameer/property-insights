@@ -3,6 +3,7 @@
 // No agent, agency or phone column exists, so none can be read.
 import type { Db } from "../db";
 import { currentDataset } from "./datasets";
+import { memoPerRequest } from "./request-scope";
 
 export const SALES_SOURCE = "rp_sold_listings";
 
@@ -43,8 +44,15 @@ const COLUMNS = `s.listing_id, s.address_text, s.unit_no, s.street_no, s.suburb,
 
 const CURRENT = `JOIN src_dataset_current c ON c.source_id = $1 AND c.dataset_version_id = s.dataset_version_id`;
 
-/** The current dataset with the suburbs and the span of sale dates it covers, or null when none is published. */
-export async function getSalesDataset(db: Db): Promise<SalesDataset | null> {
+/**
+ * The current dataset with the suburbs and the span of sale dates it covers, or null when none is published. L21 and L04 both read it, so within one
+ * report (a request-scoped Db) it is read once: three queries, not six.
+ */
+export function getSalesDataset(db: Db): Promise<SalesDataset | null> {
+  return memoPerRequest(db, "sales_dataset", () => readSalesDataset(db));
+}
+
+async function readSalesDataset(db: Db): Promise<SalesDataset | null> {
   const ds = await currentDataset(db, SALES_SOURCE);
   if (!ds) return null;
   const suburbs = await db.query<{ sal_code: string; name: string }>(

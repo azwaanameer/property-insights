@@ -16,7 +16,7 @@ describe("parsePrice", () => {
   });
 });
 
-describe("floorOf (the script's floor parsing)", () => {
+describe("floorOf (the floor from the unit number parseSaleAddress reads)", () => {
   it("the hundreds of a unit number of three digits or more: 2105 is floor 21", () => {
     expect(floorOf("2105/628 Flinders Street")).toBe(21);
     expect(floorOf("304/610 St Kilda Road")).toBe(3);
@@ -24,8 +24,18 @@ describe("floorOf (the script's floor parsing)", () => {
     expect(floorOf("Level 4, 405/12 Foo Street")).toBe(4);
     expect(floorOf("1/1 Foo Street")).toBeNull();
   });
-  it("is null with fewer than three digits, no slash, or a prefix the script did not read", () => {
-    for (const a of ["12/30 Foo Street", "14 Elizabeth Court", "G04/74 Queens Road", "Apt 1406/265 Exhibition Street", "27/K11 Raleigh Street", "1 & 2/30 Alexandra Street", ""]) expect(floorOf(a), a).toBeNull();
+  it("reads the same unit number as parseSaleAddress, so a prefix is not dropped: Apt 514/, Unit 103/, M-City 815/", () => {
+    expect(floorOf("Apt 514/228 La Trobe Street")).toBe(5);
+    expect(floorOf("Apt 1406/265 Exhibition Street")).toBe(14);
+    expect(floorOf("Unit 103/12 Foo Street")).toBe(1);
+    expect(floorOf("Suite 2207/1 Bar Road")).toBe(22);
+    expect(floorOf("M-City 815/3 Baz Street")).toBe(8);
+    for (const a of ["Apt 514/228 La Trobe Street", "Unit 103/12 Foo Street", "M-City 815/3 Baz Street", "2105/628 Flinders Street", "303B/399 Bourke Street"]) {
+      expect(floorOf(a), a).toBe(Math.floor(parseInt(parseSaleAddress(a).unit_no, 10) / 100));
+    }
+  });
+  it("is null with fewer than three digits, no slash, no digits, or no street to read", () => {
+    for (const a of ["12/30 Foo Street", "Apt 12/30 Foo Street", "14 Elizabeth Court", "G04/74 Queens Road", "27/K11 Raleigh Street", "1 & 2/30 Alexandra Street", "Penthouse, 101 River Street", "", null, undefined]) expect(floorOf(a), String(a)).toBeNull();
   });
 });
 

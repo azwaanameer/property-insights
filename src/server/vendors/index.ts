@@ -16,6 +16,8 @@ export interface VendorOptions {
   fetch?: FetchFn;
   now?: () => Date;
   timeout_ms?: number;
+  /** Replaces the whole-call budget of every adapter (tests). */
+  budget_ms?: number;
   /** Replaces the wait before the one AirDNA retry (tests). */
   sleep?: (ms: number) => Promise<void>;
 }
@@ -26,7 +28,7 @@ export interface VendorOptions {
  */
 export function createVendors(opts: VendorOptions): VendorAdapters {
   const fetchFn: FetchFn = opts.fetch ?? ((url, init) => fetch(url, init));
-  const common = { db: opts.db, fetchFn, now: opts.now, timeout_ms: opts.timeout_ms };
+  const common = { db: opts.db, fetchFn, now: opts.now, timeout_ms: opts.timeout_ms, budget_ms: opts.budget_ms };
   const token = opts.env.MAPILLARY_ACCESS_TOKEN?.trim() || undefined;
   const rapidKey = opts.env.RAPIDAPI_KEY?.trim() || undefined;
   return {

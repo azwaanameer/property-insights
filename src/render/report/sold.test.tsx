@@ -119,7 +119,7 @@ describe("a Docklands unit: What makes it worth more or less?", () => {
     const bed2 = s.slice(s.indexOf('data-driver="bed_2"'));
     const row = text(bed2.slice(0, bed2.indexOf("</tr>")));
     expect(row).toContain("2 bedrooms compared with 1");
-    expect(row).toMatch(/\+3\d\.\d% \d\.\d% 163/);
+    expect(row).toMatch(/\+3\d\.\d% \d\.\d% 164/); // the standard error is on the effect's own scale (4.2 points for +30.5%)
     expect(text(s)).toContain("Docklands compared with Melbourne CBD");
     for (const h of ["Characteristic", "Difference in sale price", "Standard error", "Sales with it"]) expect(s).toContain(`>${h}</th>`);
     // The figure tiles carry the same effects, signed, with the Estimated chip.
@@ -128,7 +128,7 @@ describe("a Docklands unit: What makes it worth more or less?", () => {
 
   it("gives the window and the number of sales, and the layout medians with their sales", () => {
     const t = text(s);
-    expect(t).toMatch(/Based on 274 of 339 apartment sales, sold \d+ \w+ 2025 to \d+ \w+ 2026\./);
+    expect(t).toMatch(/Based on 276 of 339 apartment sales, sold \d+ \w+ 2025 to \d+ \w+ 2026\./);
     expect(t).toContain("Middle reported sale price by layout in Docklands");
     expect(t).toContain("2 bed, 2 or more bath, with a car space");
     expect(t).toContain("$698,000");

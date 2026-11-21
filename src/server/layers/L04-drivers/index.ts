@@ -36,7 +36,7 @@ export const ASSOCIATION_NOTE =
 
 const withCommas = (n: number) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-/** "2 bed, 2 or more bath, with a car space" for a layout median row. */
+/** "2 bed, 2 or more bath, with a car space" for a layout median row. "No car space" means the listing recorded zero; a sale with no parking count is not in any layout. */
 export function layoutLabel(l: Pick<LayoutMedianRow, "beds" | "baths" | "has_car">): string {
   return `${l.beds} bed, ${l.baths === 2 ? "2 or more bath" : "1 bath"}, ${l.has_car ? "with a car space" : "no car space"}`;
 }
@@ -49,7 +49,7 @@ export const L04Drivers: LayerDef = {
   title: "Price drivers",
   tier: "free",
   source_ids: L04_SOURCE_IDS,
-  teaser: "How bedrooms, bathrooms, a car space, the floor and the suburb move apartment sale prices, as associations in past sales.",
+  teaser: "How apartment sale prices differ by bedrooms, bathrooms, car space, floor and suburb, as associations in past sales.",
   async run({ db, address }): Promise<LayerRunOutput> {
     const sales = await getSalesDataset(db);
     if (!sales) return { status: "gap", figures: [], payload: {}, message: SALES_NOT_LOADED_MESSAGE };
@@ -113,7 +113,7 @@ export const L04Drivers: LayerDef = {
         chip: "Estimated",
         source_ids: src,
         as_of,
-        note: `Used ${withCommas(fit.n_used)} of ${withCommas(fit.n_total)} apartment sales reported as sold ${fit.window_from} to ${fit.window_to}. A sale is left out when its unit number has fewer than three digits (the floor comes from the unit number), its price is outside $150,000 to $2,500,000, or its suburb has fewer than 20 usable sales.`,
+        note: `Used ${withCommas(fit.n_used)} of ${withCommas(fit.n_total)} apartment sales reported as sold ${fit.window_from} to ${fit.window_to}. A sale is left out when its unit number has fewer than three digits (the floor comes from the unit number), its price is outside $150,000 to $2,500,000, the listing gave no parking count, or its suburb has fewer than 20 usable sales.`,
       }),
     );
 
@@ -121,9 +121,9 @@ export const L04Drivers: LayerDef = {
     const notes = [
       ASSOCIATION_NOTE,
       `Based on ${withCommas(fit.n_used)} of ${withCommas(fit.n_total)} apartment sales as reported on ${REPORTED_BY}, sold ${fit.window_from} to ${fit.window_to}, across ${sales.suburbs.length} suburbs. Each effect holds the other drivers and the suburb fixed. The typical unexplained spread in a sale price is about ${Math.round(fit.residual_pct)}%.`,
-      "The standard error is that of the log-price coefficient, in percentage points, so for a large effect such as three bedrooms it understates the spread in percent. The floor is read from the unit number (2105 is floor 21), which not every building follows.",
+      "The standard error is in percentage points, on the same scale as the difference in sale price beside it. The floor is read from the unit number (2105 is floor 21), which not every building follows.",
       layouts.length > 0
-        ? `Layout medians are the middle reported sale price of apartments of that layout in ${suburbName}, shown only where the suburb has at least ${MIN_LAYOUT_SALES} such sales. They describe past sales, not this property.`
+        ? `Layout medians are the middle reported sale price of apartments of that layout in ${suburbName} ("no car space" means the listing recorded none; a sale with no parking count is left out), shown only where the suburb has at least ${MIN_LAYOUT_SALES} such sales. They describe past sales, not this property.`
         : `No layout has ${MIN_LAYOUT_SALES} or more reported sales in ${suburbName}, so no layout median is shown.`,
     ];
     return {

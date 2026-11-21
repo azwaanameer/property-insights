@@ -8,7 +8,7 @@ import { parsePrice } from "../lib/sold.mjs";
 import { PublishCheckError } from "../publish/publish.mjs";
 import { runSold } from "../ingest/rp-sold.mjs";
 import { DRIVER_OPTIONS, SOLD_AS_OF, SOLD_OPTIONS, SOLD_TEXTS, soldClone } from "../ingest/fixtures/sold.mjs";
-import { ModelError, POOLED, fitOls, fitPriceModel, layoutMedians, runPriceDrivers } from "./price-drivers.mjs";
+import { ModelError, POOLED, effectInPercent, fitOls, fitPriceModel, layoutMedians, runPriceDrivers } from "./price-drivers.mjs";
 
 describe("fitOls, against a case worked by hand", () => {
   // Two groups of three: y = 1,2,3 without the dummy and 3,4,5 with it. Intercept 2, slope 2; residuals -1,0,1 in each group, so SSE 4,
@@ -24,6 +24,20 @@ describe("fitOls, against a case worked by hand", () => {
     expect(fit.r2).toBeCloseTo(0.6, 10);
     expect(fit.sigma).toBeCloseTo(1, 10);
     expect([fit.n, fit.k]).toEqual([6, 2]);
+  });
+
+  it("states the standard error on the scale of the effect, by the delta method (hand-checked)", () => {
+    // The slope above is 2 with a standard error of sqrt(2/3) = 0.81650 on the log scale. exp(2) = 7.38906, so the effect is +638.9% and its delta-method
+    // standard error is 7.38906 x 0.81650 x 100 = 603.3 points: not the 81.65 of the log scale, which understates it by the factor exp(2).
+    const fit = fitOls(X, y);
+    const e = effectInPercent(fit.beta[1], fit.se[1]);
+    expect(e.effect_pct).toBeCloseTo(638.9056, 3);
+    expect(e.se_pct).toBeCloseTo(603.34, 1);
+    // A small effect: b = 0.3, se = 0.02. exp(0.3) = 1.349859, so +34.99% with a standard error of 1.349859 x 0.02 x 100 = 2.69972 points.
+    expect(effectInPercent(0.3, 0.02).effect_pct).toBeCloseTo(34.9859, 3);
+    expect(effectInPercent(0.3, 0.02).se_pct).toBeCloseTo(2.69972, 4);
+    // No effect, no error: the reference suburb stays at 0.
+    expect(effectInPercent(0, 0)).toEqual({ effect_pct: 0, se_pct: 0 });
   });
 
   it("refuses a design where two columns move together, and one with no more sales than coefficients", () => {
@@ -130,12 +144,23 @@ describe("fitPriceModel: which sales are used", () => {
         extra({ bath: 0 }, 5),
         extra({ address_text: "12/30 Foo Street" }, 6),
         extra({ sal_code: "29999", harvest_suburb: "Thin" }, 7),
+        extra({ park: null }, 8),
       ],
       { minSuburb: 5 },
     );
-    expect(m.excluded).toEqual({ price_out_of_range: 2, bedrooms_out_of_range: 2, no_bathrooms: 1, no_unit_number: 1, thin_suburb: 1 });
-    expect(m.n_total).toBe(96 + 7);
+    expect(m.excluded).toEqual({ price_out_of_range: 2, bedrooms_out_of_range: 2, no_bathrooms: 1, no_parking_count: 1, no_unit_number: 1, thin_suburb: 1 });
+    expect(m.n_total).toBe(96 + 8);
     expect(m.n_used).toBe(96);
+  });
+
+  it("a sale with no parking count is left out of the car-space driver, not counted as 'no car space'; a recorded 0 stays in", () => {
+    // Every car-space sale plus a missing count that would, read as 0, wrongly join the no-car group at a car-space price.
+    const noCount = base.filter((r) => r.park === 1).slice(0, 12).map((r, i) => ({ ...r, listing_id: `n${i}`, park: null }));
+    const m = fitPriceModel([...base, ...noCount], { minSuburb: 5 });
+    expect(m.excluded.no_parking_count).toBe(12);
+    expect(m.n_used).toBe(96);
+    expect(m.drivers.find((d) => d.driver === "car_space").effect_pct).toBeCloseTo(20, 2);
+    expect(m.drivers.find((d) => d.driver === "car_space").n_group).toBe(48);
   });
 
   it("measures against the largest suburb when Melbourne does not qualify", () => {
@@ -167,6 +192,13 @@ describe("layoutMedians", () => {
   it("keeps a layout only where the suburb has at least 20 sales of it, and omits a thinner cell", () => {
     const rows = layoutMedians([...cell(20), ...cell(19, { bed: 3 })]);
     expect(rows).toEqual([{ sal_code: "20766", beds: 2, baths: 1, has_car: true, median_price: 495_000, n: 20 }]);
+  });
+
+  it("leaves out a sale with no parking count: 'no car space' is a recorded 0, never a missing number", () => {
+    const rows = layoutMedians([...cell(20, { park: null }), ...cell(20, { park: 0 }), ...cell(5, { park: 1 })], { minLayout: 20 });
+    expect(rows).toEqual([{ sal_code: "20766", beds: 2, baths: 1, has_car: false, median_price: expect.any(Number), n: 20 }]);
+    // Without the fix the 20 missing counts joined the 20 recorded zeros: 40 sales with no car space.
+    expect(rows[0].n).not.toBe(40);
   });
 
   it("takes the mean of the middle two for an even count, rounded to whole dollars, and merges 2 and more bathrooms", () => {

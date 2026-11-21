@@ -1,12 +1,15 @@
 // Mapillary street-level images (Graph API v4). Imagery is CC BY-SA 4.0 and credited to its creator. The token is read from the environment by
-// the caller and is never logged: it is in the request URL, so no error message here contains the URL.
+// the caller and is never logged: it goes in an `Authorization: OAuth` request header (the Graph API accepts that as well as the access_token URL
+// parameter), never in the URL, a cache row, a log line or an error message.
 // Thumbnail URLs are signed CDN links whose lifetime Mapillary does not document, so the cache is kept short (3 days).
 import { boxAround } from "../geo";
 import type { Db } from "../db";
 import { cacheKey, cached, fetchJson, SNAP_ERROR_M, snapPoint, VendorError, type FetchFn } from "./cache";
-import type { StreetImage, VendorResult } from "./types";
+import { VENDOR_BUDGET_MS, type StreetImage, type VendorResult } from "./types";
 
 export const MAPILLARY_TTL_DAYS = 3;
+/** A search that found no usable image is kept this long only: coverage grows as people upload. */
+export const MAPILLARY_EMPTY_TTL_DAYS = 1;
 /** The layer shows images within this distance of the address; the search adds the snapping margin. */
 export const MAPILLARY_RADIUS_M = 150;
 const ENDPOINT = "https://graph.mapillary.com/images";
@@ -44,7 +47,7 @@ export function parseMapillary(body: unknown): StreetImage[] {
   return out;
 }
 
-export async function fetchStreetImages(opts: { db: Db; token: string | undefined; fetchFn: FetchFn; lat: number; lon: number; now?: () => Date; timeout_ms?: number }): Promise<VendorResult<StreetImage[]>> {
+export async function fetchStreetImages(opts: { db: Db; token: string | undefined; fetchFn: FetchFn; lat: number; lon: number; now?: () => Date; timeout_ms?: number; budget_ms?: number }): Promise<VendorResult<StreetImage[]>> {
   const { db, token, fetchFn, lat, lon } = opts;
   if (!token) return { ok: false, reason: "no_key" };
   const centre = snapPoint(lat, lon);
@@ -52,12 +55,13 @@ export async function fetchStreetImages(opts: { db: Db; token: string | undefine
     db,
     vendor: "mapillary",
     key: cacheKey("mapillary", lat, lon, `r${MAPILLARY_RADIUS_M}`),
-    ttl_days: MAPILLARY_TTL_DAYS,
+    ttl_days: (images) => (images.length === 0 ? Math.min(MAPILLARY_TTL_DAYS, MAPILLARY_EMPTY_TTL_DAYS) : MAPILLARY_TTL_DAYS),
     now: opts.now,
+    budget_ms: opts.budget_ms ?? VENDOR_BUDGET_MS.mapillary,
     load: async () => {
       const b = boxAround(centre.lat, centre.lon, MAPILLARY_RADIUS_M + SNAP_ERROR_M);
-      const url = `${ENDPOINT}?access_token=${encodeURIComponent(token)}&fields=${FIELDS}&bbox=${b.min_lon},${b.min_lat},${b.max_lon},${b.max_lat}&limit=200`;
-      return parseMapillary(await fetchJson(fetchFn, url, {}, opts.timeout_ms));
+      const url = `${ENDPOINT}?fields=${FIELDS}&bbox=${b.min_lon},${b.min_lat},${b.max_lon},${b.max_lat}&limit=200`;
+      return parseMapillary(await fetchJson(fetchFn, url, { headers: { authorization: `OAuth ${token}` } }, opts.timeout_ms ?? VENDOR_BUDGET_MS.mapillary));
     },
   });
 }

@@ -22,15 +22,14 @@ export function parsePrice(s) {
 }
 
 /**
- * The floor of a tower apartment from its unit number: "2105/628 Flinders Street" -> 21. Only a number of at least three digits before the
- * slash counts (a unit "12/30 Foo Street" has no floor), exactly as scripts/23-price-drivers.mjs read it. Null when there is no such number.
+ * The floor of a tower apartment from its unit number: "2105/628 Flinders Street" -> 21. Only a number of at least three digits (with at most
+ * one trailing letter, "303B") counts: a unit "12/30 Foo Street" has no floor. The unit number is the one parseSaleAddress reads, so a prefix
+ * such as "Apt 514/", "Unit 103/" or "M-City 815/" is handled the same way in both. Null when there is no such number.
  */
 export function floorOf(address) {
-  const m = String(address ?? "").match(/^\s*(?:level\s*\d+,\s*)?([0-9]+)[A-Za-z]?\s*\//i);
-  if (!m) return null;
-  const d = m[1];
-  if (d.length < 3) return null;
-  return Math.floor(+d / 100);
+  const unit = parseSaleAddress(address)?.unit_no;
+  const m = /^(\d{3,})[A-Z]?$/.exec(unit ?? "");
+  return m ? Math.floor(+m[1] / 100) : null;
 }
 
 const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };

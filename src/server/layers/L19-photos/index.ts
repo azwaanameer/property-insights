@@ -5,10 +5,12 @@
 // Only metadata and URLs are used; images load from the vendors' own servers.
 import type { Figure } from "../../contracts/layer";
 import { haversineMetres } from "../../geo";
-import type { PlaceImage, StreetImage, VendorResult } from "../../vendors/types";
+import { log } from "../../log";
+import { VENDOR_BUDGET_MS, type PlaceImage, type StreetImage, type VendorResult } from "../../vendors/types";
 import type { LayerDef, LayerRunOutput } from "../types";
 import { figure, UNIT } from "../shared/figures";
 import { NO_COORDINATES_MESSAGE } from "../shared/location";
+import { vendorWithin } from "../shared/vendor-wait";
 
 export const MAPILLARY_SOURCE = "mapillary";
 export const COMMONS_SOURCE = "wikimedia_commons";
@@ -84,20 +86,40 @@ export function pickPlaceImages(images: PlaceImage[], lat: number, lon: number, 
 
 const yearOf = (iso: string) => new Date(iso).getUTCFullYear();
 
-const failed = <T,>(r: VendorResult<T>): boolean => !r.ok && r.reason === "unavailable";
+/**
+ * A source that gave no answer for any reason: a failed call, or a missing Mapillary token (`no_key`). Either way the photos are not available,
+ * which is not the same as "none found".
+ */
+const failed = <T,>(r: VendorResult<T>): boolean => !r.ok;
+
+let warnedNoToken = false;
+/** A missing token is a configuration problem the operator should see once, not on every report. */
+function warnOnceNoToken(r: VendorResult<unknown>) {
+  if (r.ok || r.reason !== "no_key" || warnedNoToken) return;
+  warnedNoToken = true;
+  log("warn", "mapillary_token_missing", { detail: "MAPILLARY_ACCESS_TOKEN is not set, so street photos are not available" });
+}
+/** For tests: lets the once-only warning fire again. */
+export function resetNoTokenWarning() {
+  warnedNoToken = false;
+}
 
 export const L19Photos: LayerDef = {
   layer_id: "L19-photos",
   title: "Street photos",
   tier: "free",
   source_ids: L19_SOURCE_IDS,
-  timeout_ms: 10_000, // the outside calls give up at 8 s; the layer waits a little longer so a slow vendor is a gap, not an error
+  // The two outside calls run together and give up at 5 s (cache read and write included); the layer waits a little longer so a slow vendor is a
+  // gap, not an error, and the report stays under about 12 s with L06.
+  timeout_ms: Math.max(VENDOR_BUDGET_MS.mapillary, VENDOR_BUDGET_MS.wikimedia) + 500,
   teaser: "Recent public photos of the street and the neighbourhood, each credited to its photographer.",
   async run({ address, vendors }): Promise<LayerRunOutput> {
     const { lat, lon } = address;
     if (lat === null || lon === null) return { status: "gap", figures: [], payload: {}, message: NO_COORDINATES_MESSAGE };
 
-    const [street, places] = await Promise.all([vendors.streetImages(lat, lon), vendors.placeImages(lat, lon)]);
+    const wait = Math.max(VENDOR_BUDGET_MS.mapillary, VENDOR_BUDGET_MS.wikimedia) + 250;
+    const [street, places] = await Promise.all([vendorWithin(wait, () => vendors.streetImages(lat, lon)), vendorWithin(wait, () => vendors.placeImages(lat, lon))]);
+    warnOnceNoToken(street);
     const streetPicked = street.ok ? pickStreetImages(street.data, lat, lon) : [];
     const placePicked = places.ok ? pickPlaceImages(places.data, lat, lon) : [];
 

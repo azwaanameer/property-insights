@@ -9,7 +9,10 @@ import { createSuburbDataTestDb, type TestDb } from "../testing/db";
 import { fakeVendors, ok, shortStayComp, shortStayEstimate, strongComps } from "../testing/fake-vendors";
 import type { ShortStayEstimate, VendorAdapters, VendorResult } from "../vendors/types";
 import { UNAVAILABLE_VENDORS } from "../vendors/types";
+import { VENDOR_BUDGET_MS } from "../vendors/types";
 import { LAYERS } from "./index";
+import { L19Photos } from "./L19-photos";
+import { NO_COORDINATES_MESSAGE } from "./shared/location";
 import { figure } from "./shared/figures";
 import { percentile } from "./shared/shortstay";
 import { airdnaAddress, BELOW_CUTOFF_MESSAGE, HOUSE_MESSAGE, L06Shortstay, NO_ESTIMATE_MESSAGE, NO_RENT_MESSAGE, REPORT_BATHROOMS, REPORT_BEDROOMS, UNAVAILABLE_MESSAGE, weeklyRentFrom } from "./L06-shortstay";
@@ -69,12 +72,12 @@ describe("L06 matrix: AirDNA's own figure", () => {
     expect(out.figures.filter((f) => f.source_ids.includes("airdna_rentalizer")).every((f) => f.chip === "Estimated")).toBe(true);
   });
 
-  it("states that the bedrooms and bathrooms are assumed, and sends them to the vendor with the full address and the address pid", async () => {
+  it("states that the bedrooms and bathrooms are assumed, and sends them to the vendor with the full address, the address pid and the address point", async () => {
     const shortStay = vi.fn(async (_q: unknown): Promise<VendorResult<ShortStayEstimate>> => ok(shortStayEstimate()));
     const out = await run(fakeVendors({ shortStay }));
     expect(shortStay).toHaveBeenCalledTimes(1);
-    const q = shortStay.mock.calls[0][0] as { gnaf_pid: string; address: string; bedrooms: number; bathrooms: number };
-    expect(q).toMatchObject({ gnaf_pid: address.gnaf_pid, bedrooms: REPORT_BEDROOMS, bathrooms: REPORT_BATHROOMS });
+    const q = shortStay.mock.calls[0][0] as { gnaf_pid: string; address: string; bedrooms: number; bathrooms: number; lat: number; lon: number };
+    expect(q).toMatchObject({ gnaf_pid: address.gnaf_pid, lat: address.lat, lon: address.lon, bedrooms: REPORT_BEDROOMS, bathrooms: REPORT_BATHROOMS });
     expect(q.address).toMatch(/Docklands/);
     expect(q.address).toMatch(/Australia$/);
     expect(fig(out, "shortstay_annual").note).toMatch(/assumed/);
@@ -187,7 +190,7 @@ describe("L06 matrix: the 1.4 times cutoff", () => {
   it("income one dollar under 1.4 times a year of rent hides it with the one-line reason and no figures", async () => {
     const out = await run(est({ annual_revenue: CUTOFF_DOLLARS - 1, confidence_level: "High" }), [l02(BOUNDARY_WEEKLY_CENTS)]);
     expect(out).toMatchObject({ status: "gap", message: BELOW_CUTOFF_MESSAGE, figures: [], payload: {} });
-    expect(BELOW_CUTOFF_MESSAGE).toBe("Short-stay income is not at least 40% above long-term rent here, so this section is not shown.");
+    expect(BELOW_CUTOFF_MESSAGE).toBe("No short-stay estimate is shown for this address.");
   });
 
   it("the cutoff is judged on the figure the method chose: our estimate under the line hides it even when AirDNA's own figure is above", async () => {
@@ -238,6 +241,58 @@ describe("L06 matrix: a house, no rent, and the vendor failing", () => {
   });
 });
 
+describe("L06 when the vendor misbehaves", () => {
+  it("a vendor that throws is the quiet gap 'not available right now', not an error", async () => {
+    const out = await run(fakeVendors({ shortStay: async () => { throw new Error("boom"); } }));
+    expect(out).toMatchObject({ status: "gap", message: UNAVAILABLE_MESSAGE, figures: [] });
+  });
+
+  it("a vendor that never answers (a timeout inside the adapter that did not come back) is the same quiet gap, before the runner's own limit", async () => {
+    vi.useFakeTimers();
+    try {
+      const pending = run(fakeVendors({ shortStay: () => new Promise<never>(() => {}) }));
+      await vi.advanceTimersByTimeAsync(VENDOR_BUDGET_MS.airdna + 300);
+      expect(await pending).toMatchObject({ status: "gap", message: UNAVAILABLE_MESSAGE });
+      expect(VENDOR_BUDGET_MS.airdna + 300).toBeLessThan(L06Shortstay.timeout_ms!);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("an address with no coordinates is a gap and the vendor is never asked (the cache is keyed on the point)", async () => {
+    const shortStay = vi.fn();
+    const out = await run(fakeVendors({ shortStay }), [l02(WEEKLY_CENTS)], { lat: null, lon: null });
+    expect(out).toMatchObject({ status: "gap", message: NO_COORDINATES_MESSAGE });
+    expect(shortStay).not.toHaveBeenCalled();
+  });
+});
+
+describe("L06 figure labels follow the method", () => {
+  it("AirDNA's own figure labels the comparable listings as shown and the 25th to 75th range as context, not as the range of the estimate", async () => {
+    const out = await run(est({ annual_revenue: 91_200, confidence_level: "High" }));
+    expect(out.payload.method).toBe("airdna");
+    expect(fig(out, "shortstay_comps_used").label).toBe("Comparable listings shown");
+    expect(fig(out, "shortstay_annual_p25").label).toBe("Nearby listings, for context: low end, a year");
+    expect(fig(out, "shortstay_annual_p75").label).toBe("Nearby listings, for context: high end, a year");
+    expect(fig(out, "shortstay_annual_p25").note).toMatch(/context, not the range of AirDNA's estimate/);
+    expect(out.figures.map((f) => f.label).join("|")).not.toMatch(/Low end of the range|Comparable listings used/);
+  });
+
+  it("AirDNA's figure as the fallback (no usable comparable listings) uses the same labels", async () => {
+    const out = await run(est({ annual_revenue: 91_200, confidence_level: "Medium", comps: [] }));
+    expect(out.payload.method).toBe("airdna_fallback");
+    expect(fig(out, "shortstay_comps_used").label).toBe("Comparable listings shown");
+  });
+
+  it("our own estimate keeps the range labels and 'used'", async () => {
+    const out = await run(est({ confidence_level: "Medium", annual_revenue: 30_000, comps: strongComps(8, (i) => 60_000 + i * 1_000) }));
+    expect(out.payload.method).toBe("own");
+    expect(fig(out, "shortstay_comps_used").label).toBe("Comparable listings used");
+    expect(fig(out, "shortstay_annual_p25").label).toBe("Low end of the range, a year");
+    expect(fig(out, "shortstay_annual_p75").label).toBe("High end of the range, a year");
+  });
+});
+
 describe("L06 wording and what is kept", () => {
   it("never uses guarantee or forecast language, and keeps only an id, distance, size, income, reviews and a link per comparable listing", async () => {
     const out = await run(est());
@@ -265,7 +320,16 @@ describe("L06 in the assembled report", () => {
   it("sits right after L05-return, is free and live, and is a synthesis layer with a longer time limit", () => {
     const ids = LAYERS.map((l) => l.layer_id);
     expect(ids.indexOf("L06-shortstay")).toBe(ids.indexOf("L05-return") + 1);
-    expect(L06Shortstay).toMatchObject({ tier: "free", synthesis: true, source_ids: ["airdna_rentalizer", "gnaf"], timeout_ms: 10000 });
+    expect(L06Shortstay).toMatchObject({ tier: "free", synthesis: true, source_ids: ["airdna_rentalizer", "gnaf"], timeout_ms: 6500 });
+  });
+
+  it("keeps the whole report under about 12 s when vendors hang: the layer limits sit just above the vendor budgets and L19 then L06 add up to 12 s", () => {
+    expect(VENDOR_BUDGET_MS).toEqual({ airdna: 6000, mapillary: 5000, wikimedia: 5000 });
+    expect(L06Shortstay.timeout_ms).toBeGreaterThan(VENDOR_BUDGET_MS.airdna);
+    expect(L06Shortstay.timeout_ms).toBeLessThanOrEqual(VENDOR_BUDGET_MS.airdna + 1000);
+    expect(L19Photos.timeout_ms).toBeGreaterThan(Math.max(VENDOR_BUDGET_MS.mapillary, VENDOR_BUDGET_MS.wikimedia));
+    expect(L19Photos.timeout_ms).toBeLessThanOrEqual(Math.max(VENDOR_BUDGET_MS.mapillary, VENDOR_BUDGET_MS.wikimedia) + 1000);
+    expect(L19Photos.timeout_ms! + L06Shortstay.timeout_ms!).toBeLessThanOrEqual(12_000);
   });
 
   it("reads the real L02 rent: an estimate above 1.4 times shows, one under hides, and L14 credits AirDNA only when the section showed data", async () => {
@@ -289,11 +353,9 @@ describe("L06 in the assembled report", () => {
     }
   });
 
-  it("a vendor that throws turns only L06 into an error: every other section is unaffected (AD-9)", async () => {
-    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+  it("a vendor that throws turns only L06 into the quiet gap, never an error card: every other section is unaffected (AD-9)", async () => {
     const boom = await report(fakeVendors({ shortStay: async () => { throw new Error("boom"); } }));
-    spy.mockRestore();
-    expect(boom["L06-shortstay"].status).toBe("error");
+    expect(boom["L06-shortstay"]).toMatchObject({ status: "gap", message: UNAVAILABLE_MESSAGE });
     const calm = await report(fakeVendors());
     for (const id of Object.keys(calm)) if (id !== "L06-shortstay") expect(boom[id].status, id).toBe(calm[id].status);
   });

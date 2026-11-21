@@ -9,7 +9,12 @@ import type { VendorResult } from "./types";
 export const MAX_CACHE_DAYS = 30;
 /** Outside calls give up after this long (AD-9). */
 export const VENDOR_TIMEOUT_MS = 8000;
-export const USER_AGENT = "VicProp/1.0 (property report tool)";
+export const USER_AGENT = "VicProp/1.0 (+https://vicprop.agenticapps.workers.dev)";
+/** How long a failed lookup is remembered when an adapter asks for it (a crawler or an outage must not cause one paid call per request). */
+export const NEGATIVE_CACHE_SECONDS = 600;
+/** A cache row with this key in its payload is a short-lived failure marker. It is never served as data. */
+export const FAILED_MARKER = "__vendor_failed";
+const DAY_SECONDS = 86400;
 
 /** Three decimal places of latitude is about 111 m. */
 const SNAP_DECIMALS = 3;
@@ -90,14 +95,36 @@ export interface CachedOptions<T> {
   db: Db;
   vendor: string;
   key: string;
-  ttl_days: number;
+  /** Days to keep an answer (at most 30). A function decides from the answer, so an empty one can be kept for less. */
+  ttl_days: number | ((data: T) => number);
   now?: () => Date;
   /** Does the outside call and returns what is worth caching. May throw. */
   load: () => Promise<T>;
+  /**
+   * When set, a failed load stores a failure marker for this many seconds, and until it expires the adapter answers `unavailable` without
+   * calling the vendor again. The marker is never data. Leave unset for a vendor whose calls are free.
+   */
+  negative_ttl_seconds?: number;
+  /** A hard limit for the whole call (cache read, outside call and cache write): when it passes the answer is `unavailable`. */
+  budget_ms?: number;
 }
 
-/** Reads a live cache row, else loads and stores (best effort: a cache read or write problem never fails the call). A failed load is never cached. */
-export async function cached<T>(opts: CachedOptions<T>): Promise<VendorResult<T>> {
+const isFailureMarker = (payload: unknown): boolean => !!payload && typeof payload === "object" && !Array.isArray(payload) && (payload as Record<string, unknown>)[FAILED_MARKER] === true;
+
+async function store(db: Db, vendor: string, key: string, payload: unknown, now: Date, seconds: number): Promise<void> {
+  try {
+    await db.query(
+      `INSERT INTO vendor_cache (cache_key, vendor, principal_id, payload, fetched_at, expires_at)
+       VALUES ($1, $2, NULL, $3::jsonb, $4::timestamptz, $4::timestamptz + make_interval(secs => $5::int))
+       ON CONFLICT (cache_key) DO UPDATE SET vendor = EXCLUDED.vendor, principal_id = NULL, payload = EXCLUDED.payload, fetched_at = EXCLUDED.fetched_at, expires_at = EXCLUDED.expires_at`,
+      [key, vendor, JSON.stringify(payload), now.toISOString(), seconds],
+    );
+  } catch (err) {
+    log("warn", "vendor_cache_write_failed", { vendor, ...errorFields(err) });
+  }
+}
+
+async function cachedInner<T>(opts: CachedOptions<T>): Promise<VendorResult<T>> {
   const { db, vendor, key } = opts;
   const now = opts.now?.() ?? new Date();
   try {
@@ -105,7 +132,10 @@ export async function cached<T>(opts: CachedOptions<T>): Promise<VendorResult<T>
       "SELECT payload, fetched_at FROM vendor_cache WHERE cache_key = $1 AND vendor = $2 AND expires_at > $3::timestamptz",
       [key, vendor, now.toISOString()],
     );
-    if (rows[0]) return { ok: true, data: rows[0].payload, as_of: new Date(rows[0].fetched_at).toISOString().slice(0, 10), cached: true };
+    if (rows[0]) {
+      if (isFailureMarker(rows[0].payload)) return { ok: false, reason: "unavailable" };
+      return { ok: true, data: rows[0].payload, as_of: new Date(rows[0].fetched_at).toISOString().slice(0, 10), cached: true };
+    }
   } catch (err) {
     log("warn", "vendor_cache_read_failed", { vendor, ...errorFields(err) });
   }
@@ -114,18 +144,34 @@ export async function cached<T>(opts: CachedOptions<T>): Promise<VendorResult<T>
     data = await opts.load();
   } catch (err) {
     log("warn", "vendor_failed", { vendor, ...errorFields(err) });
+    if (opts.negative_ttl_seconds && opts.negative_ttl_seconds > 0) {
+      await store(db, vendor, key, { [FAILED_MARKER]: true }, now, Math.min(Math.round(opts.negative_ttl_seconds), MAX_CACHE_DAYS * DAY_SECONDS));
+    }
     return { ok: false, reason: "unavailable" };
   }
-  const days = Math.max(0, Math.min(opts.ttl_days, MAX_CACHE_DAYS));
-  try {
-    await db.query(
-      `INSERT INTO vendor_cache (cache_key, vendor, principal_id, payload, fetched_at, expires_at)
-       VALUES ($1, $2, NULL, $3::jsonb, $4::timestamptz, $4::timestamptz + make_interval(days => $5::int))
-       ON CONFLICT (cache_key) DO UPDATE SET vendor = EXCLUDED.vendor, principal_id = NULL, payload = EXCLUDED.payload, fetched_at = EXCLUDED.fetched_at, expires_at = EXCLUDED.expires_at`,
-      [key, vendor, JSON.stringify(data), now.toISOString(), days],
-    );
-  } catch (err) {
-    log("warn", "vendor_cache_write_failed", { vendor, ...errorFields(err) });
-  }
+  const days = Math.max(0, Math.min(typeof opts.ttl_days === "function" ? opts.ttl_days(data) : opts.ttl_days, MAX_CACHE_DAYS));
+  await store(db, vendor, key, data, now, Math.round(days * DAY_SECONDS));
   return { ok: true, data, as_of: now.toISOString().slice(0, 10), cached: false };
+}
+
+/**
+ * Reads a live cache row, else loads and stores (best effort: a cache read or write problem never fails the call). A failed load is never
+ * cached as data; with `negative_ttl_seconds` it leaves a short failure marker. Never throws.
+ */
+export async function cached<T>(opts: CachedOptions<T>): Promise<VendorResult<T>> {
+  if (opts.budget_ms === undefined) return cachedInner(opts);
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const expired = new Promise<VendorResult<T>>((resolve) => {
+    timer = setTimeout(() => {
+      log("warn", "vendor_budget_exceeded", { vendor: opts.vendor, budget_ms: opts.budget_ms });
+      resolve({ ok: false, reason: "unavailable" });
+    }, opts.budget_ms);
+  });
+  const inner = cachedInner(opts);
+  inner.catch(() => undefined);
+  try {
+    return await Promise.race([inner, expired]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
 }

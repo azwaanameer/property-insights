@@ -9,9 +9,12 @@
 // No guarantee or forecast wording: the figure is what similar listings made over the last year.
 import type { Figure, LayerResult } from "../../contracts/layer";
 import type { ResolvedAddress } from "../../contracts/address";
+import { VENDOR_BUDGET_MS } from "../../vendors/types";
 import type { LayerDef, LayerRunOutput } from "../types";
 import { dwellingFamily, FAMILY } from "../shared/derive";
 import { figure, joinNotes, UNIT } from "../shared/figures";
+import { NO_COORDINATES_MESSAGE } from "../shared/location";
+import { vendorWithin } from "../shared/vendor-wait";
 import { type ChosenIncome, chooseIncome, CUTOFF_RATIO, MAX_COMPS, isStrongComp, meetsCutoff, MIN_COMP_REVENUE, MIN_COMP_REVIEWS, MIN_STRONG_COMPS } from "../shared/shortstay";
 
 export const SHORTSTAY_SOURCE = "airdna_rentalizer";
@@ -27,7 +30,7 @@ export const HOUSE_MESSAGE = "Short-stay estimates are for apartments.";
 export const NO_RENT_MESSAGE = "No long-term rent figure to compare with.";
 export const UNAVAILABLE_MESSAGE = "Short-stay estimates are not available right now.";
 export const NO_ESTIMATE_MESSAGE = "No short-stay estimate is available for this address.";
-export const BELOW_CUTOFF_MESSAGE = "Short-stay income is not at least 40% above long-term rent here, so this section is not shown.";
+export const BELOW_CUTOFF_MESSAGE = "No short-stay estimate is shown for this address.";
 
 export const SHORTSTAY_NOTES = [
   "An estimate from what AirDNA reports for similar nearby listings over the last 12 months. It is not a promise or a forecast of what this home would earn.",
@@ -73,8 +76,9 @@ export const L06Shortstay: LayerDef = {
   tier: "free",
   synthesis: true,
   source_ids: L06_SOURCE_IDS,
-  // The adapter's own limit is 8 s, and it may wait 1.5 s and try once more, so the layer is given a little longer than the runner's default.
-  timeout_ms: 10000,
+  // The adapter's whole budget is 6 s (cache read, up to two calls and the wait, cache write). The layer gives up on it a little after that (a
+  // quiet gap) and the runner's limit is a little longer still, so a slow vendor is never an error card, and the report stays under about 12 s.
+  timeout_ms: VENDOR_BUDGET_MS.airdna + 500,
   teaser: "What an apartment like this could earn as a short stay, set against its long-term rent.",
   async run({ address, siblings, vendors }): Promise<LayerRunOutput> {
     const gap = (message: string): LayerRunOutput => ({ status: "gap", figures: [], payload: {}, message });
@@ -82,7 +86,10 @@ export const L06Shortstay: LayerDef = {
     const rent = weeklyRentFrom(siblings);
     if (!rent) return gap(NO_RENT_MESSAGE);
 
-    const result = await vendors.shortStay({ gnaf_pid: address.gnaf_pid, address: airdnaAddress(address), bedrooms: REPORT_BEDROOMS, bathrooms: REPORT_BATHROOMS });
+    if (address.lat === null || address.lon === null) return gap(NO_COORDINATES_MESSAGE);
+
+    const query = { gnaf_pid: address.gnaf_pid, lat: address.lat, lon: address.lon, address: airdnaAddress(address), bedrooms: REPORT_BEDROOMS, bathrooms: REPORT_BATHROOMS };
+    const result = await vendorWithin(VENDOR_BUDGET_MS.airdna + 250, () => vendors.shortStay(query));
     if (!result.ok) return gap(UNAVAILABLE_MESSAGE);
     const est = result.data;
     const chosen = chooseIncome(est);
@@ -126,10 +133,14 @@ export const L06Shortstay: LayerDef = {
     ];
     if (chosen.p25 !== null && chosen.p75 !== null) {
       const n = chosen.selection.used.length;
-      const rangeNote = `The 25th and 75th percentile of the yearly income of the ${plural(n, "nearby comparable listing", "nearby comparable listings")} used: half of them earned between these two figures.`;
+      // When the figure is AirDNA's own, the nearby listings are context, not the range of that estimate; only our own estimate has a range.
+      const own = chosen.method === "own";
+      const rangeNote = own
+        ? `The 25th and 75th percentile of the yearly income of the ${plural(n, "nearby comparable listing", "nearby comparable listings")} used: half of them earned between these two figures.`
+        : `The 25th and 75th percentile of the yearly income of ${plural(n, "nearby listing", "nearby listings")} AirDNA found. This is context, not the range of AirDNA's estimate above: half of these listings earned between these two figures.`;
       figures.push(
-        figure({ key: "shortstay_annual_p25", label: "Low end of the range, a year", value: cents(chosen.p25), unit: UNIT.money, chip: "Estimated", source_ids: src, as_of, note: rangeNote }),
-        figure({ key: "shortstay_annual_p75", label: "High end of the range, a year", value: cents(chosen.p75), unit: UNIT.money, chip: "Estimated", source_ids: src, as_of, note: rangeNote }),
+        figure({ key: "shortstay_annual_p25", label: own ? "Low end of the range, a year" : "Nearby listings, for context: low end, a year", value: cents(chosen.p25), unit: UNIT.money, chip: "Estimated", source_ids: src, as_of, note: rangeNote }),
+        figure({ key: "shortstay_annual_p75", label: own ? "High end of the range, a year" : "Nearby listings, for context: high end, a year", value: cents(chosen.p75), unit: UNIT.money, chip: "Estimated", source_ids: src, as_of, note: rangeNote }),
       );
     }
     // Occupancy and the nightly rate are AirDNA's own statistics for the address, so they sit beside AirDNA's figure, not beside ours.
@@ -144,7 +155,7 @@ export const L06Shortstay: LayerDef = {
     figures.push(
       figure({
         key: "shortstay_comps_used",
-        label: "Comparable listings used",
+        label: chosen.method === "own" ? "Comparable listings used" : "Comparable listings shown",
         value: chosen.selection.used.length,
         unit: UNIT.count,
         chip: "Estimated",
