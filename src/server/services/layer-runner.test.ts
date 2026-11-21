@@ -161,3 +161,80 @@ describe("failure isolation (AD-9)", () => {
     spy.mockRestore();
   });
 });
+
+describe("synthesis layers (two-pass run)", () => {
+  it("a synthesis layer runs after every ordinary layer and is handed their results, in registry order, whatever their status", async () => {
+    const order: string[] = [];
+    const a = makeLayer({ layer_id: "LS-a", run: async () => (order.push("a"), { status: "ok", figures: [], payload: { fact: 1 } }) });
+    const off = makeLayer({ layer_id: "LS-off" });
+    const locked = makeLayer({ layer_id: "LS-locked", tier: "paid" });
+    let seen: string[] = [];
+    let seenStatus: string[] = [];
+    const synth = makeLayer({
+      layer_id: "LS-synth",
+      synthesis: true,
+      run: async (ctx) => {
+        order.push("synth");
+        seen = (ctx.siblings ?? []).map((s) => s.layer_id);
+        seenStatus = (ctx.siblings ?? []).map((s) => s.status);
+        return { status: "ok", figures: [], payload: { read: (ctx.siblings ?? []).length } };
+      },
+    });
+    const slow = makeLayer({ layer_id: "LS-slow", run: async () => (await new Promise((r) => setTimeout(r, 30)), order.push("slow"), { status: "ok", figures: [], payload: {} }) });
+    const i = await input([a, off, locked, synth, slow]);
+    i.rights.config.set("LS-off", { layer_id: "LS-off", tier: "free", enabled: false, source_ids: ["gnaf"] });
+    // The synthesis layer is listed FIRST on purpose: it still runs last.
+    const out = await runLayers([synth, a, off, locked, slow], i);
+    expect(out.map((l) => l.layer_id)).toEqual(["LS-synth", "LS-a", "LS-off", "LS-locked", "LS-slow"]);
+    expect(order).toEqual(["a", "slow", "synth"]);
+    expect(seen).toEqual(["LS-a", "LS-off", "LS-locked", "LS-slow"]);
+    expect(seenStatus).toEqual(["ok", "not_covered", "locked", "ok"]);
+    expect(out[0].payload).toEqual({ read: 4 });
+  });
+
+  it("an ordinary layer is never given siblings", async () => {
+    let got: unknown = "unset";
+    const layer = makeLayer({ layer_id: "LS-plain", run: async (ctx) => ((got = ctx.siblings), { status: "ok", figures: [], payload: {} }) });
+    await runLayers([layer], await input([layer]));
+    expect(got).toBeUndefined();
+  });
+
+  it("a locked sibling shows the synthesis layer no figure: locked data does not leave through it (AD-3)", async () => {
+    const locked = makeLayer({ layer_id: "LS-locked2", tier: "paid" });
+    let figures = -1;
+    let payload = "";
+    const synth = makeLayer({
+      layer_id: "LS-synth2",
+      synthesis: true,
+      run: async (ctx) => {
+        figures = (ctx.siblings ?? []).reduce((n, s) => n + s.figures.length, 0);
+        payload = JSON.stringify((ctx.siblings ?? []).map((s) => s.payload));
+        return { status: "ok", figures: [], payload: {} };
+      },
+    });
+    await runLayers([locked, synth], await input([locked, synth]));
+    expect(figures).toBe(0);
+    expect(payload).not.toContain(String(SECRET));
+  });
+
+  it("a failing ordinary layer still lets the synthesis layer run, and a failing synthesis layer fails alone", async () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const bad = makeLayer({ layer_id: "LS-bad", run: async () => { throw new Error("boom"); } });
+    const good = makeLayer({ layer_id: "LS-good" });
+    let statuses: string[] = [];
+    const synth = makeLayer({ layer_id: "LS-synth3", synthesis: true, run: async (ctx) => ((statuses = (ctx.siblings ?? []).map((s) => s.status)), { status: "ok", figures: [], payload: {} }) });
+    const broken = makeLayer({ layer_id: "LS-synth4", synthesis: true, run: async () => { throw new Error("synth boom"); } });
+    const out = await runLayers([bad, good, synth, broken], await input([bad, good, synth, broken]));
+    expect(statuses).toEqual(["error", "ok"]);
+    expect(out.map((l) => l.status)).toEqual(["error", "ok", "ok", "error"]);
+    spy.mockRestore();
+  });
+
+  it("a synthesis layer passes through the same rights gate and entitlement as any other", async () => {
+    const run = vi.fn();
+    const synth = makeLayer({ layer_id: "LS-synth5", synthesis: true, source_ids: ["gnaf", "shortstay_vendor"], run });
+    const out = await runLayers([synth], await input([synth]));
+    expect(out[0].status).toBe("not_covered");
+    expect(run).not.toHaveBeenCalled();
+  });
+});

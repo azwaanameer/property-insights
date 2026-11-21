@@ -52,6 +52,9 @@ export function quarterLabel(iso: string): string {
   return `${MONTH_NAMES[Number(iso.slice(5, 7)) - 1]} quarter ${iso.slice(0, 4)}`;
 }
 
+/** 0.0734 -> "7.3%". For sentences inside notes and questions; figures themselves are formatted by the renderer. */
+export const percentText = (fraction: number) => `${(Math.abs(fraction) * 100).toFixed(1)}%`;
+
 export const dollars = (cents: number) => `$${Math.round(cents / 100).toLocaleString("en-AU")}`;
 
 export type Family = "unit" | "house";

@@ -1,7 +1,10 @@
 import type { LayerResult } from "../../server/contracts/layer";
-import { REPORT, SECTION_QUESTIONS } from "../../site/copy";
+import { PROFILE_HEADING, REPORT, SECTION_QUESTIONS } from "../../site/copy";
 import { FigureTile } from "./FigureTile";
 import { LockCard } from "./LockCard";
+import { QuestionsList } from "./QuestionsList";
+import { RatingPanel } from "./RatingPanel";
+import { ReturnCalculator } from "./ReturnCalculator";
 import { CompareTable, HistoryTable } from "./tables";
 
 /** Free; Unlocked only when a paid layer actually returned its content; every other paid layer is still a Full report section. */
@@ -21,6 +24,9 @@ const NOTICE: Record<"gap" | "not_covered" | "error", { label: string; cls: stri
 function Extras({ layer }: { layer: LayerResult }) {
   if (layer.layer_id === "L07-history") return <HistoryTable payload={layer.payload} />;
   if (layer.layer_id === "L09-suburb-compare") return <CompareTable payload={layer.payload} />;
+  if (layer.layer_id === "L05-return") return <ReturnCalculator payload={layer.payload} />;
+  if (layer.layer_id === "L15-conditions") return <RatingPanel payload={layer.payload} />;
+  if (layer.layer_id === "L13-questions") return <QuestionsList payload={layer.payload} />;
   return null;
 }
 
@@ -29,7 +35,9 @@ function Extras({ layer }: { layer: LayerResult }) {
  * never a value (AD-3); gap, not_covered and error layers say why in place and leave every other section alone (AD-9).
  */
 export function ReportSection({ layer, pid }: { layer: LayerResult; pid: string }) {
-  const heading = SECTION_QUESTIONS[layer.layer_id] ?? layer.title;
+  // L15 outside the validated scope is a descriptive profile, and its heading says so (AD-5).
+  const profile = layer.layer_id === "L15-conditions" && layer.payload.mode === "profile";
+  const heading = profile ? PROFILE_HEADING : (SECTION_QUESTIONS[layer.layer_id] ?? layer.title);
   return (
     <section className="rsec" id={`r-${layer.layer_id}`} data-layer={layer.layer_id} data-status={layer.status} aria-labelledby={`h-${layer.layer_id}`}>
       <div className="sh">

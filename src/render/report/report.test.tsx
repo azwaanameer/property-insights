@@ -10,6 +10,7 @@ import { formatFigure } from "../format";
 import { provenanceText } from "./FigureTile";
 import { GeneratingState } from "./Generating";
 import { ReportMessage, ReportView } from "./ReportView";
+import { Calculator, fromFieldText, readCalculator, toFieldText } from "./ReturnCalculator";
 
 const SECRET = 424242424;
 const coverage = { market_tier: "A", match_type: "unit" } as const;
@@ -230,5 +231,176 @@ describe("narrow screen", () => {
   it("tables scroll inside their own wrapper and the page clips overflow", () => {
     expect(css).toMatch(/\.tw \{ overflow-x: auto;/);
     expect(css).toMatch(/\.site \{[^}]*overflow-x: clip/);
+  });
+});
+
+// ---------------------------------------------------------------- L05 calculator, L15 conditions, L13 questions
+
+const calcInputs = [
+  { key: "price", label: "Purchase price", unit: "AUD_cents", default: 56_650_000, basis: "Valuer-General median unit price for the March quarter 2026, for the suburb, not this home", placeholder: false },
+  { key: "weekly_rent", label: "Weekly rent", unit: "AUD_cents_per_week", default: 80_000, basis: "Homes Victoria median", placeholder: false },
+  { key: "vacancy_weeks", label: "Weeks vacant each year", unit: "weeks", default: 2, basis: "placeholder, set your own", placeholder: true },
+  { key: "management_fee", label: "Property management fee, share of rent collected", unit: "fraction", default: 0.07, basis: "placeholder, set your own", placeholder: true },
+  { key: "council_rates", label: "Council rates and water, a year", unit: "AUD_cents", default: 200_000, basis: "placeholder, set your own", placeholder: true },
+  { key: "insurance", label: "Landlord insurance, a year", unit: "AUD_cents", default: 60_000, basis: "placeholder, set your own", placeholder: true },
+  { key: "owners_corporation", label: "Owners corporation fees, a year", unit: "AUD_cents", default: 300_000, basis: "placeholder, set your own", placeholder: true },
+  { key: "maintenance", label: "Repairs and maintenance, a year", unit: "AUD_cents", default: 100_000, basis: "placeholder, set your own", placeholder: true },
+  { key: "deposit_share", label: "Deposit, share of the price", unit: "fraction", default: 0.2, basis: "placeholder, set your own", placeholder: true },
+  { key: "interest_rate", label: "Loan interest rate, a year", unit: "fraction", default: 0.06, basis: "placeholder, set your own", placeholder: true },
+  { key: "growth_rate", label: "Price growth, a year", unit: "fraction", default: 0, basis: "placeholder, set your own", placeholder: true },
+  { key: "horizon_years", label: "Years to hold", unit: "years", default: 5, basis: "placeholder, set your own", placeholder: true },
+];
+const calcPayload = { calculator: { label: "x", sources: [{ key: "price", source_ids: ["vgv_medians"], as_of: "2026-03-31" }], inputs: calcInputs, history: { price_cagr_5y: -0.0152 } } };
+const l05: LayerResult = { layer_id: "L05-return", title: "Return", tier: "free", status: "ok", coverage, figures: [], payload: calcPayload };
+
+describe("L05 return calculator", () => {
+  const out = html(model([l05]));
+  it("shows the section under its question, the starting inputs as text fields, and where each sourced figure came from", () => {
+    expect(out).toContain("What could it return?");
+    expect(out).toContain('value="566500"');
+    expect(out).toContain('value="800"');
+    expect(out).toContain('value="7"'); // 0.07 shown as a percent
+    expect(out).toContain("Valuer-General median unit price for the March quarter 2026, for the suburb, not this home (Valuer-General Victoria, as at 31 Mar 2026)");
+  });
+  it("labels every placeholder default and says it is an illustration", () => {
+    expect(out.match(/placeholder, set your own/g)?.length).toBe(10);
+    expect(out).toContain("An illustration with your own numbers, not a promise");
+  });
+  it("works the outputs out from the defaults with the shared function, with growth at 0%", () => {
+    expect(out).toContain("7.3%"); // gross yield 80,000 x 52 / 56,650,000
+    expect(out).toMatch(/data-calc="value_after"[^>]*>.*?\$566,500/);
+  });
+  it("shows the past growth as history only, not as an input", () => {
+    expect(out).toContain("Past 5-year price growth, for history only: -1.5%");
+    expect(out).not.toContain('name="price_cagr_5y"');
+  });
+  it("a blank rent, and bad text, give Not available outputs and never NaN", () => {
+    const bad = renderToStaticMarkup(<Calculator inputs={readCalculator(calcPayload)!.inputs} history={null} typed={{ weekly_rent: "", price: "abc", owners_corporation: "-3", growth_rate: "oops" }} />);
+    expect(bad).not.toMatch(/NaN|undefined|Infinity/);
+    expect(bad).toContain('aria-invalid="true"');
+    for (const k of ["gross_yield", "net_yield", "cash_flow", "value_after"]) {
+      expect(bad, k).toMatch(new RegExp(`data-calc="${k}"[^>]*><div class="cap">[^<]*</div><div class="val na">Not available`));
+    }
+  });
+  it("a negative growth rate is allowed, and only that one", () => {
+    const o = renderToStaticMarkup(<Calculator inputs={readCalculator(calcPayload)!.inputs} history={null} typed={{ growth_rate: "-10", horizon_years: "1", council_rates: "-1" }} />);
+    expect(o).toMatch(/data-calc="value_after"[^>]*>.*?\$509,850/);
+    expect(o).toMatch(/data-calc="net_income"[^>]*><div class="cap">[^<]*<\/div><div class="val na">Not available/);
+  });
+  it("text to value and back, in dollars, percent and plain numbers", () => {
+    expect(toFieldText("AUD_cents", 56_650_000)).toBe("566500");
+    expect(toFieldText("AUD_cents_per_week", 80_050)).toBe("800.5");
+    expect(toFieldText("fraction", 0.0733)).toBe("7.33");
+    expect(toFieldText("weeks", null)).toBe("");
+    expect(fromFieldText("AUD_cents", "$566,500")).toBe(56_650_000);
+    expect(fromFieldText("fraction", "6.5%")).toBe(0.065);
+    expect(fromFieldText("weeks", " ")).toBeNull();
+    expect(fromFieldText("weeks", "two")).toBeNull();
+  });
+  it("fromFieldText takes plain numbers only: no decimal comma, exponent, inner space or lone symbol", () => {
+    // read as typed
+    expect(fromFieldText("weeks", "1,234")).toBe(1234);
+    expect(fromFieldText("weeks", "1,234,567.5")).toBe(1_234_567.5);
+    expect(fromFieldText("AUD_cents", "-$12.50")).toBe(-1250);
+    expect(fromFieldText("weeks", "-3")).toBe(-3);
+    expect(fromFieldText("weeks", "0.5")).toBe(0.5);
+    expect(fromFieldText("fraction", " 7% ")).toBe(0.07);
+    // not numbers: the field is flagged instead of being read as something else
+    for (const bad of ["1,5", "1e3", "2 0", "$", "%", "$%", "-", ".", "1,23", "12,3456", "1,2345", "1.2.3", "1..2", "5.", ".5", "--1", "$-5", "0x10", "Infinity", "1,234,56"]) {
+      expect(fromFieldText("weeks", bad), bad).toBeNull();
+    }
+  });
+  it("a typed 1,5 or 1e3 flags the field and blanks the outputs that need it, rather than reading 15 or 1000", () => {
+    const o = renderToStaticMarkup(<Calculator inputs={readCalculator(calcPayload)!.inputs} history={null} typed={{ vacancy_weeks: "1,5", horizon_years: "1e3" }} />);
+    expect(o.match(/aria-invalid="true"/g)).toHaveLength(2);
+    expect(o).toMatch(/data-calc="rent_collected"[^>]*><div class="cap">[^<]*<\/div><div class="val na">Not available/);
+    expect(o).toMatch(/data-calc="value_after"[^>]*><div class="cap">[^<]*<\/div><div class="val na">Not available/);
+  });
+  it("says what the calculator leaves out", () => {
+    expect(out).toContain("Not included: stamp duty, other buying and selling costs, land tax and the effect of tax");
+  });
+  it("a payload that is not the shape the layer writes draws nothing", () => {
+    expect(readCalculator({})).toBeNull();
+    expect(readCalculator({ calculator: { inputs: [{ key: "price" }] } })).toBeNull();
+    expect(readCalculator({ calculator: { inputs: [{ key: "evil", label: "x", unit: "AUD_cents" }] } })).toBeNull();
+    expect(html(model([{ ...l05, payload: { calculator: "no" } }]))).not.toContain("calc-grid");
+  });
+});
+
+const ratingPayload = {
+  mode: "rating",
+  label: "Conditions rating, not a price forecast",
+  rating: { fifth: 5, fifth_label: "Bottom fifth", position: 438, of: 441 },
+  validation: { low: 0.74, high: 0.8, range: "74% to 80%", windows: "4 windows, 2016 to 2025", checked_on: "2026-11-14" },
+  meta: { chip: "Estimated", source_ids: ["conditions_rating", "abs_census_2021", "vgv_medians"], as_of: "2021-08-10" },
+};
+const l15Rating: LayerResult = { layer_id: "L15-conditions", title: "Conditions", tier: "free", status: "ok", coverage, figures: [fig("flat_share", "Households in flats or apartments", 0.978, "fraction", "Observed")], payload: ratingPayload };
+const l15Profile: LayerResult = {
+  ...l15Rating,
+  payload: { mode: "profile", profile_note: "Descriptive, not a rating. These are Census facts about the suburb. The conditions rating is shown only where it has passed a test." },
+};
+
+describe("L15 conditions", () => {
+  it("rating mode: the conditions-rating heading, five fifths with the suburb's marked, the label and the test result from the payload", () => {
+    const out = html(model([l15Rating]));
+    expect(out).toContain("What are the suburb&#x27;s conditions?");
+    expect(out).toContain("Conditions rating, not a price forecast");
+    expect(out.match(/<li[^>]*aria-current="true"/g)).toHaveLength(1);
+    expect(out).toMatch(/aria-current="true"><span>Bottom<\/span>/);
+    expect(out).toContain("Bottom fifth: position 438 of 441 rated suburbs.");
+    expect(out).toContain("4 windows, 2016 to 2025");
+    expect(out).toContain("74% to 80% of pairs");
+    expect(out).toContain("Checked 14 Nov 2026.");
+    expect(out).toContain("VicProp conditions rating, ABS Census 2021, Valuer-General Victoria, as at 10 Aug 2021");
+  });
+  it("profile mode: the profile heading, 'Descriptive, not a rating', and no fifths at all", () => {
+    const out = html(model([l15Profile]));
+    expect(out).toContain("What does the suburb profile look like?");
+    expect(out).not.toContain("What are the suburb");
+    expect(out).toContain("Descriptive, not a rating.");
+    expect(out).not.toMatch(/fifths|aria-current|Bottom fifth|position \d/);
+  });
+  it("a rating-mode payload with a malformed rating draws no band", () => {
+    const out = html(model([{ ...l15Rating, payload: { ...ratingPayload, rating: { fifth: 9, fifth_label: "x", position: 1, of: 2 } } }]));
+    expect(out).not.toContain("fifths");
+  });
+});
+
+const trig = { text: "24.3% of private dwellings in the suburb were unoccupied on Census night (2021 Census).", chip: "Observed", source_ids: ["abs_census_2021"], as_of: "2021-08-10" };
+const l13: LayerResult = {
+  layer_id: "L13-questions", title: "Questions", tier: "free", status: "ok", coverage, figures: [],
+  payload: {
+    questions: [
+      { id: "unoccupied-high", question: "How many apartments in this building sit empty?", why: "It describes the suburb, not this building.", ask: "owners corporation", standard: false, trigger: trig },
+      { id: "std-sales", question: "What have comparable homes sold for?", why: "A median cannot tell you.", ask: "agent", standard: true, trigger: null },
+      { id: "orphan", question: "A question with no fact and not standard", why: "", ask: "agent", standard: false, trigger: null },
+    ],
+  },
+};
+
+describe("L13 questions", () => {
+  const out = html(model([l13]));
+  it("a prompted question carries the report fact, its chip and its source", () => {
+    expect(out).toContain("What should I ask next?");
+    expect(out).toContain("How many apartments in this building sit empty?");
+    expect(out).toContain("Prompted by: 24.3% of private dwellings in the suburb were unoccupied");
+    expect(out).toContain("<i></i>Observed</span>");
+    expect(out).toContain("ABS Census 2021, as at 10 Aug 2021");
+    expect(out).toContain("Ask the owners corporation");
+  });
+  it("a standard question is marked standard", () => {
+    expect(out).toContain('data-question="std-sales" data-standard="true"');
+    expect(out).toContain("Standard question");
+  });
+  it("a question that is neither prompted by a fact nor standard is not drawn", () => {
+    expect(out).not.toContain("A question with no fact");
+  });
+});
+
+describe("narrow screen: new sections", () => {
+  const css = readFileSync(new URL("../pine.css", import.meta.url), "utf8");
+  it("the calculator stacks and the fifths stack on a phone", () => {
+    expect(css.slice(css.indexOf("@media (max-width: 860px)"))).toMatch(/\.calc-grid \{ grid-template-columns: 1fr; \}/);
+    expect(css.slice(css.indexOf("@media (max-width: 580px)"))).toMatch(/\.fifths \{ grid-template-columns: 1fr; \}/);
   });
 });

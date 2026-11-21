@@ -319,9 +319,15 @@ export const SECTION_QUESTIONS: Record<string, string> = {
   "L01-property": "What is this property?",
   "L02-rent": "What does it rent for?",
   "L03-price": "What is it worth?",
+  "L05-return": "What could it return?",
   "L07-history": "How have prices moved?",
   "L09-suburb-compare": "How does the suburb compare with nearby ones?",
+  "L15-conditions": "What are the suburb's conditions?",
+  "L13-questions": "What should I ask next?",
 };
+
+/** The L15 heading when the layer returns the descriptive profile instead of a rating (AD-5). */
+export const PROFILE_HEADING = "What does the suburb profile look like?";
 
 /** Plain names for source ids shown under figures. Unknown ids are shown as they are. */
 export const SOURCE_NAMES: Record<string, string> = {
@@ -332,6 +338,7 @@ export const SOURCE_NAMES: Record<string, string> = {
   abs_seifa_2021: "ABS SEIFA 2021",
   vgv_medians: "Valuer-General Victoria",
   homes_victoria_rents: "Homes Victoria",
+  conditions_rating: "VicProp conditions rating",
 };
 
 export const REPORT = {
@@ -366,6 +373,62 @@ export const REPORT = {
   historyCaption: "Annual median price",
   compareCaption: "Side by side",
   thisSuburb: "(this suburb)",
+};
+
+/** The return calculator (L05). It is an illustration of the reader's own numbers. */
+export const CALCULATOR = {
+  title: "Return calculator",
+  intro: "An illustration with your own numbers, not a promise of what this home will earn or sell for. Change any figure below.",
+  basisHeading: "Where each starting figure comes from",
+  placeholderTag: "placeholder, set your own",
+  invalid: "Enter a number of zero or more.",
+  invalidGrowth: "Enter a number, for example 0 or -2.",
+  resultsHeading: "What those numbers give",
+  history: "Past 5-year price growth, for history only",
+  omitted: "Not included: stamp duty, other buying and selling costs, land tax and the effect of tax, so the net figures are before those costs.",
+  historyNote: "This is not an input. The growth above starts at 0% and is yours to set.",
+  reset: "Reset to the starting figures",
+  outputs: {
+    gross_yield: "Gross yield, before costs",
+    rent_collected: "Rent collected, a year",
+    running_costs: "Running costs, a year",
+    net_income: "Net income, a year",
+    net_yield: "Net yield, after costs",
+    loan_amount: "Loan",
+    annual_interest: "Interest, a year",
+    cash_flow: "Cash flow after interest, a year",
+    cash_flow_weekly: "Cash flow after interest, a week",
+    value_after: "Value after holding, at your growth rate",
+  },
+  outputNotes: {
+    gross_yield: "Weekly rent x 52 / price.",
+    net_yield: "Net income / price.",
+    cash_flow: "Net income less interest. A negative number is a shortfall.",
+    value_after: "Price grown at the rate you set. With 0% it is the price you entered.",
+  },
+};
+
+/** The conditions rating panel (L15). */
+export const RATING = {
+  barLabel: (fifthLabel: string, position: number, of: number) => `${fifthLabel}: position ${position} of ${of} rated suburbs`,
+  barCaption: "Fifths of rated suburbs, top to bottom",
+  fifths: ["Top", "Second", "Middle", "Fourth", "Bottom"],
+  how: "Rated on three 2021 Census markers: more households owning their home, fewer in flats, fewer dwellings unoccupied. The suburb's own numbers are in the tiles above.",
+  testTitle: "How the rating did on past data",
+  test: (range: string, windows: string, checked: string | null) =>
+    `Across ${windows || "the test windows"}, a random suburb from the top fifth grew faster than a random suburb from the bottom fifth in ${range} of pairs. 50% would be a coin flip.${checked ? ` Checked ${checked}.` : ""}`,
+  limits: "It describes the suburb, not this home or building, and it says nothing about what prices will do.",
+  profileTitle: "Descriptive, not a rating",
+};
+
+/** What to ask next (L13). */
+export const QUESTIONS = {
+  intro: "Each question says what in this report prompted it, or is marked standard. Take them to the agent, the conveyancer and the owners corporation.",
+  askLabel: "Ask the",
+  standardTag: "Standard question",
+  promptedBy: "Prompted by",
+  promptedGroup: "Prompted by this report",
+  standardGroup: "Standard questions",
 };
 
 export const NOT_FOUND = {

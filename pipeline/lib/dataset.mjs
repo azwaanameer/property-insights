@@ -20,6 +20,7 @@ const LOADED_TABLES = [
   "series_rent",
   "fact_suburb_marker",
   "ref_suburb_neighbour",
+  "derived_rating",
   "src_dataset_unmatched",
 ];
 

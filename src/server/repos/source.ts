@@ -48,3 +48,14 @@ export async function listMarketValidation(db: Db): Promise<MarketValidationRow[
      FROM market_validation ORDER BY state, dwelling_type`,
   );
 }
+
+/** The validation row for one state and dwelling type, or null when the market was never tested (AD-5: no row means no rating). */
+export async function getMarketValidation(db: Db, state: string, dwellingType: string): Promise<MarketValidationRow | null> {
+  const rows = await db.query<MarketValidationRow>(
+    `SELECT state, dwelling_type, status, pairwise_score_low, pairwise_score_high, windows,
+            to_char(checked_on, 'YYYY-MM-DD') AS checked_on
+     FROM market_validation WHERE state = $1 AND dwelling_type = $2`,
+    [state, dwellingType],
+  );
+  return rows[0] ?? null;
+}

@@ -14,7 +14,7 @@ afterAll(() => close());
 
 describe("migrations", () => {
   it("apply once, record themselves, and are idempotent", async () => {
-    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql"]);
+    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql"]);
     expect(await applyMigrations(db)).toEqual([]);
   });
 
@@ -56,6 +56,24 @@ describe("migrations", () => {
       expect(src.licence, src.source_id).toContain("CC BY 4.0");
       expect(src.attribution_text.length, src.source_id).toBeGreaterThan(10);
     }
+  });
+
+  it("0006 adds the cleared conditions_rating source and switches on L05, L15 and L13 as free layers with their sources", async () => {
+    const [src] = await db.query("SELECT licence, rights_status, attribution_text FROM src_source WHERE source_id = 'conditions_rating'");
+    expect(src.rights_status).toBe("cleared");
+    expect(src.licence).toContain("CC BY 4.0");
+    expect(src.attribution_text).toContain("Australian Bureau of Statistics");
+    expect(src.attribution_text).toContain("Valuer-General");
+    const rows = await db.query("SELECT layer_id, tier, enabled, source_ids FROM layer_config WHERE layer_id IN ('L05-return','L15-conditions','L13-questions') ORDER BY layer_id");
+    expect(rows.map((r) => [r.layer_id, r.tier, r.enabled])).toEqual([
+      ["L05-return", "free", true],
+      ["L13-questions", "free", true],
+      ["L15-conditions", "free", true],
+    ]);
+    // Every source a new layer lists must be cleared, which the layer_config trigger enforced when the rows went in.
+    const sources = new Set(rows.flatMap((r) => r.source_ids));
+    const cleared = new Set((await db.query("SELECT source_id FROM src_source WHERE rights_status = 'cleared'")).map((r) => r.source_id));
+    for (const id of sources) expect(cleared.has(id), id).toBe(true);
   });
 
   it("the dev seed is idempotent on a migrated database", async () => {

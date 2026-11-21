@@ -108,3 +108,16 @@
 - source_spec: `spec-checkout-entitlements.md`
   summary: Handle chargeback (charge.dispute.created), invoice.payment_failed and customer.subscription.updated events, and make access sharing harder (one-time token exchange for the return link, or login).
   evidence: Review findings; today the 32 day expiry is the only backstop and a bearer link opens Pro on any number of devices.
+
+- source_spec: `spec-report-return-rating-questions.md`
+  summary: Add a serve-time freshness check that the published rating was built from the current Census and Valuer-General dataset versions, and read both inputs inside one transaction in `pipeline/derive/rating.mjs`.
+  evidence: Review findings: the rating records input versions in `file_sha256` but nothing compares them at serve time; a pointer move mid-run records the wrong inputs.
+- source_spec: `spec-report-return-rating-questions.md`
+  summary: Make L05 and L13 state-aware (standard questions mention section 32 and owners corporation; L05 gap message is Victorian) before any non-Victorian state is loaded.
+  evidence: Review finding; only Victorian addresses resolve today.
+- source_spec: `spec-report-return-rating-questions.md`
+  summary: Extend the calculator with stamp duty, land tax, loan costs and an equity return, and test its edit and reset wiring in a real browser.
+  evidence: Review findings; the section now states what it leaves out, and the repo has no DOM test tooling.
+- source_spec: `spec-report-return-rating-questions.md`
+  summary: Add negative tests for the rating publish checks (fifths, ordering, shrink below 80%), fix `getRating`'s unit-only unrated reason, and give the synthesis pass a shared time budget.
+  evidence: Review findings; a weakened check would still pass today.

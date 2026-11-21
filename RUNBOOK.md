@@ -97,3 +97,8 @@ The foundation is committed (`8825e37`). Everything since is uncommitted in the 
 ## 8. Live deployment (2026-11-21)
 
 Worker `vicprop` is deployed at https://vicprop.agenticapps.workers.dev (Cloudflare account on the logged-in Wrangler). Secrets set: `DATABASE_URL`, `ENTITLEMENT_SECRET`. Not set, on purpose: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (checkout answers `payments_not_configured`) and `ALLOW_DEV_UNLOCK` (the dev route answers 404). Redeploy with `npm run build` then `npx wrangler deploy`. The branch `build/foundation` is pushed to origin; `main` is unchanged. The GitHub repo is public.
+
+## 9. Report sections added 2026-11-21
+
+Migration 0006 and `node --env-file=.env pipeline/derive/rating.mjs` have been run on Neon, and `vicprop` is redeployed with L05 Return calculator, L15 Conditions rating (VIC apartment suburbs only) and L13 What should you ask next. The report now has eight sections. After any reload of Census or Valuer-General data, run `npm run pipeline:rating` again (it is the last step of `npm run pipeline:suburb-data`). Sections still not built: building, short-stay (Airbnb), schools, transport, nearby, flood, bushfire, heritage, planning, supply, screener, sale history, maps and photos.
+

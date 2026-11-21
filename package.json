@@ -19,7 +19,8 @@
     "pipeline:census": "node pipeline/ingest/census-sal.mjs",
     "pipeline:seifa": "node pipeline/ingest/seifa-sal.mjs",
     "pipeline:neighbours": "node pipeline/ingest/locality-neighbours.mjs",
-    "pipeline:suburb-data": "npm run pipeline:vgv && npm run pipeline:rents && npm run pipeline:census && npm run pipeline:seifa && npm run pipeline:neighbours"
+    "pipeline:rating": "node pipeline/derive/rating.mjs",
+    "pipeline:suburb-data": "npm run pipeline:vgv && npm run pipeline:rents && npm run pipeline:census && npm run pipeline:seifa && npm run pipeline:neighbours && npm run pipeline:rating"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

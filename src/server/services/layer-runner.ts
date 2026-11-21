@@ -55,6 +55,8 @@ export interface RunLayersInput {
   rights: RightsContext;
   /** Per-layer time limit. Default 8000 ms. */
   timeout_ms?: number;
+  /** Results of the layers that ran before a synthesis layer. Set by runLayers for the second pass; leave unset otherwise. */
+  siblings?: LayerResult[];
 }
 
 export const DEFAULT_LAYER_TIMEOUT_MS = 8000;
@@ -91,7 +93,7 @@ export async function runLayer(layer: LayerDef, input: RunLayersInput): Promise<
     const timeout = new Promise<never>((_, reject) => {
       timer = setTimeout(() => reject(new LayerTimeout(timeoutMs)), timeoutMs);
     });
-    const out = await Promise.race([layer.run({ db: input.db, address, request_id }), timeout]);
+    const out = await Promise.race([layer.run({ db: input.db, address, request_id, ...(layer.synthesis ? { siblings: input.siblings ?? [] } : {}) }), timeout]);
     return LayerResult.parse({ ...base, status: out.status, figures: out.figures, payload: out.payload, message: out.message });
   } catch (err) {
     // Detail goes to the log, with the request id. The report only says this section failed.
@@ -108,6 +110,16 @@ export async function runLayer(layer: LayerDef, input: RunLayersInput): Promise<
   }
 }
 
+/**
+ * Two passes. Every ordinary layer runs in parallel first; then each synthesis layer runs with those results as `siblings`, so a
+ * layer such as L13 reads sibling results only after they ran and never calls another layer (AD-1). Results come back in the order
+ * the layers were given. Gate, entitlement and failure isolation apply to both passes alike.
+ */
 export async function runLayers(layers: LayerDef[], input: RunLayersInput): Promise<LayerResult[]> {
-  return Promise.all(layers.map((layer) => runLayer(layer, input)));
+  const first = layers.filter((l) => !l.synthesis);
+  const second = layers.filter((l) => l.synthesis);
+  const firstResults = await Promise.all(first.map((layer) => runLayer(layer, input)));
+  const secondResults = await Promise.all(second.map((layer) => runLayer(layer, { ...input, siblings: firstResults })));
+  const byLayer = new Map<LayerDef, LayerResult>([...first.map((l, i) => [l, firstResults[i]] as const), ...second.map((l, i) => [l, secondResults[i]] as const)]);
+  return layers.map((l) => byLayer.get(l)!);
 }

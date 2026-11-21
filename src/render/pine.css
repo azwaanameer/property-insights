@@ -248,6 +248,36 @@ th .chip { margin-left: 6px; }
 .unlockbar b { font-size: 1.05rem; }
 .unlockbar span { color: var(--mute); font-size: 0.9rem; }
 .unlockbar .acts { display: flex; gap: 10px; flex-wrap: wrap; }
+/* Return calculator (L05), conditions rating (L15), questions (L13) */
+.calc h3 { font-size: 1.1rem; margin-top: 18px; }
+.calc-intro { color: var(--mute); font-size: 0.9rem; margin: 6px 0 14px; max-width: 66ch; }
+.calc-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 20px; align-items: start; }
+.calc-inputs { display: grid; gap: 12px; align-content: start; }
+.calc-field { display: grid; gap: 4px; min-width: 0; }
+.calc-field label { font-weight: 600; font-size: 0.9rem; }
+.calc-in { display: flex; align-items: center; gap: 8px; }
+.calc-in input { flex: 1; min-width: 0; background: var(--surface); border: var(--lw) solid var(--line); border-radius: var(--rb); color: var(--ink); font: 500 1rem var(--fb); padding: 10px 12px; font-variant-numeric: tabular-nums; }
+.calc-in input[aria-invalid="true"] { border-color: var(--c-con); }
+.calc-in input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.calc-unit { color: var(--mute); font-size: 0.82rem; white-space: nowrap; }
+.calc-basis { color: var(--mute); font-size: 0.78rem; overflow-wrap: anywhere; }
+.calc-basis.assumed { font-style: italic; }
+.calc-out { position: sticky; top: 16px; }
+.calc-out h4 { font-size: 1rem; margin-bottom: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn.ghost { background: transparent; color: var(--ink); border: var(--lw) solid var(--line); justify-self: start; }
+.rating { margin-top: 14px; display: grid; gap: 8px; }
+.rating-label { font: 700 1rem var(--fb); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.fifths { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; list-style: none; padding: 0; margin: 0; }
+.fifths li { padding: 10px 6px; text-align: center; border: 1px solid var(--rule); border-radius: var(--rs); background: var(--cell); color: var(--mute); font: 500 0.78rem var(--fm); }
+.fifths li.on { background: rgb(var(--acc) / 0.18); border: var(--lw) solid var(--accent); color: var(--ink); font-weight: 700; }
+.qs { margin-top: 10px; display: grid; gap: 18px; }
+.qgroup h3 { font-size: 1rem; margin-bottom: 8px; }
+.qlist { display: grid; gap: 12px; padding-left: 1.3em; }
+.qlist li { padding-left: 4px; }
+.qlist .q { font-weight: 600; }
+.qlist .qwhy { color: var(--mute); font-size: 0.88rem; }
+.qmeta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; color: var(--mute); font-size: 0.8rem; margin-top: 4px; }
+.qfact { overflow-wrap: anywhere; }
 .nfwrap { padding-block: 56px 90px; }
 .nf { max-width: 620px; display: grid; gap: 18px; justify-items: start; }
 .nf h1 { font-size: clamp(1.9rem, 4vw, 2.9rem); }
@@ -264,6 +294,8 @@ th .chip { margin-left: 6px; }
   .nl { display: none; }
   .nav .btn { margin-left: auto; }
   .samples, .plans { grid-template-columns: 1fr; }
+  .calc-grid { grid-template-columns: 1fr; }
+  .calc-out { position: static; }
 }
 @media (max-width: 580px) {
   .cards4, .cat { grid-template-columns: 1fr; }
@@ -273,6 +305,7 @@ th .chip { margin-left: 6px; }
   .nav .wrap { gap: 12px; }
   .brand { font-size: 1.2rem; }
   .plan .price { font-size: 2.8rem; }
+  .fifths { grid-template-columns: 1fr; }
   .unlockbar .acts, .unlockbar .acts .btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

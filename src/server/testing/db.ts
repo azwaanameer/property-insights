@@ -12,6 +12,7 @@ import { runNeighbours } from "../../../pipeline/ingest/locality-neighbours.mjs"
 import { runHomesVicRents } from "../../../pipeline/ingest/homes-vic-rents.mjs";
 import { runSeifa } from "../../../pipeline/ingest/seifa-sal.mjs";
 import { runVgvMedians } from "../../../pipeline/ingest/vgv-medians.mjs";
+import { runRating } from "../../../pipeline/derive/rating.mjs";
 import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import type { Db } from "../db";
@@ -39,7 +40,7 @@ export async function createLoadedTestDb() {
   return t;
 }
 
-export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours";
+export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating";
 
 /**
  * Migrated database with the fixture addresses and every suburb dataset (excerpts of the real files) published through the real
@@ -58,5 +59,8 @@ export async function createSuburbDataTestDb(opts: { omit?: SuburbDataset[] } = 
   if (!omit.has("census")) await runCensus(t.db, { texts: CENSUS_TEXTS, sals, minimum: 10 });
   if (!omit.has("seifa")) await runSeifa(t.db, { file: SEIFA_FILE, sals, minimum: 10 });
   if (!omit.has("neighbours")) await runNeighbours(t.db, { texts: NEIGHBOUR_TEXTS, sals, as_of: "2026-08-31", minimum: 10 });
+  // The conditions rating is derived from the Census and Valuer-General datasets above, through the real pipeline. The fixture has a handful of
+  // suburbs, far too few for the backtest regression (that is tested on its own, in pipeline/derive/rating.test.mjs), so it is switched off here.
+  if (!omit.has("rating") && !omit.has("census") && !omit.has("vgv")) await runRating(t.db, { minimum: 1, regression: false });
   return t;
 }
