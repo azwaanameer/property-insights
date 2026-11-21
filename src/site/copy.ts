@@ -309,7 +309,7 @@ export const FOOTER = {
   disclaimer:
     "General information only. Not financial, legal, planning or valuation advice. Some details come from public listings and are not checked against the title.",
   // Only the sources the built layers use. Add a source here when a layer that uses it ships.
-  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria and the Australian Bureau of Statistics, used under Creative Commons Attribution licences.",
+  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education and the City of Melbourne, used under Creative Commons Attribution licences.",
 };
 
 // ----- Report page -----
@@ -324,6 +324,12 @@ export const SECTION_QUESTIONS: Record<string, string> = {
   "L09-suburb-compare": "How does the suburb compare with nearby ones?",
   "L15-conditions": "What are the suburb's conditions?",
   "L13-questions": "What should I ask next?",
+  "L16-transport": "How do you get around?",
+  "L17-schools": "Which schools is it zoned for?",
+  "L11-building": "What do we know about the building?",
+  "L08-supply": "What new apartments are coming?",
+  "L10-screener": "Where else could you invest?",
+  "L14-attribution": "Where did all this come from?",
 };
 
 /** The L15 heading when the layer returns the descriptive profile instead of a rating (AD-5). */
@@ -339,6 +345,11 @@ export const SOURCE_NAMES: Record<string, string> = {
   vgv_medians: "Valuer-General Victoria",
   homes_victoria_rents: "Homes Victoria",
   conditions_rating: "VicProp conditions rating",
+  gtfs_vic: "Public Transport Victoria",
+  vic_school_zones_2026: "Department of Education school zones 2026",
+  vic_school_locations_2026: "Department of Education school locations 2026",
+  com_open_data: "City of Melbourne",
+  vicprop_registry: "VicProp",
 };
 
 export const REPORT = {
@@ -429,6 +440,71 @@ export const QUESTIONS = {
   promptedBy: "Prompted by",
   promptedGroup: "Prompted by this report",
   standardGroup: "Standard questions",
+};
+
+/** The location and building sections: transport (L16), schools (L17), building (L11), supply (L08). */
+export const LOCATION = {
+  straightLine: "Distances are straight lines from the address point, not walking routes.",
+  mapTitle: "Schematic map, not a street map",
+  mapNote: "Straight-line positions only. North is up. No street map or map tiles are used.",
+  mapRing: (m: number) => (m >= 1000 ? `${m / 1000} km` : `${m} m`),
+  you: "This address",
+  mapLabel: (what: string) => `Schematic of ${what} around the address, with rings. Not a street map.`,
+  modes: { train: "Train", tram: "Tram", bus: "Bus", coach: "Regional coach" } as Record<string, string>,
+  transportCaption: "Nearest stop of each kind",
+  stopsNotServices: "The counts are numbers of stops, not services. How often vehicles run, and at what hours, is not shown.",
+  transportHead: { mode: "Kind", stop: "Nearest stop", routes: "Routes", distance: "Straight line", within400: "Within 400 m", within800: "Within 800 m" },
+  noStop: "None found",
+  schoolsZoneCaption: "Government school zones that contain this address",
+  schoolsNearestCaption: "Nearest schools",
+  schoolsHead: { school: "School", years: "Year levels", sector: "Sector", distance: "Straight line", level: "Level", group: "Kind of school", inZone: "In its zone" },
+  inZone: "Yes",
+  notInZone: "No",
+  notApplicable: "n/a",
+  noZoneListed: "No zone listed",
+  buildingBasis: "Matched to the City of Melbourne record",
+  supplyStageCaption: "New apartments within 1 km, by stage",
+  supplyHead: { stage: "Stage", projects: "Projects", dwellings: "Dwellings" },
+  supplyProjectsCaption: "The nearest projects",
+  supplyProjectHead: { stage: "Stage", address: "Address", dwellings: "Dwellings", floors: "Floors", distance: "Straight line" },
+  supplyMore: (shown: number, total: number) => `Showing the nearest ${shown} of ${total} projects.`,
+  council: "City of Melbourne data covers the City of Melbourne only.",
+};
+
+/** The screener table (L10). */
+export const SCREENER = {
+  caption: "Nearby suburbs side by side, ordered by gross yield before costs",
+  suburb: "Suburb",
+  boundaries: (hops: number) => (hops === 0 ? "This suburb" : hops === 1 ? "Next door" : "Two boundaries away"),
+  notRated: "Not rated",
+  ratingHead: "Conditions rating, fifth",
+  ratingNote: "Shown only for Victorian apartment suburbs, where it has passed a test on past data. It describes the suburb and says nothing about what prices will do.",
+};
+
+/** Short section names for the "Used in" line of the attribution list. */
+export const LAYER_NAMES: Record<string, string> = {
+  "L01-property": "Property",
+  "L02-rent": "Rent",
+  "L03-price": "Price",
+  "L16-transport": "Transport",
+  "L17-schools": "Schools",
+  "L11-building": "Building",
+  "L08-supply": "New supply",
+  "L05-return": "Return",
+  "L07-history": "Price history",
+  "L09-suburb-compare": "Suburb comparison",
+  "L10-screener": "Nearby suburbs",
+  "L15-conditions": "Conditions",
+  "L13-questions": "Questions",
+};
+
+/** The attribution list (L14). */
+export const ATTRIBUTION = {
+  licence: "Licence",
+  adapted: "Adapted by VicProp.",
+  asOf: "Data as at",
+  noDate: "no dated dataset",
+  usedIn: "Used in",
 };
 
 export const NOT_FOUND = {

@@ -1,0 +1,4 @@
+"route_id","agency_id","route_short_name","route_long_name","route_type","route_color","route_text_color"
+"aus:vic:vic-02-ALM:","","Alamein","Alamein Line","400","152C6B","FFFFFF"
+"aus:vic:vic-02-ALM-R:","","Replacement Bus","Alamein Line","400","FE5000","FFFFFF"
+"aus:vic:vic-02-MDD:","","Mernda","Mernda Line","400","BE1014","FFFFFF"

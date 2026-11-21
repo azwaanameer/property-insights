@@ -1,0 +1,7 @@
+"route_id","service_id","trip_id","shape_id","trip_headsign","direction_id","block_id","wheelchair_accessible","bikes_allowed"
+"aus:vic:vic-02-ALM:","T2_2","02-ALM--1-T2-2302","2-ALM-vpt-1.1.R","Camberwell","1","","1","1"
+"aus:vic:vic-02-ALM:","T2_2","02-ALM--1-T2-2305","2-ALM-vpt-1.2.H","Alamein","0","","1","1"
+"aus:vic:vic-02-ALM-R:","T3","02-ALM-R-74-T3-BA0000","2-ALM-R-vpt-74.1.R","Parliament","1","","1","2"
+"aus:vic:vic-02-ALM-R:","T3","02-ALM-R-74-T3-BA0001","2-ALM-R-vpt-74.2.H","Alamein","0","","1","2"
+"aus:vic:vic-02-MDD:","T2_2","02-MDD--1-T2-1000","2-MDD-vpt-1.1.R","Flinders Street","1","4896","1","1"
+"aus:vic:vic-02-MDD:","T2_2","02-MDD--1-T2-1103","2-MDD-vpt-1.3.H","Mernda","0","4607","1","1"

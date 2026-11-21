@@ -1,0 +1,5 @@
+"route_id","agency_id","route_short_name","route_long_name","route_type","route_color","route_text_color"
+"aus:vic:vic-05-995:","","Coach","Warrnambool - Melbourne via Ararat & Hamilton","204","A57FB2","FFFFFF"
+"aus:vic:vic-05-BGO:","","Bendigo","Bendigo - Melbourne via Gisborne","204","A57FB2","FFFFFF"
+"aus:vic:vic-05-ECH:","","Bendigo","Echuca/Moama - Melbourne via Bendigo or Heathcote","204","A57FB2","FFFFFF"
+"aus:vic:vic-05-SWL:","","Bendigo","Swan Hill - Melbourne via Bendigo","204","A57FB2","FFFFFF"

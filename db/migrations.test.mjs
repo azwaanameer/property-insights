@@ -14,12 +14,12 @@ afterAll(() => close());
 
 describe("migrations", () => {
   it("apply once, record themselves, and are idempotent", async () => {
-    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql"]);
+    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql"]);
     expect(await applyMigrations(db)).toEqual([]);
   });
 
   it("create every table the spec lists", async () => {
-    const want = ["src_source", "src_dataset_version", "src_dataset_current", "ref_suburb", "ref_building", "ref_address", "series_price", "series_rent", "derived_rating", "market_validation", "layer_config", "fact_suburb_marker", "ref_suburb_neighbour", "src_dataset_unmatched", "app_user", "app_org", "app_subscription", "app_report", "app_lookup_log", "app_purchase", "app_webhook_event", "vendor_cache"];
+    const want = ["src_source", "src_dataset_version", "src_dataset_current", "ref_suburb", "ref_building", "ref_address", "series_price", "series_rent", "derived_rating", "market_validation", "layer_config", "fact_suburb_marker", "ref_suburb_neighbour", "src_dataset_unmatched", "app_user", "app_org", "app_subscription", "app_report", "app_lookup_log", "app_purchase", "app_webhook_event", "vendor_cache", "ref_transit_stop", "ref_school_zone", "ref_school", "ref_com_building", "ref_com_building_match", "fact_supply_project"];
     const have = new Set((await db.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")).map((r) => r.table_name));
     for (const t of want) expect(have.has(t), t).toBe(true);
   });
@@ -74,6 +74,40 @@ describe("migrations", () => {
     const sources = new Set(rows.flatMap((r) => r.source_ids));
     const cleared = new Set((await db.query("SELECT source_id FROM src_source WHERE rights_status = 'cleared'")).map((r) => r.source_id));
     for (const id of sources) expect(cleared.has(id), id).toBe(true);
+  });
+
+  it("0007 adds three cleared sources with attribution and switches on L16, L17, L11, L08, L10 and L14 as free layers", async () => {
+    const sources = await db.query("SELECT source_id, licence, rights_status, attribution_text FROM src_source WHERE source_id IN ('vic_school_zones_2026','vic_school_locations_2026','vicprop_registry')");
+    expect(sources.map((s) => s.source_id).sort()).toEqual(["vic_school_locations_2026", "vic_school_zones_2026", "vicprop_registry"]);
+    for (const s of sources) {
+      expect(s.rights_status, s.source_id).toBe("cleared");
+      expect(s.attribution_text.length, s.source_id).toBeGreaterThan(10);
+    }
+    expect(sources.filter((s) => s.source_id.startsWith("vic_school")).every((s) => s.licence === "CC BY 4.0")).toBe(true);
+    const rows = await db.query("SELECT layer_id, tier, enabled, source_ids FROM layer_config WHERE layer_id IN ('L16-transport','L17-schools','L11-building','L08-supply','L10-screener','L14-attribution') ORDER BY layer_id");
+    expect(rows.map((r) => [r.layer_id, r.tier, r.enabled])).toEqual([
+      ["L08-supply", "free", true],
+      ["L10-screener", "free", true],
+      ["L11-building", "free", true],
+      ["L14-attribution", "free", true],
+      ["L16-transport", "free", true],
+      ["L17-schools", "free", true],
+    ]);
+    // Every source a new layer lists is cleared (the layer_config trigger enforced it when the rows went in), including the two seeded in 0002.
+    const cleared = new Set((await db.query("SELECT source_id FROM src_source WHERE rights_status = 'cleared'")).map((r) => r.source_id));
+    for (const id of rows.flatMap((r) => r.source_ids)) expect(cleared.has(id), id).toBe(true);
+    expect(rows.find((r) => r.layer_id === "L16-transport").source_ids).toContain("gtfs_vic");
+    expect(rows.find((r) => r.layer_id === "L08-supply").source_ids).toContain("com_open_data");
+  });
+
+  it("0007: a school zone's school_key and a G-NAF match are keyed so a bare school number cannot collide and one G-NAF building has one match", async () => {
+    const cols = (await db.query("SELECT column_name FROM information_schema.columns WHERE table_name = 'ref_school'")).map((c) => c.column_name);
+    expect(cols).toEqual(expect.arrayContaining(["school_key", "school_no", "sector", "lat", "lon"]));
+    const pk = await db.query(
+      `SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey)
+       WHERE i.indrelid = 'ref_com_building_match'::regclass AND i.indisprimary ORDER BY a.attname`,
+    );
+    expect(pk.map((r) => r.attname)).toEqual(["dataset_version_id", "gnaf_building_id"]);
   });
 
   it("the dev seed is idempotent on a migrated database", async () => {

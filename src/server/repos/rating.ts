@@ -36,3 +36,28 @@ export async function getRating(db: Db, salCode: string, dwellingType: "house" |
   if (!row || !Number.isInteger(fifth) || fifth < 1 || fifth > 5) return { published: true, as_of: ds.as_of, rating: null };
   return { published: true, as_of: ds.as_of, rating: { sal_code: row.sal_code, fifth: fifth as RatingRow["fifth"], position: row.position, of: row.of } };
 }
+
+/**
+ * The fifth and position of each listed suburb for one dwelling type, from the current rating dataset. A suburb that was not rated is
+ * absent from the map. Whether the rating may be SHOWN is decided by market_validation (AD-5), not here. Null when nothing is published.
+ */
+export async function listRatings(db: Db, salCodes: string[], dwellingType: "house" | "unit"): Promise<{ as_of: string; ratings: Map<string, RatingRow> } | null> {
+  const ds = await currentDataset(db, RATING_SOURCE);
+  if (!ds) return null;
+  const ratings = new Map<string, RatingRow>();
+  if (salCodes.length === 0) return { as_of: ds.as_of, ratings };
+  const rows = await db.query<{ sal_code: string; band: string | null; position: number; of: number }>(
+    `SELECT x.sal_code, x.band, x.position, x."of" FROM (
+       SELECT r.sal_code, r.band, (rank() OVER (ORDER BY r.score DESC))::int AS position, (count(*) OVER ())::int AS "of"
+       FROM derived_rating r
+       JOIN src_dataset_current c ON c.source_id = $1 AND c.dataset_version_id = r.dataset_version_id
+       WHERE r.dwelling_type = $2) x
+     WHERE x.sal_code = ANY($3::text[])`,
+    [RATING_SOURCE, dwellingType, salCodes],
+  );
+  for (const row of rows) {
+    const fifth = Number(row.band);
+    if (Number.isInteger(fifth) && fifth >= 1 && fifth <= 5) ratings.set(row.sal_code, { sal_code: row.sal_code, fifth: fifth as RatingRow["fifth"], position: row.position, of: row.of });
+  }
+  return { as_of: ds.as_of, ratings };
+}

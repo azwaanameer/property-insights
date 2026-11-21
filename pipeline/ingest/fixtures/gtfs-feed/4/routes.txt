@@ -1,0 +1,6 @@
+"route_id","agency_id","route_short_name","route_long_name","route_type","route_color","route_text_color"
+"17-235-aus-1","","235","City (Southern Cross Station) - Fishermans Bend via Williamstown Road","3","FF8200","FFFFFF"
+"17-237-aus-1","","237","City (Southern Cross Station) - Fishermans Bend via Lorimer Street","3","FF8200","FFFFFF"
+"35-232-aus-1","","232","Altona North - City (Queen Victoria Market)","3","FF8200","FFFFFF"
+"35-235-aus-1","","235","City (Southern Cross Station) - Fishermans Bend via Williamstown Road","3","FF8200","FFFFFF"
+"35-237-aus-1","","237","City (Southern Cross Station) - Fishermans Bend via Lorimer Street","3","FF8200","FFFFFF"

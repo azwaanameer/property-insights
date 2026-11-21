@@ -97,10 +97,10 @@ describe("photos and credits", () => {
     for (const c of PHOTO_CREDITS) expect(existsSync(new URL(`../../public/img/${c.file}`, import.meta.url)), c.file).toBe(true);
     for (const m of html.matchAll(/src="\/img\/([a-z]+\.jpg)"/g)) expect(PHOTO_CREDITS.some((c) => c.file === m[1]), m[1]).toBe(true);
   });
-  it("the footer data line lists only the sources the built layers use", () => {
+  it("the footer data line lists only the sources the built layers use (transport, school zones and the City of Melbourne now ship)", () => {
     const footer = renderToStaticMarkup(<SiteFooter />);
-    expect(footer).toContain("Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria and the Australian Bureau of Statistics, used under Creative Commons Attribution licences.");
-    for (const gone of ["Crime Statistics", "Public Transport Victoria", "OpenStreetMap", "ODbL", "Vicmap"]) expect(footer).not.toContain(gone);
+    expect(footer).toContain("Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education and the City of Melbourne, used under Creative Commons Attribution licences.");
+    for (const gone of ["Crime Statistics", "OpenStreetMap", "ODbL", "Vicmap"]) expect(footer).not.toContain(gone);
   });
   it("the footer credits every photo with author and licence", () => {
     const footer = renderToStaticMarkup(<SiteFooter />);

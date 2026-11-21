@@ -13,6 +13,11 @@ import { runHomesVicRents } from "../../../pipeline/ingest/homes-vic-rents.mjs";
 import { runSeifa } from "../../../pipeline/ingest/seifa-sal.mjs";
 import { runVgvMedians } from "../../../pipeline/ingest/vgv-medians.mjs";
 import { runRating } from "../../../pipeline/derive/rating.mjs";
+import { FIXTURE_AS_OF as GTFS_FIXTURE_AS_OF, FIXTURE_FEED, runExtractor, runGtfsStops } from "../../../pipeline/ingest/gtfs-stops.mjs";
+import { runSchoolZones } from "../../../pipeline/ingest/school-zones.mjs";
+import { runComData } from "../../../pipeline/ingest/com-buildings.mjs";
+import { COM_AS_OF, COM_TEXTS } from "../../../pipeline/ingest/fixtures/com.mjs";
+import { SCHOOL_AS_OF, SCHOOL_LOCATIONS_TEXT, SCHOOL_ZONE_TEXTS } from "../../../pipeline/ingest/fixtures/schools.mjs";
 import { mkdtemp } from "node:fs/promises";
 import os from "node:os";
 import type { Db } from "../db";
@@ -40,7 +45,15 @@ export async function createLoadedTestDb() {
   return t;
 }
 
-export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating";
+export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating" | "transit" | "schools" | "com";
+
+/** The fixture transport feed is extracted once per test file (it runs python), then loaded into each database. */
+let fixtureStops: Promise<string> | undefined;
+export const fixtureStopsDir = () => (fixtureStops ??= (async () => {
+  const out = await mkdtemp(path.join(os.tmpdir(), "gtfs-fixture-"));
+  runExtractor({ input: FIXTURE_FEED, out, as_of: GTFS_FIXTURE_AS_OF });
+  return out;
+})());
 
 /**
  * Migrated database with the fixture addresses and every suburb dataset (excerpts of the real files) published through the real
@@ -62,5 +75,11 @@ export async function createSuburbDataTestDb(opts: { omit?: SuburbDataset[] } = 
   // The conditions rating is derived from the Census and Valuer-General datasets above, through the real pipeline. The fixture has a handful of
   // suburbs, far too few for the backtest regression (that is tested on its own, in pipeline/derive/rating.test.mjs), so it is switched off here.
   if (!omit.has("rating") && !omit.has("census") && !omit.has("vgv")) await runRating(t.db, { minimum: 1, regression: false });
+  // Batch 2: real excerpts around the Docklands test address, through the real loaders. The City of Melbourne load matches buildings to the
+  // fixture G-NAF addresses published above.
+  const anyMode = { train: [1, 1_000_000], tram: [1, 1_000_000], bus: [1, 1_000_000], coach: [1, 1_000_000] } as Record<string, [number, number]>;
+  if (!omit.has("transit")) await runGtfsStops(t.db, { dir: await fixtureStopsDir(), minimum: 10, bounds: anyMode });
+  if (!omit.has("schools")) await runSchoolZones(t.db, { zoneTexts: SCHOOL_ZONE_TEXTS, locationsText: SCHOOL_LOCATIONS_TEXT, as_of: SCHOOL_AS_OF, minimumSchools: 10, minimumZones: 5 });
+  if (!omit.has("com")) await runComData(t.db, { texts: COM_TEXTS, as_of: COM_AS_OF, minimumBuildings: 20, minimumProjects: 20, minimumMatches: 1 });
   return t;
 }

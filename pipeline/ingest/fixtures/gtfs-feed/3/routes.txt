@@ -1,0 +1,4 @@
+"route_id","agency_id","route_short_name","route_long_name","route_type","route_color","route_text_color"
+"aus:vic:vic-03-35:","","35","City Circle (Free Tourist Tram)","0","6B3529","FFFFFF"
+"aus:vic:vic-03-70:","","70","Waterfront City Docklands -  Wattle Park","0","F59BBB","000000"
+"aus:vic:vic-03-75:","","75","Vermont South - Central Pier Docklands","0","00A9E0","000000"

@@ -2,7 +2,7 @@
 import type { PriceRow, RentRow } from "../../repos/series";
 import { cagr, FAMILY, grossYield, THIN_MIN, yearsBefore, type Family } from "./derive";
 
-export const isThinPrice = (r: PriceRow) => r.low_count || r.carried_forward || (r.sales_count !== null && r.sales_count < THIN_MIN);
+export const isThinPrice = (r: Pick<PriceRow, "low_count" | "carried_forward" | "sales_count">) => r.low_count || r.carried_forward || (r.sales_count !== null && r.sales_count < THIN_MIN);
 /** The note for a median that is thin or carried forward; undefined when it is neither. */
 export function priceThinNote(r: PriceRow, noun: string): string | undefined {
   if (r.carried_forward) return `No ${noun} sales in this period: the Valuer-General carried an earlier median forward.`;
@@ -10,7 +10,7 @@ export function priceThinNote(r: PriceRow, noun: string): string | undefined {
   return undefined;
 }
 
-export const isThinRent = (r: RentRow) => r.low_count || (r.lettings_count !== null && r.lettings_count < THIN_MIN);
+export const isThinRent = (r: Pick<RentRow, "low_count" | "lettings_count">) => r.low_count || (r.lettings_count !== null && r.lettings_count < THIN_MIN);
 
 export function quarterRows(rows: PriceRow[], sal: string, family: Family): PriceRow[] {
   return rows.filter((r) => r.sal_code === sal && r.dwelling_type === family && r.period_type === "quarter").sort((a, b) => a.period.localeCompare(b.period));

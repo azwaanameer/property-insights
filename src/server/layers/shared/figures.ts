@@ -37,6 +37,9 @@ export const UNIT = {
   count: "count",
   index: "index",
   rank: "rank",
+  /** A straight-line distance in whole metres; the renderer shows 230 m or 1.2 km. */
+  metres: "metres",
+  year: "year",
 } as const;
 
 /** The answer for an address whose locality could not be matched to one ABS suburb: every suburb layer says so (AD-9). */

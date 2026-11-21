@@ -278,6 +278,33 @@ th .chip { margin-left: 6px; }
 .qlist .qwhy { color: var(--mute); font-size: 0.88rem; }
 .qmeta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; color: var(--mute); font-size: 0.8rem; margin-top: 4px; }
 .qfact { overflow-wrap: anywhere; }
+/* Location and nearby sections (batch 2): transport, schools, building, supply, screener, attribution */
+.notices { display: grid; gap: 4px; margin: 0 0 12px; padding: 12px 14px; border-left: 3px solid var(--c-est); background: rgb(var(--acc) / 0.07); font-size: 0.9rem; list-style: none; }
+.tw table + table { margin-top: 22px; }
+.hop { display: block; font: 400 0.72rem var(--fm); color: var(--mute); }
+.smap { margin: 18px 0 0; display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.smap svg { width: 100%; height: auto; max-width: 340px; background: var(--cell); border: 1px solid var(--rule); border-radius: var(--rs); }
+.smap figcaption { color: var(--mute); font-size: 0.82rem; display: grid; gap: 8px; align-content: start; }
+.smap figcaption b { color: var(--ink); }
+.smap .ring { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 4; }
+.smap .ringlbl, .smap .north, .smap .ptlbl { font: 400 9px var(--fm); fill: var(--mute); }
+.smap .ptlbl { fill: var(--ink); paint-order: stroke; stroke: var(--cell); stroke-width: 3px; }
+.smap .axis { stroke: var(--mute); stroke-width: 1; }
+.smap .you circle:first-child { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+.smap .you-in { fill: var(--bg); }
+.smap .mk { stroke: var(--bg); stroke-width: 1; }
+.mk-train { fill: var(--accent); } .mk-tram { fill: var(--c-obs); } .mk-bus { fill: var(--c-est); } .mk-coach { fill: var(--c-rep); }
+.smap .mk-zoned { fill: none; stroke: var(--c-obs); stroke-width: 2.5; } .smap .mk-school { fill: var(--c-unk); }
+.legend { display: flex; gap: 6px 14px; flex-wrap: wrap; list-style: none; padding: 0; margin: 0; }
+.legend li { display: inline-flex; gap: 6px; align-items: center; }
+.mk-key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--mute); }
+.mk-key.you-key { background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--accent); }
+.mk-key.mk-train { border-radius: 1px; } .mk-key.mk-bus { transform: rotate(45deg) scale(0.85); border-radius: 1px; }
+.mk-key.mk-coach { border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.mk-key.mk-zoned { background: none; border: 2.5px solid var(--c-obs); width: 12px; height: 12px; }
+.attrib ul { display: grid; gap: 12px; }
+.attrib li { display: grid; gap: 2px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; }
+.attrib .meta { display: block; color: var(--mute); font-size: 0.82rem; }
 .nfwrap { padding-block: 56px 90px; }
 .nf { max-width: 620px; display: grid; gap: 18px; justify-items: start; }
 .nf h1 { font-size: clamp(1.9rem, 4vw, 2.9rem); }
@@ -296,6 +323,7 @@ th .chip { margin-left: 6px; }
   .samples, .plans { grid-template-columns: 1fr; }
   .calc-grid { grid-template-columns: 1fr; }
   .calc-out { position: static; }
+  .smap { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 580px) {
   .cards4, .cat { grid-template-columns: 1fr; }

@@ -6,7 +6,7 @@ import type { Chip, Figure, LayerResult } from "../../contracts/layer";
 import type { LayerDef, LayerRunOutput } from "../types";
 import { dwellingFamily, percentText } from "../shared/derive";
 
-export const L13_SOURCE_IDS = ["gnaf", "vgv_medians", "homes_victoria_rents", "abs_census_2021", "conditions_rating"];
+export const L13_SOURCE_IDS = ["gnaf", "vgv_medians", "homes_victoria_rents", "abs_census_2021", "conditions_rating", "gtfs_vic", "vic_school_zones_2026", "com_open_data"];
 
 /** A suburb where fewer than this share of households own their home is worth asking about the building's owners. */
 export const LOW_OWNER_SHARE = 0.5;
@@ -15,7 +15,7 @@ export const HIGH_UNOCCUPIED_SHARE = 0.1;
 /** The conditions rating's fourth and bottom fifths are worth a question about the building. */
 export const WEAK_FIFTH = 4;
 
-export type Ask = "agent" | "conveyancer" | "owners corporation" | "property manager" | "building inspector";
+export type Ask = "agent" | "conveyancer" | "owners corporation" | "property manager" | "building inspector" | "school or the Department of Education";
 
 export interface Trigger {
   /** The report fact, in words. */
@@ -190,6 +190,65 @@ export function buildQuestions(siblings: LayerResult[], family: "unit" | "house"
       why: "A high share of dwellings in the suburb were unoccupied on Census night. That describes the suburb, not this building, and the report does not check whether short stays are allowed.",
       ask: "owners corporation",
       trigger: triggerFrom("L15-conditions", L15.fig("unoccupied_share"), `${percentText(unocc)} of private dwellings in the suburb were unoccupied on Census night (2021 Census).`, { chip: "Observed", source_ids: ["abs_census_2021"], as_of: null }),
+    });
+  }
+
+  // ---- facts about the location and the building (batch 2). Each is prompted by a fact one of those sections returned; a section that did
+  // not run, or that had nothing to say, prompts nothing.
+  const L16 = by("L16-transport");
+  const L17 = by("L17-schools");
+  const L11 = by("L11-building");
+  const L08 = by("L08-supply");
+
+  // No school zone contains the address (the layer ran and listed no zone): ask where a child would go.
+  if (L17.ran && Array.isArray(L17.payload.zones) && L17.payload.zones.length === 0) {
+    add({
+      id: "schools-no-zone",
+      question: "Which government school would a child living here be enrolled at, and can the school confirm there is a place?",
+      why: "No government school zone contains this address. Only government neighbourhood schools have zones, so this address may have none. A zone is never a guarantee of a place.",
+      ask: "school or the Department of Education",
+      trigger: triggerFrom("L17-schools", L17.fig("zoned_primary"), "No government school zone for 2026 contains this address.", { chip: "Unknown", source_ids: ["vic_school_zones_2026"], as_of: null }),
+    });
+  }
+
+  // No stop of any kind within 800 m (every mode counted, none found close).
+  const counts = asObj(L16.payload.counts);
+  const modes = Object.values(counts).map((c) => num(asObj(c).within_800));
+  if (L16.ran && modes.length > 0 && modes.every((n) => n === 0)) {
+    add({
+      id: "transport-far",
+      question: "How do residents here get to the nearest train, tram or bus stop, and how far is that in practice?",
+      why: "No train, tram, bus or coach stop is listed within 800 m of this address in a straight line. The report measures straight lines only, so it cannot say how long the trip really is.",
+      ask: "agent",
+      trigger: triggerFrom("L16-transport", L16.fig("nearest_train") ?? L16.fig("nearest_tram") ?? L16.fig("nearest_bus"), "No public transport stop is listed within 800 m of this address.", { chip: "Estimated", source_ids: ["gtfs_vic"], as_of: null }),
+    });
+  }
+
+  // The City of Melbourne census gives the year the building was built.
+  const built = L11.num("year_built");
+  if (built !== null) {
+    add({
+      id: "building-age",
+      question:
+        family === "unit"
+          ? "When did the owners corporation last do major works on this building, and what does its maintenance plan say is due next?"
+          : "Can I see recent building and pest inspection reports, and what major works have been done since it was built?",
+      why: `The City of Melbourne census records the building as built in ${built}. The age of a building is a reason to ask what has been done to it. This report cannot see its condition.`,
+      ask: family === "unit" ? "owners corporation" : "building inspector",
+      trigger: triggerFrom("L11-building", L11.fig("year_built"), `The City of Melbourne census records the building as built in ${built}.`, { chip: "Observed", source_ids: ["com_open_data"], as_of: null }),
+    });
+  }
+
+  // Dwellings are under construction within a kilometre. Counted in dwellings, not projects: an office or a hotel under construction is
+  // not a reason to ask about apartments.
+  const dwellings = L08.num("dwellings_under_construction");
+  if (dwellings !== null && dwellings > 0) {
+    add({
+      id: "supply-under-construction",
+      question: "How many apartments are being built nearby, and when are they due to be finished?",
+      why: `The council's development monitor records ${dwellings} ${dwellings === 1 ? "dwelling" : "dwellings"} under construction within a kilometre. The report does not say what that does to rents or prices, and it does not say whether a project will go ahead.`,
+      ask: "agent",
+      trigger: triggerFrom("L08-supply", L08.fig("dwellings_under_construction"), `${dwellings} ${dwellings === 1 ? "dwelling is" : "dwellings are"} under construction within 1 km (City of Melbourne development monitor).`, { chip: "Estimated", source_ids: ["com_open_data"], as_of: null }),
     });
   }
 

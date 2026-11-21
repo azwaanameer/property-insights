@@ -21,6 +21,13 @@ const LOADED_TABLES = [
   "fact_suburb_marker",
   "ref_suburb_neighbour",
   "derived_rating",
+  "ref_transit_stop",
+  "ref_school_zone",
+  "ref_school",
+  // The match table references ref_com_building, so it is cleared first.
+  "ref_com_building_match",
+  "ref_com_building",
+  "fact_supply_project",
   "src_dataset_unmatched",
 ];
 

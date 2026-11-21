@@ -64,3 +64,33 @@ export async function listMarkers(db: Db, sourceId: string, salCodes: string[], 
   }
   return { as_of: ds.as_of, markers };
 }
+
+export interface NearbySuburb {
+  sal_code: string;
+  name: string;
+  /** 1 = shares a boundary with the suburb, 2 = shares a boundary with one that does. */
+  hops: 1 | 2;
+}
+
+/**
+ * Suburbs within two boundaries of `salCode`: those that share a boundary with it and those that share one with them, from the G-NAF
+ * locality neighbour table. The suburb itself is excluded. First `limit` by hops then name. Null when no neighbour dataset is published.
+ */
+export async function listNearbySuburbs(db: Db, salCode: string, limit = 80): Promise<{ as_of: string; rows: NearbySuburb[]; total: number } | null> {
+  const ds = await currentDataset(db, NEIGHBOUR_SOURCE);
+  if (!ds) return null;
+  const found = await db.query<{ sal_code: string; name: string; hops: number; total: number }>(
+    `WITH cur AS (SELECT dataset_version_id FROM src_dataset_current WHERE source_id = $1),
+          hop1 AS (SELECT n.neighbour_sal_code AS sal_code FROM ref_suburb_neighbour n JOIN cur ON cur.dataset_version_id = n.dataset_version_id WHERE n.sal_code = $3),
+          hop2 AS (SELECT n.neighbour_sal_code AS sal_code FROM ref_suburb_neighbour n JOIN cur ON cur.dataset_version_id = n.dataset_version_id
+                   WHERE n.sal_code IN (SELECT sal_code FROM hop1))
+     SELECT s.sal_code, s.name, (CASE WHEN s.sal_code IN (SELECT sal_code FROM hop1) THEN 1 ELSE 2 END)::int AS hops, (count(*) OVER ())::int AS total
+     FROM ref_suburb s
+     JOIN src_dataset_current sc ON sc.source_id = $2 AND sc.dataset_version_id = s.dataset_version_id
+     WHERE s.sal_code IN (SELECT sal_code FROM hop1 UNION SELECT sal_code FROM hop2) AND s.sal_code <> $3
+     ORDER BY 3, s.name, s.sal_code
+     LIMIT $4`,
+    [NEIGHBOUR_SOURCE, SUBURB_SOURCE, salCode, limit],
+  );
+  return { as_of: ds.as_of, rows: found.map((r) => ({ sal_code: r.sal_code, name: r.name, hops: r.hops === 1 ? 1 : 2 })), total: found[0]?.total ?? 0 };
+}

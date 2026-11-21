@@ -20,6 +20,9 @@
     "pipeline:seifa": "node pipeline/ingest/seifa-sal.mjs",
     "pipeline:neighbours": "node pipeline/ingest/locality-neighbours.mjs",
     "pipeline:rating": "node pipeline/derive/rating.mjs",
+    "pipeline:gtfs": "python -I pipeline/ingest/gtfs-extract.py && node pipeline/ingest/gtfs-stops.mjs",
+    "pipeline:schools": "node pipeline/ingest/school-zones.mjs",
+    "pipeline:com": "node pipeline/ingest/com-buildings.mjs",
     "pipeline:suburb-data": "npm run pipeline:vgv && npm run pipeline:rents && npm run pipeline:census && npm run pipeline:seifa && npm run pipeline:neighbours && npm run pipeline:rating"
   },
   "dependencies": {

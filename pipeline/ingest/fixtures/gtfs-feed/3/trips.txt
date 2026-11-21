@@ -1,0 +1,7 @@
+"route_id","service_id","trip_id","shape_id","trip_headsign","direction_id","block_id","wheelchair_accessible"
+"aus:vic:vic-03-35:","T6","03-35--16-T6-147303332","3-35-vpt-16.1.H","City Circle","0","","2"
+"aus:vic:vic-03-35:","T5_2","03-35--21-T5-147875234","3-35-vpt-21.1.R","Melbourne Central Station - Stop 5","1","","1"
+"aus:vic:vic-03-70:","T6","03-70--16-T6-146634406","3-70-vpt-16.2.R","Waterfront City Docklands","1","","2"
+"aus:vic:vic-03-70:","T6","03-70--16-T6-146634408","3-70-vpt-16.3.H","Wattle Park","0","","2"
+"aus:vic:vic-03-75:","T6","03-75--16-T6-146634634","3-75-vpt-16.3.H","Vermont South","0","","2"
+"aus:vic:vic-03-75:","T6","03-75--16-T6-146634635","3-75-vpt-16.2.R","Central Pier Docklands","1","","2"

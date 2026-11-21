@@ -223,7 +223,7 @@ describe("a house with a price but no rent (Carlton rents are published only for
 });
 
 describe("suburb not matched", () => {
-  it("L05 and L15 are gaps that say so, and L13 still gives the standard questions only", async () => {
+  it("L05 and L15 are gaps that say so, and L13 still gives the standard questions and none prompted by a suburb figure", async () => {
     const layers = await report(db, "5 Odd Court Fakeville");
     for (const id of ["L05-return", "L15-conditions"]) {
       expect(layers[id].status, id).toBe("gap");
@@ -234,7 +234,10 @@ describe("suburb not matched", () => {
     expect(l13.status).toBe("ok");
     const qs = questions(l13);
     expect(qs.length).toBeGreaterThan(3);
-    expect(qs.every((q) => q.standard && q.trigger === null)).toBe(true);
+    // No suburb section prompts anything. The location sections (transport, schools, building, supply) can, because they need no suburb.
+    const prompted = qs.filter((q) => !q.standard);
+    for (const q of prompted) expect(["L16-transport", "L17-schools", "L11-building", "L08-supply"], q.id).toContain(q.trigger!.layer_id);
+    expect(qs.filter((q) => q.standard).every((q) => q.trigger === null)).toBe(true);
   });
 });
 
@@ -372,11 +375,13 @@ describe("registration and constants", () => {
     for (const id of NEW_LAYERS) expect(status[id], id).toBe("live");
   });
 
-  it("L13 is the only synthesis layer, and it is last", async () => {
+  it("L13 and L14 are the only synthesis layers, and they are last", async () => {
     const { LAYERS } = await import(".");
-    expect(LAYERS.filter((l) => l.synthesis).map((l) => l.layer_id)).toEqual(["L13-questions"]);
-    expect(LAYERS.at(-1)).toBe(L13Questions);
-    expect(LAYERS.map((l) => l.layer_id)).toEqual(["L01-property", "L02-rent", "L03-price", "L05-return", "L07-history", "L09-suburb-compare", "L15-conditions", "L13-questions"]);
+    expect(LAYERS.filter((l) => l.synthesis).map((l) => l.layer_id)).toEqual(["L13-questions", "L14-attribution"]);
+    expect(LAYERS.at(-2)).toBe(L13Questions);
+    expect(LAYERS.map((l) => l.layer_id)).toEqual([
+      "L01-property", "L02-rent", "L03-price", "L16-transport", "L17-schools", "L11-building", "L08-supply", "L05-return", "L07-history", "L09-suburb-compare", "L10-screener", "L15-conditions", "L13-questions", "L14-attribution",
+    ]);
   });
 
   it("the serve plane's 300-dwelling minimum equals the pipeline's", () => {

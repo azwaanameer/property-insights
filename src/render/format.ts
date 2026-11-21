@@ -7,6 +7,8 @@
 //   count / index        whole numbers          -> 1,471
 //   weeks                number of weeks        -> 3 weeks
 //   rank                 a ready string         -> 3 of 8
+//   metres               whole metres           -> 230 m, 1.2 km (a straight line, never a walk)
+//   year                 a calendar year        -> 2018 (no thousands separator)
 import type { Figure } from "../server/contracts/layer";
 
 const WHOLE = new Intl.NumberFormat("en-AU", { maximumFractionDigits: 0 });
@@ -49,6 +51,13 @@ export function formatValue(value: Figure["value"] | undefined, unit?: string, o
     case "count":
     case "index":
       return WHOLE.format(value);
+    case "metres": {
+      // Whole metres first, so 999.6 reads 1.0 km and never "1,000 m".
+      const m = Math.round(value);
+      return m < 1000 ? `${WHOLE.format(m)} m` : `${ONE_DECIMAL.format(m / 1000)} km`;
+    }
+    case "year":
+      return String(Math.round(value));
     default:
       return String(value);
   }

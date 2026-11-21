@@ -100,5 +100,38 @@ Worker `vicprop` is deployed at https://vicprop.agenticapps.workers.dev (Cloudfl
 
 ## 9. Report sections added 2026-11-21
 
-Migration 0006 and `node --env-file=.env pipeline/derive/rating.mjs` have been run on Neon, and `vicprop` is redeployed with L05 Return calculator, L15 Conditions rating (VIC apartment suburbs only) and L13 What should you ask next. The report now has eight sections. After any reload of Census or Valuer-General data, run `npm run pipeline:rating` again (it is the last step of `npm run pipeline:suburb-data`). Sections still not built: building, short-stay (Airbnb), schools, transport, nearby, flood, bushfire, heritage, planning, supply, screener, sale history, maps and photos.
+Migration 0006 and `node --env-file=.env pipeline/derive/rating.mjs` have been run on Neon, and `vicprop` is redeployed with L05 Return calculator, L15 Conditions rating (VIC apartment suburbs only) and L13 What should you ask next. The report now has eight sections. After any reload of Census or Valuer-General data, run `npm run pipeline:rating` again (it is the last step of `npm run pipeline:suburb-data`). Batch 2 (section 10) then added transport, schools, building, supply, screener and sources.
 
+
+## 10. Report batch 2: transport, schools, building, supply, screener, sources (built and run on Neon 2026-11-21)
+
+Six new sections, all free for now (same decision as batch 1: nothing paid can be sold yet): `L16-transport` How do you get around?, `L17-schools` Which schools is it zoned for?, `L11-building` What do we know about the building?, `L08-supply` What new apartments are coming?, `L10-screener` Where else could you invest?, `L14-attribution` Where did all this come from?. The report page order is L01, L02, L03, L16, L17, L11, L08, L05, L07, L09, L10, L15, then L13 and L14.
+
+**Order to run (PowerShell, repo root, `.env` holding `DATABASE_URL`).** G-NAF and the suburb datasets from section 3 must already be published: the building match reads G-NAF and the screener reads the suburb datasets.
+
+```powershell
+node --env-file=.env db/migrate.mjs      # migration 0007: 3 sources, 6 tables, 6 layer switches, L13 gets 3 more sources
+python -I pipeline/ingest/gtfs-extract.py                       # extracts the stops into data/out/gtfs-vic (a few minutes)
+node --env-file=.env pipeline/ingest/gtfs-stops.mjs             # loads gtfs_vic
+node --env-file=.env pipeline/ingest/school-zones.mjs           # school locations (Windows-1252 CSV) then school zones, two dataset versions
+node --env-file=.env pipeline/ingest/com-buildings.mjs          # City of Melbourne buildings and development monitor; matches buildings to G-NAF
+```
+
+Each prints its counts and exits non-zero if a check fails, leaving the old dataset live. Dry runs in memory, no database needed: `node pipeline/ingest/gtfs-stops.mjs --pglite` (small committed fixture feed; add `--dir data/out/gtfs-vic` for the real extract), `node pipeline/ingest/school-zones.mjs --pglite`, `node pipeline/ingest/com-buildings.mjs --pglite` (G-NAF is not published in memory, so nothing is matched there). `data/out/gtfs-vic/` must exist for the real GTFS load; `npm run pipeline:gtfs` creates it.
+
+**Counts the checks expect (from the 2026-11-14 files).** GTFS: 28,777 stops (324 train, 1,624 tram, 25,992 bus, 837 coach), feed dated 2026-11-06. Schools: 2,318 open schools and 2,372 zone rows (1,268 primary), 11 zone schools not in the locations file keep their name only. City of Melbourne: 14,093 current buildings (census 2024), 1,451 developments, and with the full G-NAF loaded about 18,600 G-NAF buildings matched (13,752 exact street number, 4,848 street number inside the council's range). The match was tried locally on the real files against the real G-NAF extract: the Docklands unit 310/628 Flinders St sits in G-NAF building GAVIC720476126, which matches the council record "614-644 Flinders Street" (built 2018, 45 floors) by range, so its facts show as Estimated. The check fails the load if fewer than 5,000 G-NAF buildings match while G-NAF is published.
+
+**What is real, and what it says.**
+- Transport: nearest stop per kind (train, tram, bus, regional coach) and counts within 400 m and 800 m, from the PTV GTFS stops. Straight-line distances only: no walk time, no isochrone. A schematic SVG (no map tiles) shows the stops.
+- Schools: which 2026 government school zones contain the address (every zone listed with its year levels, none picked), the nearest government and non-government schools, with the 2026 zone-year line, "not a guarantee of a place, confirm with the school or the Department", and the Department's "should not be relied on for property purchase decisions". No quality score of any kind. Government and non-government school numbers overlap, so schools are keyed G or N plus the number.
+- Building: the G-NAF unit count as a range (indicative, about 10% either side, Estimated; G-NAF can miss unit addresses) and, where the data build matched one council record, year built, floors, main use and the council's dwelling count with the match type. Outside the City of Melbourne it says the dataset covers that council only and invents nothing.
+- Supply: projects and dwellings under construction, approved and applied for within 1 km, from the council's development monitor. City of Melbourne addresses only.
+- Screener: suburbs within two boundaries (G-NAF neighbours), with price, rent and gross yield before costs, ordered by yield with thin-sample rows last; the conditions-rating column appears only where `market_validation` says validated (Victorian units).
+- Attribution: every source a section that ran cited, with its credit text, licence and dataset date, read from `src_source` and `src_dataset_current`.
+- As-of dates: zones, locations and City of Melbourne datasets carry the date the file was saved into `data/raw` (2026-11-14); GTFS carries the feed build date (2026-11-06). The council building census year (2024) is in each figure note.
+
+**Roll back one section without code:** `UPDATE layer_config SET enabled = false WHERE layer_id = 'L16-transport';` (and likewise for the others).
+
+**After a data refresh:** re-run the matching loader, `npm run pipeline:com`, whenever G-NAF is reloaded, because the match is made against the G-NAF version current at the time.
+
+**Not built in this batch (and why).** Planning, flood, bushfire and heritage (the Vicmap server returned 504 on every call on 2026-11-21; next batch, live through `vendor_cache`). Nearby amenities (no shops or cafes in Vicmap; OpenStreetMap or Overture needs a licence decision). Crime (file not downloaded). Short-stay (rights pending; needs a CRM sync and a decision). Sale history (reported web lookup, rights pending). Price drivers (the model came from Domain data). Photos (no licensed source). Base-map tiles (OpenStreetMap's tile policy bars bulk use).

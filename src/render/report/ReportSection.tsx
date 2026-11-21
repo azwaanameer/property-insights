@@ -2,6 +2,8 @@ import type { LayerResult } from "../../server/contracts/layer";
 import { PROFILE_HEADING, REPORT, SECTION_QUESTIONS } from "../../site/copy";
 import { FigureTile } from "./FigureTile";
 import { LockCard } from "./LockCard";
+import { BuildingPanel, SchoolsPanel, SupplyPanel, TransportPanel } from "./LocationPanels";
+import { AttributionList, ScreenerTable } from "./NearbyPanels";
 import { QuestionsList } from "./QuestionsList";
 import { RatingPanel } from "./RatingPanel";
 import { ReturnCalculator } from "./ReturnCalculator";
@@ -27,6 +29,12 @@ function Extras({ layer }: { layer: LayerResult }) {
   if (layer.layer_id === "L05-return") return <ReturnCalculator payload={layer.payload} />;
   if (layer.layer_id === "L15-conditions") return <RatingPanel payload={layer.payload} />;
   if (layer.layer_id === "L13-questions") return <QuestionsList payload={layer.payload} />;
+  if (layer.layer_id === "L16-transport") return <TransportPanel payload={layer.payload} />;
+  if (layer.layer_id === "L17-schools") return <SchoolsPanel payload={layer.payload} />;
+  if (layer.layer_id === "L11-building") return <BuildingPanel payload={layer.payload} />;
+  if (layer.layer_id === "L08-supply") return <SupplyPanel payload={layer.payload} />;
+  if (layer.layer_id === "L10-screener") return <ScreenerTable payload={layer.payload} />;
+  if (layer.layer_id === "L14-attribution") return <AttributionList payload={layer.payload} />;
   return null;
 }
 

@@ -121,3 +121,22 @@
 - source_spec: `spec-report-return-rating-questions.md`
   summary: Add negative tests for the rating publish checks (fifths, ordering, shrink below 80%), fix `getRating`'s unit-only unrated reason, and give the synthesis pass a shared time budget.
   evidence: Review findings; a weakened check would still pass today.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-2-transport-schools-building-supply.md`
+  summary: L08 Supply shows only under-construction, approved and applied projects; recent completions are loaded but not shown, and the pipeline total mixes certain and speculative dwellings.
+  evidence: Blind review of L08; completed rows carry `year_completed` and `resi_dwellings`. Add a recent-completions row and split the total.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-2-transport-schools-building-supply.md`
+  summary: Transport extraction keeps one representative trip per route, shape and direction, so frequency, hours and school-only or night-only services are lost, and stop patterns that share a shape key can drop stops.
+  evidence: Edge review of `gtfs-extract.py` `process_feed`. A stop-pattern signature in the keep key, and a weekday trips-per-hour figure, would fix both.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-2-transport-schools-building-supply.md`
+  summary: The City of Melbourne to G-NAF match table is keyed by G-NAF pid and goes stale when G-NAF is reloaded; no serve-time check that the match was built against the current G-NAF version, and the column is named `gnaf_building_id` though it holds a property-level pid.
+  evidence: Edge and blind reviews. The RUNBOOK says to re-run `pipeline:com` after a G-NAF reload; a stored G-NAF dataset version id and a gate in L11 would make staleness visible.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-2-transport-schools-building-supply.md`
+  summary: L16, L17 and L10 have no state check; an address outside Victoria would get Victorian statements ("no zone", "no stop within 40 km").
+  evidence: Edge review. Only Victoria is loaded so no other-state address resolves today; needed before another state.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-2-transport-schools-building-supply.md`
+  summary: Screener drops the subject suburb row when it has no price or rent of its own and gives no note; school zone join by school number across second campuses is untested; the `npm run pipeline:gtfs` script hard-codes `python`.
+  evidence: Edge and blind reviews; each is low frequency (a few suburbs, a few schools, a machine without `python` on PATH).
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-2-transport-schools-building-supply.md`
+  summary: Copy numbers (1 km, 400 m, 800 m) are literal text next to constants in the layer files; the GTFS outer-zip branch has no committed nested-zip fixture or real-file test (a full real run takes minutes).
+  evidence: Blind and gap reviews; a mismatch appears only if a constant changes.
