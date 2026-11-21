@@ -93,3 +93,7 @@ Not started: layers for schools, transport, flood, bushfire, heritage, planning,
 ## 7. Git
 
 The foundation is committed (`8825e37`). Everything since is uncommitted in the working tree: migrations 0004 and 0005, the pipelines, layers, site, checkout, tests, specs and this file. Review it, then commit when you are ready. `.env` is ignored by git.
+
+## 8. Live deployment (2026-11-21)
+
+Worker `vicprop` is deployed at https://vicprop.agenticapps.workers.dev (Cloudflare account on the logged-in Wrangler). Secrets set: `DATABASE_URL`, `ENTITLEMENT_SECRET`. Not set, on purpose: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (checkout answers `payments_not_configured`) and `ALLOW_DEV_UNLOCK` (the dev route answers 404). Redeploy with `npm run build` then `npx wrangler deploy`. The branch `build/foundation` is pushed to origin; `main` is unchanged. The GitHub repo is public.
