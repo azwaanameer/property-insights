@@ -20,7 +20,7 @@ export function SafetyPanel({ payload }: { payload: Record<string, unknown> }) {
   const year = isNum(payload.year_ending) ? payload.year_ending : null;
   if (!suburb || !str(suburb.name) || year === null) return null;
   const previous = isNum(payload.previous_year) ? payload.previous_year : null;
-  const table = list(payload.table).filter(isObj).filter((r) => str(r.subdivision) && isNum(r.latest));
+  const table = list(payload.table).filter(isObj).filter((r) => str(r.subdivision) && (isNum(r.latest) || isNum(r.previous)));
   const series = list(payload.series).filter(isObj).filter((r) => isNum(r.year_ending));
   const councils = list(payload.councils).filter(isObj).filter((c) => str(c.lga));
   const victoria = isObj(payload.victoria) && isNum(payload.victoria.rate_per_100k) ? payload.victoria : null;

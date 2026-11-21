@@ -4,6 +4,7 @@ import { FigureTile } from "./FigureTile";
 import { LockCard } from "./LockCard";
 import { BuildingPanel, SchoolsPanel, SupplyPanel, TransportPanel } from "./LocationPanels";
 import { AttributionList, ScreenerTable } from "./NearbyPanels";
+import { PhotosPanel, PlacesPanel } from "./PhotosPanel";
 import { QuestionsList } from "./QuestionsList";
 import { RatingPanel } from "./RatingPanel";
 import { SafetyPanel } from "./SafetyPanel";
@@ -30,6 +31,8 @@ function Extras({ layer }: { layer: LayerResult }) {
   if (layer.layer_id === "L05-return") return <ReturnCalculator payload={layer.payload} />;
   if (layer.layer_id === "L15-conditions") return <RatingPanel payload={layer.payload} />;
   if (layer.layer_id === "L13-questions") return <QuestionsList payload={layer.payload} />;
+  if (layer.layer_id === "L19-photos") return <PhotosPanel payload={layer.payload} />;
+  if (layer.layer_id === "L20-places") return <PlacesPanel payload={layer.payload} />;
   if (layer.layer_id === "L16-transport") return <TransportPanel payload={layer.payload} />;
   if (layer.layer_id === "L17-schools") return <SchoolsPanel payload={layer.payload} />;
   if (layer.layer_id === "L18-safety") return <SafetyPanel payload={layer.payload} />;

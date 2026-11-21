@@ -48,7 +48,7 @@ context:
 - `src/server/layers/l02-rent.ts` — add the reported listing line.
 - `src/server/report/report-type.ts` — house or apartment from G-NAF, and the section list for each.
 - `src/server/layers/l-short-stay.ts` — apply the 1.4 times cutoff.
-- `migrations/0009_reported_source.sql` — seed `src_source` row for the lookup with `rights_status: pending`.
+- `migrations/0010_reported_source.sql` — seed `src_source` row for the lookup with `rights_status: pending`.
 
 ## Tasks & Acceptance
 

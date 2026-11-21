@@ -55,6 +55,8 @@ describe.skipIf(!have)("real Crime Statistics Agency workbook into PGlite", () =
        FROM fact_crime_lga WHERE year_ending = 2026 AND rate_per_100k > 0`,
     );
     expect(s.areas).toBe(79);
+    // The 2026 incidents in the council rows: a stored or summed region Total would double this.
+    expect((await db.query("SELECT sum(incidents)::int AS n FROM fact_crime_lga WHERE year_ending = 2026 AND rate_per_100k > 0"))[0].n).toBe(465_100);
     expect(s.rate).toBeGreaterThan(5_000);
     expect(s.rate).toBeLessThan(9_000);
     expect((await db.query("SELECT count(*)::int AS n FROM fact_crime_lga WHERE lga = 'Total'"))[0].n).toBe(0);

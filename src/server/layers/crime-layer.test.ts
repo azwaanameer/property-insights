@@ -1,5 +1,6 @@
 // L18 Recorded crime (layer id L18-safety), run end to end on a real excerpt of the Crime Statistics Agency workbook loaded through the real
 // extractor and loader into PGlite (fixtures/crime.mjs). One test per row of the spec's I/O matrix, plus the wording guard and the L14 credit.
+import { UNAVAILABLE_VENDORS } from "../vendors/types";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { ANONYMOUS, type ResolvedAddress } from "../contracts/address";
 import type { LayerResult } from "../contracts/layer";
@@ -45,7 +46,7 @@ afterAll(() => close());
 
 async function runWith(over: Partial<ResolvedAddress>, t: TestDb = db, query = DOCKLANDS_UNIT) {
   const address = { ...(await resolveQuery(t, query)), ...over };
-  return L18Safety.run({ db: t, address, request_id: "t" });
+  return L18Safety.run({ db: t, address, request_id: "t", vendors: UNAVAILABLE_VENDORS });
 }
 async function withDb<T>(fn: (t: TestDb) => Promise<T>, omit: SuburbDataset[] = []): Promise<T> {
   const t = await createSuburbDataTestDb({ omit });
@@ -98,7 +99,8 @@ describe("a Docklands unit: one council area", () => {
     expect(f).toMatchObject({ unit: "fraction", chip: "Estimated" });
     expect(f.value).toBeCloseTo((3058 - prev) / prev, 10);
     expect(f.note).toContain(`3058 recorded in the year ending June 2026, compared with ${prev} in the year ending June 2025`);
-    expect(f.note).toMatch(/subject to movement between releases/);
+    expect(f.note).toMatch(/newest year is provisional/);
+    expect(f.note).toMatch(/not like for like/);
   });
 
   it("the council area rate is Observed as published (City of Melbourne 16,944), and the Victorian rate is Estimated from the council rows with a matching top and bottom", () => {
@@ -114,7 +116,9 @@ describe("a Docklands unit: one council area", () => {
     const population = councils.reduce((n, r) => n + (r.incidents * 100000) / (r.rate_per_100k as number), 0);
     expect(f.victoria_rate).toMatchObject({ unit: "per_100k", chip: "Estimated" });
     expect(f.victoria_rate.value as number).toBeCloseTo((incidents / population) * 100000, 6);
-    expect(f.victoria_rate.note).toContain("all 4 council areas combined, excluding incidents with unknown location");
+    expect(f.victoria_rate.note).toContain("all 4 council areas combined, excluding incidents at justice institutions and immigration facilities, in unincorporated Victoria and with unknown location");
+    // The incidents behind the rate are the councils' only: a stored or summed region Total would double them.
+    expect((l18.payload as any).victoria.incidents).toBe(incidents);
     // The region Total rows (which carry a rate too) are not in the sum: with them the rate would be a different number.
     const withTotals = extract.lga.filter((r) => r.year === 2026 && r.rate_per_100k !== null);
     const wrong = withTotals.reduce((n, r) => n + r.incidents, 0) / withTotals.reduce((n, r) => n + (r.incidents * 100000) / (r.rate_per_100k as number), 0) / 1e-5;

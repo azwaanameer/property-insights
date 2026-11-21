@@ -164,3 +164,30 @@ npm run pipeline:crime                   # extract (python, openpyxl, about 20 s
 
 **Orchestrator steps still to run:** migration 0008 and the crime load on Neon, `npm run build` and `npx wrangler deploy`, then the browser check on GAVIC720519114 and GAVIC425618586 at 1200 px and 390 px.
 
+
+
+## 12. Report batch 3: street photos and nearby places (built 2026-11-21; migration, secret, deploy and live check still to run)
+
+Two new free sections and the first live vendor adapters: `L19-photos` What does the street look like? (right after the property section) and `L20-places` What is nearby? (right after transport). They read no loaded dataset: each call goes to an outside service at request time and is cached in `vendor_cache`.
+
+**Run order (PowerShell, repo root, `.env` holding `DATABASE_URL`).**
+
+```powershell
+node --env-file=.env db/migrate.mjs                 # migration 0009: sources openstreetmap, mapillary, wikimedia_commons; layers L19, L20
+npx wrangler secret put MAPILLARY_ACCESS_TOKEN      # paste the Mapillary client token; without it L19 shows Wikimedia photos only
+npm run build; npx wrangler deploy
+```
+
+Nothing to load: there is no pipeline. For local runs put `MAPILLARY_ACCESS_TOKEN=...` in the gitignored `.dev.vars` (Worker) or `.env` (node dev). The token is read in `src/server/vendors/index.ts` only and is never logged, cached or returned (the request URL carries it, so adapter errors never include the URL).
+
+**Sources.** Mapillary images (CC BY-SA 4.0, credit "Photos: Mapillary contributors, CC BY-SA 4.0"); Wikimedia Commons photos (only public domain, CC0, CC BY and CC BY-SA files; each shows its own author and licence); OpenStreetMap places via the public Overpass API (ODbL 1.0, credit "© OpenStreetMap contributors" linked to https://www.openstreetmap.org/copyright). All three are `cleared` in 0009 on the owner's rulings of 2026-11-21 (public images may be used; OpenStreetMap with that credit).
+
+**Mapillary terms, as read 2026-11-21.** help.mapillary.com (Licenses) says images are shared under CC BY-SA and must be credited to the photographer; the version is not stated there, 4.0 is assumed from the owner's note. Mapillary's help site returned 403 to a direct fetch, so this comes from search summaries of its pages. Thumbnail URLs are signed CDN links; nothing found says how long they last (one forum post reports "URL signature expired"). Hence the Mapillary cache is 3 days, not the 7-day ceiling the spec allows. If a photo ever shows as broken, shorten `MAPILLARY_TTL_DAYS` in `src/server/vendors/mapillary.ts`.
+
+**How it behaves.** Each section makes at most 2 (L19) or 1 (L20) outside calls, in parallel, 8 second limit; the layer runner waits 10 s for these two layers (`LayerDef.timeout_ms`) so a slow vendor is a gap ("Photos are not available right now." / "Nearby places are not available right now."), never an error. Cache keys are the vendor plus the point rounded to 3 decimals (about 100 m) plus the radius; each adapter searches around the rounded point with a margin, and the layer filters by true distance (street photos 150 m, Commons photos 1 km, places 800 m). A failed call is never cached. Public data is stored with `principal_id` null. Images are never stored or proxied.
+
+**Safe to test without the network.** Vitest installs a setup file (`src/server/testing/no-network.ts`) that makes the global `fetch` throw, and layers get `UNAVAILABLE_VENDORS` unless a test passes fakes (`src/server/testing/fake-vendors.ts`).
+
+**Roll back one section without code:** `UPDATE layer_config SET enabled = false WHERE layer_id = 'L19-photos';` (or `'L20-places'`).
+
+**Smoke test to run after deploy.** Open GAVIC720519114 (Docklands) and GAVIC425618586 at 1200 px and 390 px: street photos with creator, licence and a Source link under each; Commons photos if any; the places table with the OpenStreetMap credit; the sources list crediting OpenStreetMap, Mapillary and Wikimedia Commons. Check the `vendor_cache` rows (principal_id null, expiry within 3 or 30 days). A second load must not call out again.

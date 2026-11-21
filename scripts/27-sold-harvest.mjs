@@ -37,7 +37,8 @@ let remaining = null;
 const save = () => writeFileSync(OUT, JSON.stringify(out));
 
 for (const s of PRIORITY) {
-  if (DONE_BEFORE.has(s.name) || out.suburbs[s.name]?.status) continue;
+  // Only finished suburbs are skipped: one that stopped on an error is tried again (its pages are cached, so the repeat is cheap).
+  if (DONE_BEFORE.has(s.name) || ["ok", "mixed states"].includes(out.suburbs[s.name]?.status)) continue;
   const rows = [];
   let total = null;
   let status = "ok";

@@ -158,7 +158,8 @@ def main():
     suburb = [[y, l, p, s, d, sd, n] for (y, l, p, s, d, sd), n in sorted(agg.items())]
 
     retrieved = datetime.fromtimestamp(os.path.getmtime(INPUT), tz=timezone.utc)
-    as_of = AS_OF_ARG or retrieved.strftime("%Y-%m-%d")
+    # The data's own date: the end of the newest year (the agency's years end in June), not the day the file was downloaded.
+    as_of = AS_OF_ARG or f"{max(raw_total)}-06-30"
     manifest = {
         "source": "csa_crime_incidents",
         "source_file": os.path.basename(INPUT),

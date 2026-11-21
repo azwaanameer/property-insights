@@ -127,7 +127,7 @@ describe("two council areas, a gap and a malformed payload", () => {
     const out = html(await model("5 Odd Court Fakeville"));
     const s = section(out, "L18-safety");
     expect(s).toContain('data-status="gap"');
-    expect(text(s)).toContain('The Crime Statistics Agency lists no incidents under the suburb or town "Fakeville" with postcode 3999');
+    expect(text(s)).toContain('The Crime Statistics Agency\'s list does not include the suburb or town "Fakeville" with postcode 3999');
     expect(s).not.toContain("<table");
     expect(s).not.toContain('class="tile"');
     // The rest of the report still renders, and the agency is not credited.

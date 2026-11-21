@@ -15,13 +15,17 @@ import { L15Conditions } from "./L15-conditions";
 import { L16Transport } from "./L16-transport";
 import { L17Schools } from "./L17-schools";
 import { L18Safety } from "./L18-safety";
+import { L19Photos } from "./L19-photos";
+import { L20Places } from "./L20-places";
 import type { LayerDef } from "./types";
 
 export const LAYERS: LayerDef[] = [
   L01Property,
+  L19Photos,
   L02Rent,
   L03Price,
   L16Transport,
+  L20Places,
   L17Schools,
   L18Safety,
   L11Building,

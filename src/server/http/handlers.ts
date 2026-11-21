@@ -19,6 +19,8 @@ import { buildSetCookie, isSecureRequest, readCookie, signEntitlementCookie, ver
 import { entitlements, principalId, resolvePrincipal } from "../services/entitlements";
 import { rightsGate } from "../services/layer-runner";
 import { activeCookieIds, applyPaymentEvent, completeDevUnlock, payableLayers, purchaseView, startCheckout } from "../services/purchases";
+import { createVendors } from "../vendors";
+import type { VendorAdapters } from "../vendors/types";
 import { loadedStates, resolveByPid, resolveQuery, suggest } from "../services/resolve-address";
 
 export type DbSource = () => Db;
@@ -26,6 +28,8 @@ export type DbSource = () => Db;
 /** Injectable for tests. In production every field is read from the environment and the registry. */
 export interface HandlerOptions {
   layers?: LayerDef[];
+  /** Overrides the live vendor adapters (tests pass fakes). */
+  vendors?: VendorAdapters;
   env?: Env;
   /** undefined = choose from the environment; null = no provider. */
   provider?: PaymentProvider | null;
@@ -121,7 +125,8 @@ export function handleReport(
     const db = getDb();
     const principal = await resolvePrincipal(request, db, { env: options.env, now: options.now });
     const address = await resolveByPid(db, pid, unit ?? null);
-    const report = await assembleReport({ db, address, principal, request_id: requestId, layers: options.layers });
+    const vendors = options.vendors ?? createVendors({ db, env: options.env ?? processEnv() });
+    const report = await assembleReport({ db, address, principal, request_id: requestId, layers: options.layers, vendors });
 
     // Best effort: a failed log write never fails the report. Only the matched pid is stored.
     try {

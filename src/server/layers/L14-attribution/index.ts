@@ -15,6 +15,18 @@ export const L14_SOURCE_IDS = [REGISTRY_SOURCE];
 export const SOURCES_NOTE = "Every figure in this report shows its source and date. A figure marked Estimated says how it was worked out. This report is general information, not advice.";
 
 export const CC_BY_4_URL = "https://creativecommons.org/licenses/by/4.0/";
+export const CC_BY_SA_4_URL = "https://creativecommons.org/licenses/by-sa/4.0/";
+export const ODBL_URL = "https://opendatacommons.org/licenses/odbl/1-0/";
+/** Where a credit line links to, for a source whose licence asks for a link in the credit. */
+export const CREDIT_URLS: Record<string, string> = { openstreetmap: "https://www.openstreetmap.org/copyright" };
+
+/** The licence text of the registry mapped to its licence page; a licence that is set per item (Wikimedia Commons) has none here. */
+export function licenceUrl(licence: string): string | null {
+  if (licence.includes("CC BY-SA 4.0")) return CC_BY_SA_4_URL;
+  if (licence.includes("CC BY 4.0")) return CC_BY_4_URL;
+  if (licence.includes("ODbL")) return ODBL_URL;
+  return null;
+}
 
 /**
  * Sources VicProp always transforms before showing: stops grouped into stations, zones tested against the address, schools filtered to open
@@ -71,7 +83,8 @@ export const L14Attribution: LayerDef = {
           name: r.name,
           licence: r.licence,
           attribution_text: r.attribution_text,
-          licence_url: r.licence.includes("CC BY 4.0") ? CC_BY_4_URL : null,
+          licence_url: licenceUrl(r.licence),
+          credit_url: CREDIT_URLS[id] ?? null,
           adapted: ADAPTED_SOURCES.has(id) || (used.get(id)?.estimated ?? false),
           as_of: d?.as_of ?? null,
           retrieved_at: d?.retrieved_at ?? null,

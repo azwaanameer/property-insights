@@ -309,7 +309,7 @@ export const FOOTER = {
   disclaimer:
     "General information only. Not financial, legal, planning or valuation advice. Some details come from public listings and are not checked against the title.",
   // Only the sources the built layers use. Add a source here when a layer that uses it ships.
-  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education, the City of Melbourne and the Crime Statistics Agency, used under Creative Commons Attribution licences.",
+  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education, the City of Melbourne and the Crime Statistics Agency, used under Creative Commons Attribution licences. Place data © OpenStreetMap contributors (ODbL). Street and neighbourhood photos from Mapillary and Wikimedia Commons contributors, credited on each photo.",
 };
 
 // ----- Report page -----
@@ -327,6 +327,8 @@ export const SECTION_QUESTIONS: Record<string, string> = {
   "L16-transport": "How do you get around?",
   "L17-schools": "Which schools is it zoned for?",
   "L18-safety": "What does recorded crime look like?",
+  "L19-photos": "What does the street look like?",
+  "L20-places": "What is nearby?",
   "L11-building": "What do we know about the building?",
   "L08-supply": "What new apartments are coming?",
   "L10-screener": "Where else could you invest?",
@@ -351,6 +353,9 @@ export const SOURCE_NAMES: Record<string, string> = {
   vic_school_locations_2026: "Department of Education school locations 2026",
   com_open_data: "City of Melbourne",
   csa_crime_incidents: "Crime Statistics Agency Victoria",
+  mapillary: "Mapillary contributors",
+  wikimedia_commons: "Wikimedia Commons",
+  openstreetmap: "OpenStreetMap contributors",
   vicprop_registry: "VicProp",
 };
 
@@ -489,6 +494,27 @@ export const CRIME = {
   scopeLabel: "About these figures",
 };
 
+/** The street and neighbourhood photos (L19). Every image shows who took it, its licence and where it came from. */
+export const PHOTOS = {
+  streetHeading: "The street",
+  placesHeading: "The neighbourhood",
+  notesLabel: "About these photos",
+  by: "Photo by",
+  source: "Source",
+  streetCaption: (year: number, facing: string) => (facing ? `Taken in ${year}, facing ${facing}` : `Taken in ${year}`),
+};
+
+/** The nearby places table (L20). Distances are straight lines; no ratings or reviews are shown. */
+export const PLACES = {
+  caption: "The nearest of each kind, and how many are close",
+  head: { kind: "Kind", nearest: "Nearest", distance: "Straight line", within400: "Within 400 m", within800: "Within 800 m" },
+  unnamed: "A place with no name in OpenStreetMap",
+  none: "None listed within 800 m",
+  dash: "None",
+  straightLine: "Distances are straight lines from the address point, not walking routes.",
+  credit: { text: "© OpenStreetMap contributors", url: "https://www.openstreetmap.org/copyright" },
+};
+
 /** The screener table (L10). */
 export const SCREENER = {
   caption: "Nearby suburbs side by side, ordered by gross yield before costs",
@@ -507,6 +533,8 @@ export const LAYER_NAMES: Record<string, string> = {
   "L16-transport": "Transport",
   "L17-schools": "Schools",
   "L18-safety": "Recorded crime",
+  "L19-photos": "Street photos",
+  "L20-places": "Nearby places",
   "L11-building": "Building",
   "L08-supply": "New supply",
   "L05-return": "Return",

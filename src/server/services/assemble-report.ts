@@ -6,6 +6,7 @@ import { LAYERS } from "../layers";
 import type { LayerDef } from "../layers/types";
 import { listCurrentDatasets } from "../repos/datasets";
 import { listLayerConfig, listSources } from "../repos/source";
+import type { VendorAdapters } from "../vendors/types";
 import { runLayers, type RightsContext } from "./layer-runner";
 
 export interface AssembleInput {
@@ -15,6 +16,8 @@ export interface AssembleInput {
   request_id: string;
   /** Overridable for tests; defaults to the registry. */
   layers?: LayerDef[];
+  /** Outside-service adapters. Unset = none (every outside call fails); the HTTP handler sets the live ones. */
+  vendors?: VendorAdapters;
   now?: Date;
   timeout_ms?: number;
 }
@@ -40,7 +43,7 @@ export function matchNote(address: ResolvedAddress): string | null {
 export async function assembleReport(input: AssembleInput): Promise<ReportModel> {
   const { db, address, principal, request_id } = input;
   const rights = await loadRights(db);
-  const layers = await runLayers(input.layers ?? LAYERS, { db, address, principal, request_id, rights, timeout_ms: input.timeout_ms });
+  const layers = await runLayers(input.layers ?? LAYERS, { db, address, principal, request_id, rights, vendors: input.vendors, timeout_ms: input.timeout_ms });
   return ReportModel.parse({
     report_version: 1,
     request_id,

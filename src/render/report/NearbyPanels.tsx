@@ -103,7 +103,10 @@ export function AttributionList({ payload }: { payload: Record<string, unknown> 
           const asOf = typeof s.as_of === "string" ? formatDate(s.as_of) : "";
           return (
             <li key={String(s.source_id)} data-source={String(s.source_id)}>
-              <b>{String(s.name)}.</b> {typeof s.attribution_text === "string" ? s.attribution_text : ""}
+              <b>{String(s.name)}.</b>{" "}
+              {typeof s.credit_url === "string" && s.credit_url.startsWith("https://") ? (
+                <a href={s.credit_url} target="_blank" rel="noopener noreferrer">{typeof s.attribution_text === "string" ? s.attribution_text : ""}</a>
+              ) : typeof s.attribution_text === "string" ? s.attribution_text : ""}
               {s.adapted === true && !(typeof s.attribution_text === "string" && s.attribution_text.includes(ATTRIBUTION.adapted.replace(/\.$/, ""))) ? ` ${ATTRIBUTION.adapted}` : ""}
               <span className="meta">
                 {ATTRIBUTION.licence}: {typeof s.licence === "string" ? s.licence : ""}

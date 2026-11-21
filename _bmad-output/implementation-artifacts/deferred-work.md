@@ -163,3 +163,40 @@
   summary: The offence table is the agency's own offence names. One of them, "A80 Dangerous and negligent acts endangering people", contains the word "dangerous", so a literal search of the section for that word finds it. It is the agency's classification name, shown as published.
   evidence: The acceptance criterion bars verdict wording; the owner may prefer a shortened label, which would stop it being the agency's name.
 
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: L18 matches the suburb by name and postcode at serve time (a deliberate exception to AD-6); a pipeline-built crosswalk from the G-NAF suburb code to the agency's suburb and postcode would store a match type.
+  evidence: review of b228b0a, finding 4. 99.5% of Victorian G-NAF addresses match today; 5,887 match nothing (mostly Rosebud West, 4,604) and get the "list does not include" gap.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: The crime extractor and loader assume a year-ending-June file with 87 council rows a year for 10 years; the next release with a different shape will stop the load loudly, so the checks need updating then.
+  evidence: review of b228b0a, finding 12 (`crime-extract.py` June check, `crime.mjs` row counts).
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: The panel footer carries one Estimated chip although the section also shows an Observed council rate; the per-figure chips are right.
+  evidence: review of b228b0a, finding 11 (cosmetic).
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-safety-crime.md`
+  summary: The site copy for the Victorian rate (`src/site/copy.ts`, crime strings) still says it excludes only unknown-location incidents; the layer note now names justice institutions, immigration facilities, unincorporated Victoria and unknown location.
+  evidence: review of b228b0a, finding 6; copy.ts was being edited by another build at the time.
+- source_spec: `scripts/27-sold-harvest.mjs`
+  summary: Sold-listing harvest data (RapidAPI realty-in-au) feeds only the offline price-driver model; the user ruled on 2026-11-21 that this route may be used. No harvested record may reach a layer as a raw listing.
+  evidence: review of b228b0a, finding 8.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
+  summary: Mapillary returns up to 200 images for the search box in no stated order, so in a very dense street the newest photos can be missing from the 200; a narrower box or a captured-at filter would fix it.
+  evidence: built to the spec's request (bbox, limit 200); noted while writing the picker.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
+  summary: Mapillary thumbnail links are signed and their lifetime is undocumented; the cache is 3 days and a broken photo is possible inside that window. No retry on a broken image is built.
+  evidence: help.mapillary.com read only through search summaries (403 on direct fetch), 2026-11-21.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
+  summary: The Mapillary licence version (4.0) is assumed from the owner's note; the help page says CC BY-SA without a version. Confirm in Mapillary's current terms.
+  evidence: RUNBOOK section 12.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
+  summary: The public Overpass endpoint has fair-use limits and no service level; with steady traffic, move to a paid or self-hosted Overpass or a periodic OpenStreetMap extract loaded as a dataset.
+  evidence: spec Design Notes; the layer already tolerates the vendor being down.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
+  summary: OpenStreetMap place counts stop at 400 elements (the query limit) and say so when reached; in the densest areas the counts are understated.
+  evidence: parseOverpass `truncated` flag and the section note.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
+  summary: The marketing catalogue (`CATALOGUE` in `src/site/copy.ts`) and its 18, 2, 5 counts do not list the street photos section; 'What is nearby day to day?' already stands for the places section.
+  evidence: left alone: the spec names no site-catalogue change and the home test pins the counts.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
+  summary: A Wikimedia photo whose author field is empty is dropped unless it is public domain or CC0; some valid CC BY photos with the author only in the description are therefore skipped.
+  evidence: `parseWikimedia` credit rule (a credit is required for CC BY and CC BY-SA).

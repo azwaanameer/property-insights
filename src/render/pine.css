@@ -312,6 +312,17 @@ tr.divrow th { font-weight: 700; color: var(--accent); background: rgb(var(--acc
 .nf h1 { font-size: clamp(1.9rem, 4vw, 2.9rem); }
 .nf p { color: var(--mute); }
 
+/* ===== Street photos and nearby places (L19, L20) ===== */
+.photos h3 { font-size: 1rem; margin: 18px 0 8px; }
+.photos .notices + h3 { margin-top: 4px; }
+.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 14px; }
+.shot { margin: 0; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.shotimg { display: block; background: var(--cell); border: 1px solid var(--rule); border-radius: var(--rs); }
+.shot img { display: block; width: 100%; height: auto; max-height: 260px; object-fit: contain; }
+.shot figcaption { display: grid; gap: 2px; font-size: 0.8rem; color: var(--mute); overflow-wrap: anywhere; }
+.shot .shotcap { color: var(--ink); font-weight: 600; }
+.shot .credit a { color: inherit; text-decoration: underline; }
+
 /* ===== Responsive ===== */
 @media (max-width: 1020px) {
   .cards4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }

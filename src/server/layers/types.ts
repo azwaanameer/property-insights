@@ -3,11 +3,14 @@
 import type { Db } from "../db";
 import type { Figure, LayerResult, LayerTier } from "../contracts/layer";
 import type { ResolvedAddress } from "../contracts/address";
+import type { VendorAdapters } from "../vendors/types";
 
 export interface LayerContext {
   db: Db;
   address: ResolvedAddress;
   request_id: string;
+  /** Outside-service adapters (AD-8). A layer never fetches itself: it asks these, and a failure comes back as a value. */
+  vendors: VendorAdapters;
   /**
    * Only for a `synthesis` layer: the results of every non-synthesis layer, after they ran (in registry order, whatever their status; other synthesis layers are not included).
    * A synthesis layer reads these results and nothing else of theirs; it never calls them (AD-1). Undefined for every other layer.
@@ -34,6 +37,8 @@ export interface LayerDef {
    * returns not_covered and is not run. Omit for a layer that reads no versioned dataset.
    */
   dataset_ids?: string[];
+  /** Time limit for this layer in ms, when it needs longer than the runner default (a layer that waits on an outside call). */
+  timeout_ms?: number;
   /** Runs in a second pass, after every non-synthesis layer, and receives their results as `ctx.siblings`. Reads results only (AD-1). */
   synthesis?: true;
   /** Hand-written headline sentence shown instead of figures when locked. Must not contain a figure value. */

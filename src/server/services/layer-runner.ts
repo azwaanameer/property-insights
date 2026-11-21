@@ -7,6 +7,7 @@ import type { LayerDef } from "../layers/types";
 import { errorFields, log } from "../log";
 import type { LayerTier } from "../contracts/layer";
 import type { LayerConfigRow, SourceRow } from "../repos/source";
+import { UNAVAILABLE_VENDORS, type VendorAdapters } from "../vendors/types";
 import { entitlements } from "./entitlements";
 
 export interface RightsContext {
@@ -53,7 +54,9 @@ export interface RunLayersInput {
   principal: Principal;
   request_id: string;
   rights: RightsContext;
-  /** Per-layer time limit. Default 8000 ms. */
+  /** Outside-service adapters handed to every layer. Unset = every outside call fails (no network), so a layer says its data is unavailable. */
+  vendors?: VendorAdapters;
+  /** Per-layer time limit. Default 8000 ms, or the layer's own `timeout_ms`. */
   timeout_ms?: number;
   /** Results of the layers that ran before a synthesis layer. Set by runLayers for the second pass; leave unset otherwise. */
   siblings?: LayerResult[];
@@ -87,13 +90,13 @@ export async function runLayer(layer: LayerDef, input: RunLayersInput): Promise<
     return LayerResult.parse({ ...base, status: "locked", figures: [], payload: {}, teaser: layer.teaser });
   }
 
-  const timeoutMs = input.timeout_ms ?? DEFAULT_LAYER_TIMEOUT_MS;
+  const timeoutMs = input.timeout_ms ?? layer.timeout_ms ?? DEFAULT_LAYER_TIMEOUT_MS;
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     const timeout = new Promise<never>((_, reject) => {
       timer = setTimeout(() => reject(new LayerTimeout(timeoutMs)), timeoutMs);
     });
-    const out = await Promise.race([layer.run({ db: input.db, address, request_id, ...(layer.synthesis ? { siblings: input.siblings ?? [] } : {}) }), timeout]);
+    const out = await Promise.race([layer.run({ db: input.db, address, request_id, vendors: input.vendors ?? UNAVAILABLE_VENDORS, ...(layer.synthesis ? { siblings: input.siblings ?? [] } : {}) }), timeout]);
     return LayerResult.parse({ ...base, status: out.status, figures: out.figures, payload: out.payload, message: out.message });
   } catch (err) {
     // Detail goes to the log, with the request id. The report only says this section failed.

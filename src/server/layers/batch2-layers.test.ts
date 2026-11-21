@@ -1,6 +1,7 @@
 // Layers L16 Transport, L17 Schools, L11 Building, L08 Supply, L10 Screener and L14 Attribution, plus the new L13 questions, run end to
 // end on real excerpts (GTFS stops, school zones and locations, City of Melbourne buildings and developments, Census, Valuer-General and
 // Homes Victoria) loaded through the real pipelines into PGlite. One test per row of the spec's I/O matrix, plus the wording guard.
+import { UNAVAILABLE_VENDORS } from "../vendors/types";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { ANONYMOUS, type ResolvedAddress } from "../contracts/address";
 import type { LayerResult } from "../contracts/layer";
@@ -56,7 +57,7 @@ afterAll(() => close());
 /** A layer run directly with the address changed, for places the fixture addresses do not reach (no coordinates, outside the council). */
 async function runWith(layer: { run: (ctx: any) => Promise<any> }, over: Partial<ResolvedAddress>, t: TestDb = db, query = DOCKLANDS_UNIT) {
   const address = { ...(await resolveQuery(t, query)), ...over };
-  return layer.run({ db: t, address, request_id: "t" });
+  return layer.run({ db: t, address, request_id: "t", vendors: UNAVAILABLE_VENDORS });
 }
 async function withDb<T>(fn: (t: TestDb) => Promise<T>, omit: SuburbDataset[] = []): Promise<T> {
   const t = await createSuburbDataTestDb({ omit });
@@ -541,7 +542,7 @@ describe("L10 and L14 details", () => {
   });
 
   it("L14 with nothing cited is a gap that says so", async () => {
-    const out = await L14Attribution.run({ db, address: await resolveQuery(db, DOCKLANDS_UNIT), request_id: "t", siblings: [] });
+    const out = await L14Attribution.run({ db, address: await resolveQuery(db, DOCKLANDS_UNIT), request_id: "t", vendors: UNAVAILABLE_VENDORS, siblings: [] });
     expect(out.status).toBe("gap");
     expect(out.message).toMatch(/nothing to list/);
   });

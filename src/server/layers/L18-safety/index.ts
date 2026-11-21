@@ -28,8 +28,9 @@ export const SERIES_YEARS = 5;
 export const NOT_LOADED_MESSAGE = "Crime statistics are not loaded.";
 export const NO_POSTCODE_MESSAGE =
   "This address has no postcode, and the Crime Statistics Agency's suburb counts are matched on suburb name and postcode together, so no crime figures are shown. A postcode is needed.";
+export const VICTORIA_ONLY_MESSAGE = "Recorded crime figures come from the Victorian Crime Statistics Agency, so they are shown for Victorian addresses only.";
 export const noSuburbMessage = (suburb: string, postcode: string) =>
-  `The Crime Statistics Agency lists no incidents under the suburb or town "${suburb}" with postcode ${postcode}, so no crime figures are shown. It publishes counts only for the suburbs and towns in its own list, matched on name and postcode together.`;
+  `The Crime Statistics Agency's list does not include the suburb or town "${suburb}" with postcode ${postcode}, so no crime figures are shown. It publishes counts only for the suburbs and towns in its own list, matched on name and postcode together, and may have counted this place under a neighbour.`;
 export const noLatestMessage = (suburb: string, postcode: string, year: number) =>
   `The Crime Statistics Agency lists no incidents for "${suburb}" (postcode ${postcode}) in the year ending June ${year}, so no counts are shown for that year.`;
 
@@ -67,10 +68,11 @@ export const L18Safety: LayerDef = {
   title: "Recorded crime",
   tier: "free",
   source_ids: L18_SOURCE_IDS,
-  teaser: "How many crimes police recorded in the suburb last year, and the council area's rate for every hundred thousand residents.",
+  teaser: "How many crimes police recorded in the suburb in the latest year, and the council area's rate for every hundred thousand residents.",
   async run({ db, address }): Promise<LayerRunOutput> {
     const dataset = await getCrimeDataset(db);
     if (!dataset) return { status: "gap", figures: [], payload: {}, message: NOT_LOADED_MESSAGE };
+    if (address.state !== "VIC") return { status: "gap", figures: [], payload: {}, message: VICTORIA_ONLY_MESSAGE };
     if (!address.postcode) return { status: "gap", figures: [], payload: {}, message: NO_POSTCODE_MESSAGE };
 
     const { latest_year: latest, as_of } = dataset;
@@ -127,7 +129,7 @@ export const L18Safety: LayerDef = {
           chip: "Estimated",
           source_ids: src,
           as_of,
-          note: `${total} recorded in the ${yearLabel(latest)}, compared with ${previousTotal} in the ${yearLabel(previousYear)}. The agency says counts are subject to movement between releases, and small counts change a lot from year to year.`,
+          note: `${total} recorded in the ${yearLabel(latest)}, compared with ${previousTotal} in the ${yearLabel(previousYear)}. The newest year is provisional: the agency extracts it 18 days after the year ends and says counts move between releases, while the earlier year has settled, so this change is not like for like. Small counts also change a lot from year to year.`,
         }),
       );
     } else {
@@ -175,7 +177,7 @@ export const L18Safety: LayerDef = {
           chip: "Estimated",
           source_ids: src,
           as_of,
-          note: `Worked out from the council area rows: all ${victoria.council_areas} council areas combined, excluding incidents with unknown location. Each area's residents are its incidents divided by its rate, so the top and bottom of the sum match.`,
+          note: `Worked out from the council area rows: all ${victoria.council_areas} council areas combined, excluding incidents at justice institutions and immigration facilities, in unincorporated Victoria and with unknown location. Each area's residents are its incidents divided by its rate, so the top and bottom of the sum match.`,
         }),
       );
     } else {
@@ -189,9 +191,10 @@ export const L18Safety: LayerDef = {
         const a = now.filter((r) => r.subdivision === subdivision);
         const b = before.filter((r) => r.subdivision === subdivision);
         const division = (a[0] ?? b[0]).division;
-        return { division_key: divisionLetter(division), division, subdivision, latest: sum(a), previous: before.length > 0 ? sum(b) : null };
+        // The agency lists only offences that occurred, so no row in a year is "none listed" (null), the same as a year with no rows at all.
+        return { division_key: divisionLetter(division), division, subdivision, latest: a.length > 0 ? sum(a) : null, previous: b.length > 0 ? sum(b) : null };
       })
-      .filter((r) => r.latest > 0 || (r.previous ?? 0) > 0)
+      .filter((r) => r.latest !== null || r.previous !== null)
       .sort((x, y) => x.subdivision.localeCompare(y.subdivision, "en", { numeric: true }));
 
     // Totals for the latest five years. A year with no rows is "none listed", not zero: the layer cannot tell a quiet year from a missing one.

@@ -14,7 +14,7 @@ afterAll(() => close());
 
 describe("migrations", () => {
   it("apply once, record themselves, and are idempotent", async () => {
-    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql"]);
+    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql", "0009_photos_places.sql"]);
     expect(await applyMigrations(db)).toEqual([]);
   });
 
@@ -131,6 +131,29 @@ describe("migrations", () => {
        WHERE i.indrelid = 'fact_crime_suburb'::regclass AND i.indisprimary ORDER BY a.attname`,
     );
     expect(pk.map((r) => r.attname)).toEqual(["dataset_version_id", "lga", "postcode", "subdivision", "suburb", "year_ending"]);
+  });
+
+  it("0009 adds the three cleared photo and place sources with their credits and switches on L19 and L20 as free layers", async () => {
+    const rows = await db.query("SELECT source_id, licence, rights_status, attribution_text, max_cache_days FROM src_source WHERE source_id IN ('openstreetmap','mapillary','wikimedia_commons') ORDER BY source_id");
+    expect(rows.map((r) => r.source_id)).toEqual(["mapillary", "openstreetmap", "wikimedia_commons"]);
+    for (const r of rows) expect(r.rights_status).toBe("cleared");
+    const by = Object.fromEntries(rows.map((r) => [r.source_id, r]));
+    expect(by.openstreetmap).toMatchObject({ licence: "ODbL 1.0", attribution_text: "© OpenStreetMap contributors" });
+    expect(by.mapillary).toMatchObject({ licence: "CC BY-SA 4.0", attribution_text: "Photos: Mapillary contributors, CC BY-SA 4.0" });
+    expect(by.wikimedia_commons.attribution_text).toBe("Images from Wikimedia Commons; each image carries its own author and licence");
+    expect(by.mapillary.max_cache_days).toBeLessThanOrEqual(7);
+    for (const r of rows) expect(r.max_cache_days).toBeLessThanOrEqual(30);
+    const l = await db.query("SELECT layer_id, tier, enabled, source_ids FROM layer_config WHERE layer_id IN ('L19-photos','L20-places') ORDER BY layer_id");
+    expect(l.map((r) => [r.layer_id, r.tier, r.enabled])).toEqual([["L19-photos", "free", true], ["L20-places", "free", true]]);
+    expect([...l[0].source_ids].sort()).toEqual(["gnaf", "mapillary", "wikimedia_commons"]);
+    expect([...l[1].source_ids].sort()).toEqual(["gnaf", "openstreetmap"]);
+  });
+
+  it("0009: a layer cannot be on while its source is pending (AD-4), and vendor_cache refuses a row that lives longer than 30 days", async () => {
+    await db.query("UPDATE src_source SET rights_status = 'pending' WHERE source_id = 'openstreetmap'");
+    await expect(db.query("UPDATE layer_config SET enabled = true, updated_at = now() WHERE layer_id = 'L20-places'")).rejects.toThrow(/not cleared: .*openstreetmap/);
+    await db.query("UPDATE src_source SET rights_status = 'cleared' WHERE source_id = 'openstreetmap'");
+    await expect(db.query("INSERT INTO vendor_cache (cache_key, vendor, payload, fetched_at, expires_at) VALUES ('k', 'v', '{}', now(), now() + interval '31 days')")).rejects.toThrow();
   });
 
   it("the dev seed is idempotent on a migrated database", async () => {
