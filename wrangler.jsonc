@@ -5,5 +5,6 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
   "observability": { "enabled": true }
-  // Secrets (never in this file): DATABASE_URL via `wrangler secret put DATABASE_URL`; local dev uses .dev.vars.
+  // Secrets (never in this file): DATABASE_URL, ENTITLEMENT_SECRET, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET via `wrangler secret put NAME`; local dev uses .dev.vars.
+  // ALLOW_DEV_UNLOCK=1 is for .dev.vars only. Never set it in production.
 }

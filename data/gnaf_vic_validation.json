@@ -1,0 +1,1026 @@
+{
+ "summary": {
+  "vicmap_buildings_tested": 169,
+  "found_in_gnaf": 145,
+  "within_10pct_or_2": 130,
+  "within_25pct_or_2": 134,
+  "gnaf_lower": 11,
+  "gnaf_higher": 113
+ },
+ "pairs": [
+  {
+   "address": "131/283 Spring Street, Melbourne VIC 3000",
+   "vicmap": 165,
+   "gnaf": 188,
+   "gnaf_alt": 188
+  },
+  {
+   "address": "3201/45 Clarke Street, Southbank VIC 3006",
+   "vicmap": 703,
+   "gnaf": 705,
+   "gnaf_alt": 705
+  },
+  {
+   "address": "811N/889 Collins Street, Docklands VIC 3008",
+   "vicmap": 528,
+   "gnaf": 542,
+   "gnaf_alt": 548
+  },
+  {
+   "address": "3308/18 Hoff Boulevard, Southbank VIC 3006",
+   "vicmap": 647,
+   "gnaf": 649,
+   "gnaf_alt": 656
+  },
+  {
+   "address": "1301/139 Bourke Street, Melbourne VIC 3000",
+   "vicmap": 105,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "1807/421 Docklands Drive, Docklands VIC 3008",
+   "vicmap": 370,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "6C/29 Queens Road, Melbourne VIC 3004",
+   "vicmap": 50,
+   "gnaf": 51,
+   "gnaf_alt": 53
+  },
+  {
+   "address": "4905/245 City Road, Southbank VIC 3006",
+   "vicmap": 283,
+   "gnaf": 284,
+   "gnaf_alt": 284
+  },
+  {
+   "address": "2501/500 Elizabeth Street, Melbourne VIC 3000",
+   "vicmap": 778,
+   "gnaf": 783,
+   "gnaf_alt": 832
+  },
+  {
+   "address": "2607A/155 Franklin Street, Melbourne VIC 3000",
+   "vicmap": 724,
+   "gnaf": 726,
+   "gnaf_alt": 728
+  },
+  {
+   "address": "4410/220 Spencer Street, Melbourne VIC 3000",
+   "vicmap": 1115,
+   "gnaf": 1150,
+   "gnaf_alt": 1150
+  },
+  {
+   "address": "1403/568 Collins Street, Melbourne VIC 3000",
+   "vicmap": 854,
+   "gnaf": 859,
+   "gnaf_alt": 861
+  },
+  {
+   "address": "8/181 Franklin Street, Melbourne VIC 3000",
+   "vicmap": 14,
+   "gnaf": 15,
+   "gnaf_alt": 29
+  },
+  {
+   "address": "204/62 Beach Street, Port Melbourne VIC 3207",
+   "vicmap": 48,
+   "gnaf": 48,
+   "gnaf_alt": 48
+  },
+  {
+   "address": "805/182 Collins Street, Melbourne VIC 3000",
+   "vicmap": 59,
+   "gnaf": 59,
+   "gnaf_alt": 59
+  },
+  {
+   "address": "609/20 Queens Road, Melbourne VIC 3004",
+   "vicmap": 254,
+   "gnaf": 257,
+   "gnaf_alt": 259
+  },
+  {
+   "address": "165/55 Victoria Harbour Promenade, Docklands VIC 3008",
+   "vicmap": 123,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "3308/601 Little Lonsdale Street, Melbourne VIC 3000",
+   "vicmap": 884,
+   "gnaf": 885,
+   "gnaf_alt": 1120
+  },
+  {
+   "address": "1609/118 Kavanagh St, Southbank VIC 3006",
+   "vicmap": 753,
+   "gnaf": 761,
+   "gnaf_alt": 762
+  },
+  {
+   "address": "201/115 Nott Street, Port Melbourne VIC 3207",
+   "vicmap": 42,
+   "gnaf": 42,
+   "gnaf_alt": 45
+  },
+  {
+   "address": "2903/483 Swanston Street, Melbourne VIC 3000",
+   "vicmap": 293,
+   "gnaf": 294,
+   "gnaf_alt": 294
+  },
+  {
+   "address": "4D/9 Beach Street, Port Melbourne VIC 3207",
+   "vicmap": 57,
+   "gnaf": 62,
+   "gnaf_alt": 62
+  },
+  {
+   "address": "1001/33 Mackenzie Street, Melbourne VIC 3000",
+   "vicmap": 394,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "2805/50 Lorimer Street, Docklands VIC 3008",
+   "vicmap": 175,
+   "gnaf": 176,
+   "gnaf_alt": 201
+  },
+  {
+   "address": "1001/233 Collins Street, Melbourne VIC 3000",
+   "vicmap": 192,
+   "gnaf": 195,
+   "gnaf_alt": 193
+  },
+  {
+   "address": "1915/7 Siddeley Street, Docklands VIC 3008",
+   "vicmap": 474,
+   "gnaf": 474,
+   "gnaf_alt": 474
+  },
+  {
+   "address": "915/555 Flinders Street, Melbourne VIC 3000",
+   "vicmap": 459,
+   "gnaf": 464,
+   "gnaf_alt": 464
+  },
+  {
+   "address": "2711/33 Rose Lane, Melbourne VIC 3000",
+   "vicmap": 1006,
+   "gnaf": 1007,
+   "gnaf_alt": 1007
+  },
+  {
+   "address": "403/225 Elizabeth St, Melbourne VIC 3000",
+   "vicmap": 240,
+   "gnaf": 222,
+   "gnaf_alt": 229
+  },
+  {
+   "address": "1305/8 Waterview Walk, Docklands VIC 3008",
+   "vicmap": 307,
+   "gnaf": 317,
+   "gnaf_alt": 317
+  },
+  {
+   "address": "805/1 William Street, Melbourne VIC 3000",
+   "vicmap": 263,
+   "gnaf": 281,
+   "gnaf_alt": 282
+  },
+  {
+   "address": "616/228 A'Beckett Street, Melbourne VIC 3000",
+   "vicmap": 382,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "3617/628 Flinders Street, Docklands VIC 3008",
+   "vicmap": 721,
+   "gnaf": 732,
+   "gnaf_alt": 732
+  },
+  {
+   "address": "19/15 Liardet Street, Port Melbourne VIC 3207",
+   "vicmap": 46,
+   "gnaf": 46,
+   "gnaf_alt": 46
+  },
+  {
+   "address": "G01/15 Pickles Street, Port Melbourne VIC 3207",
+   "vicmap": 37,
+   "gnaf": 50,
+   "gnaf_alt": 51
+  },
+  {
+   "address": "28/801 Bourke Street, Docklands VIC 3008",
+   "vicmap": 66,
+   "gnaf": 67,
+   "gnaf_alt": 67
+  },
+  {
+   "address": "1508/648 Lonsdale Street, Melbourne VIC 3000",
+   "vicmap": 818,
+   "gnaf": 842,
+   "gnaf_alt": 842
+  },
+  {
+   "address": "1206/180 City Road, Southbank VIC 3006",
+   "vicmap": 707,
+   "gnaf": 713,
+   "gnaf_alt": 714
+  },
+  {
+   "address": "2508/639 Lonsdale Street, Melbourne VIC 3000",
+   "vicmap": 909,
+   "gnaf": 909,
+   "gnaf_alt": 909
+  },
+  {
+   "address": "3702/639 Little Lonsdale Street, Melbourne VIC 3000",
+   "vicmap": 714,
+   "gnaf": 716,
+   "gnaf_alt": 717
+  },
+  {
+   "address": "1503/285 La Trobe Street, Melbourne VIC 3000",
+   "vicmap": 307,
+   "gnaf": 308,
+   "gnaf_alt": 308
+  },
+  {
+   "address": "1208/250 City Rd, Southbank VIC 3006",
+   "vicmap": 359,
+   "gnaf": 359,
+   "gnaf_alt": 359
+  },
+  {
+   "address": "205/470 St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 187,
+   "gnaf": 188,
+   "gnaf_alt": 188
+  },
+  {
+   "address": "3210/560 Lonsdale Street, Melbourne VIC 3000",
+   "vicmap": 1317,
+   "gnaf": 1324,
+   "gnaf_alt": 1329
+  },
+  {
+   "address": "3302/119 A'Beckett Street, Melbourne VIC 3000",
+   "vicmap": 637,
+   "gnaf": 642,
+   "gnaf_alt": 642
+  },
+  {
+   "address": "4011/1 Balston Street, Southbank VIC 3006",
+   "vicmap": 777,
+   "gnaf": 779,
+   "gnaf_alt": 808
+  },
+  {
+   "address": "2004/70 Dorcas Street, Southbank VIC 3006",
+   "vicmap": 240,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "2603/241 City Road, Southbank VIC 3006",
+   "vicmap": 679,
+   "gnaf": 10,
+   "gnaf_alt": 697
+  },
+  {
+   "address": "4410/301 KING STREET, Melbourne VIC 3000",
+   "vicmap": 346,
+   "gnaf": 357,
+   "gnaf_alt": 357
+  },
+  {
+   "address": "1502/80 A'Beckett Street, Melbourne VIC 3000",
+   "vicmap": 474,
+   "gnaf": 548,
+   "gnaf_alt": 548
+  },
+  {
+   "address": "608E/888 Collins Street, Docklands VIC 3008",
+   "vicmap": 546,
+   "gnaf": 583,
+   "gnaf_alt": 584
+  },
+  {
+   "address": "2215/135 A'Beckett Street, Melbourne VIC 3000",
+   "vicmap": 673,
+   "gnaf": 675,
+   "gnaf_alt": 677
+  },
+  {
+   "address": "701/58 Clarke Street, Southbank VIC 3006",
+   "vicmap": 192,
+   "gnaf": 192,
+   "gnaf_alt": 192
+  },
+  {
+   "address": "303/30 Rakaia Way, Docklands VIC 3008",
+   "vicmap": 25,
+   "gnaf": 25,
+   "gnaf_alt": 25
+  },
+  {
+   "address": "611/153 Sturt Street, Southbank VIC 3006",
+   "vicmap": 139,
+   "gnaf": 141,
+   "gnaf_alt": 154
+  },
+  {
+   "address": "1409/565 Flinders Street, Melbourne VIC 3000",
+   "vicmap": 188,
+   "gnaf": 190,
+   "gnaf_alt": 190
+  },
+  {
+   "address": "306/166 Rouse St, Port Melbourne VIC 3207",
+   "vicmap": 62,
+   "gnaf": 62,
+   "gnaf_alt": 62
+  },
+  {
+   "address": "901/8 McCrae Street, Docklands VIC 3008",
+   "vicmap": 496,
+   "gnaf": 498,
+   "gnaf_alt": 498
+  },
+  {
+   "address": "401/19 Pickles Street, Port Melbourne VIC 3207",
+   "vicmap": 135,
+   "gnaf": 148,
+   "gnaf_alt": 150
+  },
+  {
+   "address": "62/431 St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 317,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "508/915 Collins Street, Docklands VIC 3008",
+   "vicmap": 312,
+   "gnaf": 322,
+   "gnaf_alt": 323
+  },
+  {
+   "address": "6013/70 Southbank Boulevard, Southbank VIC 3006",
+   "vicmap": 1269,
+   "gnaf": 1270,
+   "gnaf_alt": 1279
+  },
+  {
+   "address": "208/2 Glenti Place, Docklands VIC 3008",
+   "vicmap": 108,
+   "gnaf": 115,
+   "gnaf_alt": 116
+  },
+  {
+   "address": "510/339 Swanston Street, Melbourne VIC 3000",
+   "vicmap": 276,
+   "gnaf": 284,
+   "gnaf_alt": 283
+  },
+  {
+   "address": "3402/327 La Trobe Street, Melbourne VIC 3000",
+   "vicmap": 206,
+   "gnaf": 208,
+   "gnaf_alt": 208
+  },
+  {
+   "address": "1710/120 Abeckett Street, Melbourne VIC 3000",
+   "vicmap": 503,
+   "gnaf": 504,
+   "gnaf_alt": 504
+  },
+  {
+   "address": "224/539 St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 330,
+   "gnaf": 370,
+   "gnaf_alt": 370
+  },
+  {
+   "address": "10/1 Riverside Quay, Southbank VIC 3006",
+   "vicmap": 120,
+   "gnaf": 120,
+   "gnaf_alt": 120
+  },
+  {
+   "address": "3804/151 City Road, Southbank VIC 3006",
+   "vicmap": 977,
+   "gnaf": 983,
+   "gnaf_alt": 984
+  },
+  {
+   "address": "2206/265 Exhibition Street, Melbourne VIC 3000",
+   "vicmap": 225,
+   "gnaf": 226,
+   "gnaf_alt": 226
+  },
+  {
+   "address": "14/77 Coventry Street, Southbank VIC 3006",
+   "vicmap": 20,
+   "gnaf": 20,
+   "gnaf_alt": 20
+  },
+  {
+   "address": "2102/280 Spencer Street, Melbourne VIC 3000",
+   "vicmap": 150,
+   "gnaf": 152,
+   "gnaf_alt": 151
+  },
+  {
+   "address": "22/300 Plummer St, Port Melbourne VIC 3207",
+   "vicmap": 125,
+   "gnaf": 126,
+   "gnaf_alt": 134
+  },
+  {
+   "address": "7/32 Queens Road, Melbourne VIC 3004",
+   "vicmap": 54,
+   "gnaf": 55,
+   "gnaf_alt": 55
+  },
+  {
+   "address": "1117/601 Little Collins Street, Melbourne VIC 3000",
+   "vicmap": 666,
+   "gnaf": 670,
+   "gnaf_alt": 672
+  },
+  {
+   "address": "609/12 Queens Road, Melbourne VIC 3004",
+   "vicmap": 227,
+   "gnaf": 233,
+   "gnaf_alt": 455
+  },
+  {
+   "address": "303E/126 Rouse Street, Port Melbourne VIC 3207",
+   "vicmap": 61,
+   "gnaf": 65,
+   "gnaf_alt": 65
+  },
+  {
+   "address": "1004/350 Latrobe Street, Melbourne VIC 3000",
+   "vicmap": 65,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "1909/33 Mackenzie treet, Melbourne VIC 3000",
+   "vicmap": 394,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "130/555 St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 330,
+   "gnaf": 344,
+   "gnaf_alt": 344
+  },
+  {
+   "address": "806/320 Plummer St, Port Melbourne VIC 3207",
+   "vicmap": 115,
+   "gnaf": 117,
+   "gnaf_alt": 227
+  },
+  {
+   "address": "47/28 Southgate Avenue, Southbank VIC 3006",
+   "vicmap": 111,
+   "gnaf": 116,
+   "gnaf_alt": 232
+  },
+  {
+   "address": "809/8 Bowen Crescent, Melbourne VIC 3004",
+   "vicmap": 145,
+   "gnaf": 146,
+   "gnaf_alt": 146
+  },
+  {
+   "address": "507/35 Albert Rd, Melbourne VIC 3004",
+   "vicmap": 291,
+   "gnaf": 293,
+   "gnaf_alt": 295
+  },
+  {
+   "address": "705/1 Roy Street, Melbourne VIC 3004",
+   "vicmap": 111,
+   "gnaf": 122,
+   "gnaf_alt": 131
+  },
+  {
+   "address": "68/416 St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 159,
+   "gnaf": 206,
+   "gnaf_alt": 373
+  },
+  {
+   "address": "606/95 Berkeley Street, Melbourne VIC 3000",
+   "vicmap": 58,
+   "gnaf": 150,
+   "gnaf_alt": 150
+  },
+  {
+   "address": "1701/315 Latrobe Street, Melbourne VIC 3000",
+   "vicmap": 149,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "1511/474 Flinders St, Melbourne VIC 3000",
+   "vicmap": 56,
+   "gnaf": 107,
+   "gnaf_alt": 127
+  },
+  {
+   "address": "1809/260 Spencer Street, Melbourne VIC 3000",
+   "vicmap": 672,
+   "gnaf": 675,
+   "gnaf_alt": 675
+  },
+  {
+   "address": "2B2B/1 Point Park Crescent, Docklands VIC 3008",
+   "vicmap": 174,
+   "gnaf": 175,
+   "gnaf_alt": 175
+  },
+  {
+   "address": "111/416a St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 166,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "2408/687 La Trobe St, Docklands VIC 3008",
+   "vicmap": 348,
+   "gnaf": 348,
+   "gnaf_alt": 348
+  },
+  {
+   "address": "101/5 Caravel Lane, Docklands VIC 3008",
+   "vicmap": 172,
+   "gnaf": 172,
+   "gnaf_alt": 172
+  },
+  {
+   "address": "703/555 St Kilda Road, Melbourne VIC 3000",
+   "vicmap": 330,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "7G/8 Waterside Place, Docklands VIC 3008",
+   "vicmap": 220,
+   "gnaf": 222,
+   "gnaf_alt": 234
+  },
+  {
+   "address": "5807/81 A'beckett Street, Melbourne VIC 3000",
+   "vicmap": 620,
+   "gnaf": 620,
+   "gnaf_alt": 620
+  },
+  {
+   "address": "2112/222 Russell St, Melbourne VIC 3000",
+   "vicmap": 407,
+   "gnaf": 409,
+   "gnaf_alt": 410
+  },
+  {
+   "address": "1003/115 Swanston Street, Melbourne VIC 3000",
+   "vicmap": 88,
+   "gnaf": 87,
+   "gnaf_alt": 86
+  },
+  {
+   "address": "1001/610 St Kilda Rd, Melbourne VIC 3004",
+   "vicmap": 243,
+   "gnaf": 243,
+   "gnaf_alt": 243
+  },
+  {
+   "address": "1101/8 Exploration Lane, Melbourne VIC 3000",
+   "vicmap": 248,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "1205/118 Russell Street, Melbourne VIC 3000",
+   "vicmap": 158,
+   "gnaf": 163,
+   "gnaf_alt": 163
+  },
+  {
+   "address": "910/63 Whiteman Street, Southbank VIC 3006",
+   "vicmap": 648,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "3807/38 Rose Lane, Melbourne VIC 3000",
+   "vicmap": 402,
+   "gnaf": 402,
+   "gnaf_alt": 402
+  },
+  {
+   "address": "4804/138 Spencer Street, Melbourne VIC 3000",
+   "vicmap": 795,
+   "gnaf": 817,
+   "gnaf_alt": 817
+  },
+  {
+   "address": "105/632 St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 152,
+   "gnaf": 157,
+   "gnaf_alt": 157
+  },
+  {
+   "address": "2104/152 Sturt Street, Southbank VIC 3006",
+   "vicmap": 330,
+   "gnaf": 329,
+   "gnaf_alt": 331
+  },
+  {
+   "address": "1200/668 Bourke Street, Melbourne VIC 3000",
+   "vicmap": 654,
+   "gnaf": 364,
+   "gnaf_alt": 651
+  },
+  {
+   "address": "1311/605 St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 201,
+   "gnaf": 216,
+   "gnaf_alt": 419
+  },
+  {
+   "address": "177/22 Kavanagh Street, Southbank VIC 3006",
+   "vicmap": 380,
+   "gnaf": 217,
+   "gnaf_alt": 367
+  },
+  {
+   "address": "3005/8 Sutherland Street, Melbourne VIC 3000",
+   "vicmap": 516,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "1903/9 Power Street, Southbank VIC 3006",
+   "vicmap": 369,
+   "gnaf": 370,
+   "gnaf_alt": 371
+  },
+  {
+   "address": "2405/38 Rose Lane, Melbourne VIC 3004",
+   "vicmap": 402,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "4413/81 City Road, Southbank VIC 3006",
+   "vicmap": 1095,
+   "gnaf": 1096,
+   "gnaf_alt": 1604
+  },
+  {
+   "address": "506/100 Harbour Esplanade, Docklands VIC 3008",
+   "vicmap": 492,
+   "gnaf": 619,
+   "gnaf_alt": 620
+  },
+  {
+   "address": "519/648 Flinders Street, Docklands VIC 3008",
+   "vicmap": 797,
+   "gnaf": 808,
+   "gnaf_alt": 808
+  },
+  {
+   "address": "1308/333 Exhibition St, Melbourne VIC 3000",
+   "vicmap": 146,
+   "gnaf": 152,
+   "gnaf_alt": 146
+  },
+  {
+   "address": "2904/58 Clarke, Southbank VIC 3006",
+   "vicmap": 192,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "503/601 St Kilda Rd, Melbourne VIC 3004",
+   "vicmap": 123,
+   "gnaf": 130,
+   "gnaf_alt": 134
+  },
+  {
+   "address": "1403/270 King Street, Melbourne VIC 3000",
+   "vicmap": 190,
+   "gnaf": 207,
+   "gnaf_alt": 191
+  },
+  {
+   "address": "2214/250 Elizabeth Street, Melbourne VIC 3000",
+   "vicmap": 361,
+   "gnaf": 394,
+   "gnaf_alt": 394
+  },
+  {
+   "address": "3305/31 Abeckett Street, Melbourne VIC 3000",
+   "vicmap": 343,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "305/221 Sturt Street, Southbank VIC 3006",
+   "vicmap": 358,
+   "gnaf": 305,
+   "gnaf_alt": 305
+  },
+  {
+   "address": "706/450 St Kilda Road, Melbourne VIC 3004",
+   "vicmap": 236,
+   "gnaf": 239,
+   "gnaf_alt": 261
+  },
+  {
+   "address": "2205/81 South Wharf Drive, Docklands VIC 3008",
+   "vicmap": 224,
+   "gnaf": 228,
+   "gnaf_alt": 230
+  },
+  {
+   "address": "4708/318 Russell Street, Melbourne VIC 3000",
+   "vicmap": 601,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "1406/22 Jane Bell Lane, Melbourne VIC 3000",
+   "vicmap": 677,
+   "gnaf": 716,
+   "gnaf_alt": 716
+  },
+  {
+   "address": "2713/618 Lonsdale Street, Melbourne VIC 3000",
+   "vicmap": 955,
+   "gnaf": 955,
+   "gnaf_alt": 955
+  },
+  {
+   "address": "307/77 Queens Road, Melbourne VIC 3004",
+   "vicmap": 159,
+   "gnaf": 159,
+   "gnaf_alt": 355
+  },
+  {
+   "address": "3906/283 City Road, Southbank VIC 3006",
+   "vicmap": 903,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "1105/60 Kavanagh Street, Southbank VIC 3006",
+   "vicmap": 978,
+   "gnaf": 663,
+   "gnaf_alt": 980
+  },
+  {
+   "address": "2204/620 Collins Street, Melbourne VIC 3000",
+   "vicmap": 283,
+   "gnaf": 286,
+   "gnaf_alt": 294
+  },
+  {
+   "address": "510N/883 Collins Street, Docklands VIC 3008",
+   "vicmap": 520,
+   "gnaf": 525,
+   "gnaf_alt": 525
+  },
+  {
+   "address": "4413/228 La Trobe Street, Melbourne VIC 3000",
+   "vicmap": 978,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "3309/200 Spencer Street, Melbourne VIC 3000",
+   "vicmap": 503,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "708/87 Franklin Street, Melbourne VIC 3000",
+   "vicmap": 386,
+   "gnaf": 387,
+   "gnaf_alt": 387
+  },
+  {
+   "address": "G16/61 Mackenzie Street, Melbourne VIC 3000",
+   "vicmap": 44,
+   "gnaf": 45,
+   "gnaf_alt": 45
+  },
+  {
+   "address": "102/33 La Trobe Street, Melbourne VIC 3000",
+   "vicmap": 131,
+   "gnaf": 132,
+   "gnaf_alt": 132
+  },
+  {
+   "address": "903/25 Waterfront Way, Docklands VIC 3008",
+   "vicmap": 94,
+   "gnaf": 98,
+   "gnaf_alt": 98
+  },
+  {
+   "address": "1806/163 City Road, Southbank VIC 3006",
+   "vicmap": 478,
+   "gnaf": 302,
+   "gnaf_alt": 498
+  },
+  {
+   "address": "3604/8 Pearl River Road, Docklands VIC 3008",
+   "vicmap": 576,
+   "gnaf": 578,
+   "gnaf_alt": 579
+  },
+  {
+   "address": "3210/462 Elizabeth St, Melbourne VIC 3000",
+   "vicmap": 657,
+   "gnaf": 659,
+   "gnaf_alt": 662
+  },
+  {
+   "address": "1406/109 Clarendon Street, Southbank VIC 3006",
+   "vicmap": 257,
+   "gnaf": 259,
+   "gnaf_alt": 519
+  },
+  {
+   "address": "2201/442 Elizabeth Street, Melbourne VIC 3000",
+   "vicmap": 627,
+   "gnaf": 628,
+   "gnaf_alt": 630
+  },
+  {
+   "address": "504/253 Franklin Street, Melbourne VIC 3000",
+   "vicmap": 93,
+   "gnaf": 98,
+   "gnaf_alt": 98
+  },
+  {
+   "address": "2404/63 Haig Street, Southbank VIC 3006",
+   "vicmap": 167,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "2108/5 Sutherland Street, Melbourne VIC 3000",
+   "vicmap": 202,
+   "gnaf": 214,
+   "gnaf_alt": 214
+  },
+  {
+   "address": "2b2b/103 South Wharf Drive, Docklands VIC 3008",
+   "vicmap": 300,
+   "gnaf": 306,
+   "gnaf_alt": 306
+  },
+  {
+   "address": "3402/200 Spencer Street, Melbourne VIC 3004",
+   "vicmap": 503,
+   "gnaf": null,
+   "gnaf_alt": null
+  },
+  {
+   "address": "1405/8 Downie Street, Melbourne VIC 3000",
+   "vicmap": 330,
+   "gnaf": 334,
+   "gnaf_alt": 334
+  },
+  {
+   "address": "1205/60 Abeckett Street, Melbourne VIC 3000",
+   "vicmap": 765,
+   "gnaf": 766,
+   "gnaf_alt": 768
+  },
+  {
+   "address": "6109/371 Little Lonsdale Street, Melbourne VIC 3000",
+   "vicmap": 873,
+   "gnaf": 881,
+   "gnaf_alt": 881
+  },
+  {
+   "address": "166/88 Southbank Boulevard, Southbank VIC 3006",
+   "vicmap": 200,
+   "gnaf": 260,
+   "gnaf_alt": 256
+  },
+  {
+   "address": "404/16 Liverpool Street, Melbourne VIC 3000",
+   "vicmap": 171,
+   "gnaf": 171,
+   "gnaf_alt": 171
+  },
+  {
+   "address": "2506/11 Rose Ln, Melbourne VIC 3000",
+   "vicmap": 408,
+   "gnaf": 409,
+   "gnaf_alt": 409
+  },
+  {
+   "address": "601/380 Little Lonsdale St, Melbourne VIC 3000",
+   "vicmap": 349,
+   "gnaf": 348,
+   "gnaf_alt": 349
+  },
+  {
+   "address": "183/88 Kavanagh Street, Southbank VIC 3006",
+   "vicmap": 576,
+   "gnaf": 581,
+   "gnaf_alt": 581
+  },
+  {
+   "address": "341/673 La Trobe Street, Docklands VIC 3008",
+   "vicmap": 329,
+   "gnaf": 336,
+   "gnaf_alt": 337
+  },
+  {
+   "address": "98/38 Kavanagh Street, Southbank VIC 3006",
+   "vicmap": 133,
+   "gnaf": 137,
+   "gnaf_alt": 137
+  },
+  {
+   "address": "1001/8 Marmion Place, Docklands VIC 3008",
+   "vicmap": 327,
+   "gnaf": 356,
+   "gnaf_alt": 358
+  },
+  {
+   "address": "2406/318 Queen Street, Melbourne VIC 3000",
+   "vicmap": 228,
+   "gnaf": 229,
+   "gnaf_alt": 229
+  },
+  {
+   "address": "603/50 Haig Street, Southbank VIC 3006",
+   "vicmap": 510,
+   "gnaf": 531,
+   "gnaf_alt": 532
+  },
+  {
+   "address": "607/689 La Trobe Street, Docklands VIC 3008",
+   "vicmap": 328,
+   "gnaf": 328,
+   "gnaf_alt": 328
+  },
+  {
+   "address": "4107/27 Therry Street, Melbourne VIC 3000",
+   "vicmap": 206,
+   "gnaf": 209,
+   "gnaf_alt": 209
+  },
+  {
+   "address": "1917/199 William Street, Melbourne VIC 3000",
+   "vicmap": 633,
+   "gnaf": 635,
+   "gnaf_alt": 635
+  },
+  {
+   "address": "430/118 Franklin Street, Melbourne VIC 3000",
+   "vicmap": 290,
+   "gnaf": 296,
+   "gnaf_alt": 296
+  },
+  {
+   "address": "606/28 Wills St, Melbourne VIC 3000",
+   "vicmap": 335,
+   "gnaf": 321,
+   "gnaf_alt": 333
+  },
+  {
+   "address": "284/183 City Road, Southbank VIC 3006",
+   "vicmap": 678,
+   "gnaf": 680,
+   "gnaf_alt": 680
+  },
+  {
+   "address": "108/1 Encounter Way, Docklands VIC 3008",
+   "vicmap": 76,
+   "gnaf": 77,
+   "gnaf_alt": 77
+  }
+ ]
+}

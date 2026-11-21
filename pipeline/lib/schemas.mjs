@@ -52,3 +52,52 @@ export const SalRow = z.object({
   raw_name: z.string().min(1),
   area_sqkm: z.number().nullable(),
 });
+
+// ---------------------------------------------------------------- Victorian suburb datasets (step 2a)
+
+const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const SalCode = z.string().regex(/^2\d{4}$/, "Victorian SAL codes start with 2");
+const MatchType = z.enum(["exact", "suffix_stripped", "qualified", "code"]);
+
+/** A suburb median price. Money is integer cents; a median outside $20,000 to $50,000,000 is a parse error, not data. */
+export const PriceRow = z.object({
+  sal_code: SalCode,
+  dwelling_type: z.enum(["house", "unit"]),
+  period_type: z.enum(["year", "quarter"]),
+  period: IsoDate,
+  median_cents: z.number().int().min(2_000_000).max(5_000_000_000),
+  sales_count: z.number().int().min(0).nullable(),
+  low_count: z.boolean(),
+  carried_forward: z.boolean(),
+  source_name: z.string().min(1),
+  sal_match_type: MatchType,
+});
+
+/** A suburb moving annual median weekly rent. A median outside $20 to $20,000 a week is a parse error. */
+export const RentRow = z.object({
+  sal_code: SalCode,
+  dwelling_type: z.enum(["house", "unit", "all"]),
+  bedrooms: z.number().int().min(0).max(6),
+  period_type: z.literal("moving_year"),
+  period: IsoDate,
+  median_weekly_rent_cents: z.number().int().min(2_000).max(2_000_000),
+  lettings_count: z.number().int().min(0).nullable(),
+  low_count: z.boolean(),
+  source_name: z.string().min(1),
+  sal_match_type: MatchType,
+});
+
+/** One suburb marker. Shares are fractions; money keys end _cents. */
+export const MarkerRow = z.object({
+  sal_code: SalCode,
+  marker_key: z.string().min(1),
+  value: z.number().finite(),
+  flag: z.string().nullable(),
+});
+
+export const NeighbourRow = z.object({
+  sal_code: SalCode,
+  neighbour_sal_code: SalCode,
+  sal_match_type: z.string(),
+  neighbour_match_type: z.string(),
+});

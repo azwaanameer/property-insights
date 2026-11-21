@@ -3,7 +3,6 @@ import { ANONYMOUS } from "../contracts/address";
 import { listLayerConfig } from "../repos/source";
 import { assembleReport } from "../services/assemble-report";
 import { resolveQuery } from "../services/resolve-address";
-import { applyDevSeed } from "../../../db/migrate.mjs";
 import { rightsGate } from "../services/layer-runner";
 import { loadRights } from "../services/assemble-report";
 import { createLoadedTestDb, createTestDb, type TestDb } from "../testing/db";
@@ -32,14 +31,14 @@ describe("layer registry", () => {
   });
 });
 
-describe("production seed vs dev seed", () => {
-  it("with production migrations only, L01 is not_covered; the dev seed turns it on", async () => {
+describe("production migrations", () => {
+  it("with migrations only (no dev seed) L01 is on, because 0003 cleared gnaf; putting gnaf back to pending turns it off", async () => {
     const t = await createTestDb({ devSeed: false });
     try {
       const L01 = LAYERS[0];
-      expect(rightsGate(L01, await loadRights(t.db))).toMatchObject({ ok: false, reason: "Not available yet" });
-      await applyDevSeed(t.db);
       expect(rightsGate(L01, await loadRights(t.db))).toEqual({ ok: true });
+      await t.db.query("UPDATE src_source SET rights_status = 'pending' WHERE source_id = 'gnaf'");
+      expect(rightsGate(L01, await loadRights(t.db))).toMatchObject({ ok: false, reason: "Not available yet" });
     } finally {
       await t.close();
     }

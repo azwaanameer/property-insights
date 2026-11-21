@@ -24,6 +24,11 @@ export interface LayerDef {
   tier: LayerTier;
   /** AD-4: every source must be `cleared` or the layer returns not_covered and is not run. */
   source_ids: string[];
+  /**
+   * Sources whose data the layer reads. Each must have a published dataset (a `src_dataset_current` row) or the layer
+   * returns not_covered and is not run. Omit for a layer that reads no versioned dataset.
+   */
+  dataset_ids?: string[];
   /** Hand-written headline sentence shown instead of figures when locked. Must not contain a figure value. */
   teaser: string;
   run(ctx: LayerContext): Promise<LayerRunOutput>;

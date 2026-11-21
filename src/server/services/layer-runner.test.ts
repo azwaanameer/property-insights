@@ -112,9 +112,10 @@ describe("locked layers (AD-3)", () => {
     expect(JSON.stringify(out)).not.toContain(String(SECRET));
   });
 
-  it("a user on a paid plan gets the data", async () => {
+  it("a user on an active pro plan gets the data", async () => {
     const layer = makeLayer({ layer_id: "LX-paid2", tier: "paid" });
-    const out = await runLayer(layer, await input([layer], { kind: "user", user_id: "u1", plan: "individual" }));
+    const future = new Date(Date.now() + 86_400_000).toISOString();
+    const out = await runLayer(layer, await input([layer], { kind: "user", user_id: "u1", plan: "pro", plan_expires_at: future }));
     expect(out.status).toBe("ok");
     expect(out.figures[0].value).toBe(SECRET);
   });

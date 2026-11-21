@@ -1,0 +1,72 @@
+# G4 Referral / lead-generation economics for an Australian property-research site
+
+Prepared 2026-11-13. Method: 12 web searches, 9 successful page fetches (1 failed). Search tool returns summaries, so many figures are Secondary even where a URL is listed. Not legal advice; this reports what sources say.
+
+Evidence status key: Verified = primary or original page read this session. Secondary = reported by a search summary or a third-party/vendor page, not read as primary. Unverified = single weak source.
+
+## Figures table
+
+| # | Item | Value | Date | Source | Status |
+|---|---|---|---|---|---|
+| 1 | Broker upfront commission (lender pays) | about 0.65-0.70% of loan (about 0.693% incl GST in one lender schedule) | 2024-2026 | https://ratecity.com.au/home-loans/articles/brokerage-fees ; https://brokers.ybr.com.au/wp-content/uploads/YBR-Aggregation-Commission-Policy-3-July-2024-1.pdf | Secondary (fetch of RateCity failed; MFAA page read but gives no percentages) |
+| 2 | Broker trail commission | about 0.15% p.a. of balance (0.165% incl GST in one schedule), paid monthly | 2024-2026 | same as above | Secondary |
+| 3 | Upfront paid on drawn amount net of offset; trail for life of loan; clawback if discharged within 18 months to 2 years | qualitative | 2026 | https://www.mfaa.com.au/policy-and-advocacy/why-choose-a-broker | Verified (MFAA page read) |
+| 4 | Broker share of new residential loans | 76-76.7% (MFAA: 76%; Dec 2025 quarter 76.7%) | 2025-2026 | MFAA page above; search summary for 76.7% | Verified (76%); Secondary (76.7%) |
+| 5 | Median gross clawback per broker rose 16.5% in 2025 | +16.5% | 2025 | https://www.theadviser.com.au/broker/48994-broker-clawback-costs-rise-in-first-industry-level-measure | Secondary (headline/summary only) |
+| 6 | Average new investor loan size (ABS, seasonally adjusted) | $709,000 (Mar 2026 qtr); $696,000 (Dec 2025 qtr); owner-occupier $735,000 (Mar 2026). Original-series Dec 2025 investor figure $717,000. June 2026 qtr investor figure not found | 2026 | https://savvy.com.au/home-loans/home-loan-statistics/ ; https://www.propertyme.com.au/owner/blog/market-insights/investors-are-borrowing-more-than-ever-to-secure-a-slice-of-the-australian-property-pie | Secondary |
+| 7 | Implied upfront on a $709k loan | about $4,600-$4,960 upfront; about $1,060/yr trail (arithmetic from rows 1, 2, 6, not sourced) | n/a | derived | Derived (assumption-based) |
+| 8 | Historic referral-fee claims to brokers/planners from developer-sale firms | $5,000-$10,000 per referral (NSW, undisclosed "paid both sides" practice, banned from 1 July 2018 unless referrer holds a real estate licence) | 2018 | https://www.smartpropertyinvestment.com.au/investor-stories-1/18159-common-referrer-practice-of-being-paid-on-both-sides-of-the-fence-coming-to-an-end | Verified (page read) but a single quoted claim, old, NSW-specific |
+| 9 | Referral models for broker introducers: fixed fee per settled loan, % of upfront, tiered, lead fee regardless of settlement, reciprocal. No typical amounts given | qualitative | 2026-10-13 | https://sprintlaw.com.au/articles/mortgage-broker-referral-agreements/ | Verified (page read; law-firm blog, not regulator) |
+| 10 | REA financial services revenue | $58m in 1H FY26 (+11%); Mortgage Choice revenue $46m (vs $41m); submissions +24%; settlements +14% to $13.7bn; broker leads from realestate.com.au +26% | 2026-02-09 | https://www.theadviser.com.au/broker/48054-mortgage-choice-helps-deliver-growth-at-rea | Verified (page read; trade press report of REA results) |
+| 11 | REA group FY26 revenue from core operations | A$1,793m (+7%). Financial services not split in that article. So financial services is about 6.5% of a half-year-scale comparison only if annualised: $58m x 2 = about $116m vs $1,793m = about 6.5% (derived) | 2026 | https://www.onlinemarketplaces.com/articles/rea-group-ends-fy26-with-flat-listings-and-double-digit-yield-growth/ | Verified (group figure); derived (share) |
+| 12 | Third-party claim that finance leads are 10-15% of REA revenue | 10-15% | undated | stockalarm aggregator | Unverified; conflicts with derived 6.5% above; do not use |
+| 13 | Domain Home Loans (60% Domain / Lendi JV) | A$7.3m loss in FY23; Domain sought to sell stake in 2023; sale outcome and later status not verified | 2023 | https://onlinemarketplaces.com/?p=100757 | Secondary |
+| 14 | Buyer's agent fees, percentage | typically 1.5-3% of purchase price plus GST (REBAA full-service average cited as 2-3%); low end 0.9-1% in some sources | 2025-2026 | https://finder.com.au/home-loans/buyers-agent-fees ; https://australianpropertyexperts.com.au/buyers-agent-fees/ | Secondary |
+| 15 | Buyer's agent fees, flat | commonly $8,000-$30,000 plus GST; one source average about $22,000 | 2025-2026 | https://propertyupdate.com.au/how-much-do-buyers-agents-charge-in-australia/ | Secondary |
+| 16 | Buyer's agent territory/listing marketplace pricing | $500/month + GST exclusive city territory, no per-lead fee (whatsthedamage.com.au, one agent per city) | 2026 | https://whatsthedamage.com.au/agencies/buyers-agent/ | Secondary (vendor page) |
+| 17 | Adjacent shared-lead marketplace price point | solar leads $35/lead shared by up to 4 buyers; Get Listings (real estate sellers' leads) packs from about $69 incl GST | 2026 | https://solarproof.com.au/leads/index.php ; https://yespress.io/get-listings | Secondary (vendor); not buyer's agent leads |
+| 18 | Conveyancer lead pricing | $50 + GST first lead then $75 + GST each (Central Coast page of whatsthedamage); other city pages show $500/month subscription; one network charges a fixed fee per settled file (amount not seen) | 2026 | https://whatsthedamage.com.au/agencies/conveyancer/central-coast/ | Secondary (vendor, internally inconsistent) |
+| 19 | Landlord insurance referral to property managers | Howden RealtyProtect: $25 per new policy, $15 per renewal to distributor office; comparison site claims up to $30/policy (and $30 bundle bonus with smoke-alarm compliance) | 2023-2026 | https://www.howdengroup.com/au-en/realtyprotect-agency ; https://www.terrischeer.com.au/get-started | Secondary (summary); commission disclosure to landlords required per Terri Scheer / Aon kits |
+| 20 | Building inspection referral fee | not found | n/a | n/a | Gap |
+| 21 | Cost per lead, finance leads | CPL $9 Facebook, $21 Google in one lending-business case study (target $35/$70; cheap leads were low quality); refinance leads about $5-$10 (undated broker blog); bought leads about $160 each ($8k for about 50) quoted by a competitor vendor | undated to 2026 | https://beliefmedia.com.au/mortgage-pay-per-lead ; https://www.creditsense.com.au/the-growing-problem-of-poor-quality-finance-leads-and-what-to-do-about-it/ | Unverified/Secondary (vendor anecdotes) |
+| 22 | Finance/insurance Google CPC | average about AUD $3.44; competitive loan keywords can exceed AUD $50 | undated | https://www.yourfinanceguide.com.au/blog/mortgage-broker-marketing-lead-channels-2026 | Unverified |
+| 23 | Lead-to-settlement conversion | Illustrative only: 1,000 leads at $20 with 8% eligible, cost per funded loan over $250; vendor cites 2.80% of referral/repeat leads settling (method unclear); refinance conversion about 35% contact rate figure undated | undated | https://www.creditsense.com.au/the-growing-problem-of-poor-quality-finance-leads-and-what-to-do-about-it/ | Unverified |
+| 24 | Rent.com.au recurring share | 25% of group revenue from RentPay subscription (not one-off) | Q1 2025 | https://onlinemarketplaces.com/?p=103515 | Secondary |
+| 25 | RentBetter revenue | about $563k (2023), about $1.1m (2024), referral income a smaller add-on | 2024 | https://yespress.io/rentbetter | Unverified (third-party estimates) |
+
+## Key findings
+
+1. Finance referral value is large per settled loan but depends on becoming a broker's introducer. At about 0.65-0.70% upfront plus 0.15% trail, a $709k investor loan yields roughly $4.6-5.0k upfront and about $1.1k a year trail to the broker. A non-broker introducer typically receives only a slice, and the sources found do not give the split. No source disclosed a per-lead or per-settled-loan figure paid by Domain, REA, Canstar or Compare the Market.
+2. REA is the clearest disclosed example of a property site monetising finance: financial services revenue $58m in 1H FY26 via Mortgage Choice (owned broker network), not via introducer fees. Revenue is mainly broker commission on settlements ($13.7bn in the half) plus PropTrack data income. Realestate.com.au broker leads rose 26%. The business that scaled owns the broker, it does not rent out leads. Domain's JV (Domain Home Loans) lost $7.3m in FY23 and was put up for sale, which is a cautionary example.
+3. The referral/introducer channel is a regulatory focus. The Adviser (30 Sep 2026) reports ASIC will review the use of referrers by lenders in its 2026-27 supervisory agenda, starting in the third quarter of FY2026-27, after CBA self-reported about $1bn of potential mortgage fraud involving broker and introducer channels in February. ASIC previously won penalties over unlicensed introducers: NAB $15m (Oct 2020) and ANZ $10m (2023, 50 applications accepted from unlicensed third parties, including real estate agents).
+4. Per Sprintlaw (13 Oct 2026, law firm blog, not the regulator), an unlicensed referrer can use a limited exemption only if: written agreement with the licensed broker; contact details only passed on (name, contact, short purpose); details passed within 5 business days; no fee charged to consumer; business not principally lead generation; consumer consent; benefit disclosed at referral; broker contacts consumer within 10 business days and keeps a referrer register. The "not principally lead generation" condition matters for a research site whose referral revenue could dominate. This needs primary-source confirmation (NCCP Regulations 2010) before relying on it.
+5. Broker economics are being squeezed at the margin (clawbacks rising 16.5% per broker in 2025; the government rejected a petition to remove clawbacks), but the best interests duty (since 1 July 2021) has not removed upfront/trail structure. No 2024-2026 reform to introducer fee levels was found; the position is "ASIC review pending", not "reform enacted".
+6. Buyer's agents are a better fit for fixed-fee or territory models than per-lead: typical engagement fee $8k-$30k plus GST, or 1.5-3% of price. Marketplaces found sell exclusive territories at $500/month + GST rather than cost per lead. No source showed buyer's agents paying a per-lead fee or a referral percentage. Referral fees paid to buyer's agents by developers/sellers are flagged by Choice as a conflict-of-interest concern; disclosure rules vary by state (LegalVision says some states, including SA, WA and Tasmania, prohibit real estate agent referral fee programs, per search summary only).
+7. Non-finance referrals are small, flat sums: landlord insurance $15-$30 per policy (property manager channel), conveyancer leads about $50-$75 per lead in one vendor's pricing. Building-inspection fees not found. These are low-value add-ons next to the finance referral.
+8. Lead cost and conversion evidence is weak and vendor-sourced. CPL for finance leads of about $5-$35 is common, but eligible/settled conversion is a few percent to 8% in the illustrative examples, giving cost per funded loan of $250 or more. Treat as order-of-magnitude only. No proptech was found with a disclosed referral-versus-subscription split, other than Rent.com.au (25% of revenue from RentPay subscription).
+
+## Sources (access date 2026-11-13)
+
+- https://www.mfaa.com.au/policy-and-advocacy/why-choose-a-broker (read)
+- https://asic.gov.au/about-asic/news-centre/find-a-media-release/2023-releases/23-059mr-anz-penalised-10-million-over-non-compliant-home-loan-introducer-program/ (read)
+- https://www.theadviser.com.au/broker/49005-asic-to-review-introducer-programs-lender-oversight-of-brokers (read)
+- https://www.theadviser.com.au/broker/48054-mortgage-choice-helps-deliver-growth-at-rea (read)
+- https://www.onlinemarketplaces.com/articles/rea-group-ends-fy26-with-flat-listings-and-double-digit-yield-growth/ (read)
+- https://sprintlaw.com.au/articles/mortgage-broker-referral-agreements/ (read)
+- https://www.smartpropertyinvestment.com.au/investor-stories-1/18159-common-referrer-practice-of-being-paid-on-both-sides-of-the-fence-coming-to-an-end (read)
+- Search-summary-only (not read): ratecity brokerage fees; YBR commission policy PDF; theadviser 48994 clawbacks; savvy.com.au home loan statistics; propertyme investor borrowing; finder buyers agent fees; australianpropertyexperts; propertyupdate buyers agent costs; whatsthedamage.com.au; solarproof; yespress.io; howdengroup RealtyProtect; terrischeer; creditsense; beliefmedia; yourfinanceguide; onlinemarketplaces Domain JV and Rent.com.au; nestegg/brokernews/mpamag items on ASIC and FBAA; legalvision referral disclosure; Choice buyer's agents.
+
+## Blocked / failed
+
+- https://ratecity.com.au/home-loans/articles/brokerage-fees: WebFetch SSL handshake failure. Commission percentages therefore Secondary.
+- MFAA page and onlinemarketplaces FY26 article read but did not contain the figures sought (no commission percentages; no financial services split).
+
+## Gaps
+
+- Primary lender/aggregator commission schedule not opened (YBR PDF only seen in search); no verified introducer/referrer share of broker commission, and no disclosed referral fee per lead or settled loan from Domain, REA, Canstar, Compare the Market, Finder or Lendi.
+- Primary legal text (NCCP Act, NCCP Regulations 2010 referral exemption, ASIC RG 206/RG 273 guidance) not read; any 2024-2026 introducer reform not confirmed. Only the ASIC 2026-27 review is confirmed (via trade press).
+- Domain's post-2023 JV status and the REA/Domain ownership position not verified.
+- Buyer's agent: no verified per-lead cost, no evidence of brokers or others paying buyer's agents referral fees, state-by-state referral-fee rules not verified.
+- Building inspection referral fee: not found. Conveyancing referral fee: only vendor lead prices; Victorian rules on conveyancer referral fees not verified.
+- Lead-cost and conversion benchmarks: no independent Australian data for property-investor leads; all vendor anecdotes.
+- Proptech referral-vs-subscription mix: only Rent.com.au (25% subscription). Lendi, Canstar, Finder, Compare the Market, Tiimely not disclosed in found sources.

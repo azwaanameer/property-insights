@@ -1,0 +1,709 @@
+<title>VicProp Midnight Colours</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* ===== Tokens. Midnight layout; each palette only changes colour. Bare :root = Lime. ===== */
+:root{
+  --bg:#090D11; --alt:#0D1217; --surface:#121920; --ink:#E9EFF3; --mute:#93A0AC;
+  --line:#2A3641; --rule:#1C262E; --accent:#C7F23B; --acc:199 242 59;
+  --btn:#C7F23B; --btn-ink:#0A0E12; --btn-bd:#C7F23B; --btn-hov:#DEFA6C;
+  --card-a:#151D25; --card-b:#0F151B; --cell:#10171D; --deep:#0A0E12;
+  --c-obs:#C7F23B; --c-est:#F2B544; --c-rep:#6DB8FF; --c-unk:#93A0AC;
+  --cta-bg:#C7F23B; --cta-ink:#0A0E12; --cta-mute:#27310A; --fig:#C7F23B;
+  --fd:'Space Grotesk',system-ui,sans-serif; --fb:'Space Grotesk',system-ui,sans-serif; --fm:'JetBrains Mono',ui-monospace,Consolas,monospace;
+  --r:16px; --rb:10px; --rs:6px; --lw:1px; --pad:24px;
+  --sh:0 30px 80px -30px rgb(var(--acc) / .22);
+  --bgimg:radial-gradient(900px 520px at 80% -8%,rgb(var(--acc) / .11),transparent 62%); --bgsize:auto;
+  --fig-fill:rgb(var(--acc) / .09);
+  --h1:clamp(2.4rem,5.8vw,4.8rem); --h1w:700; --h1ls:-.035em; --h1lh:1; --h1tt:none;
+  --h2:clamp(1.8rem,3.6vw,2.8rem);
+  --sw-bg:#111; --sw-ink:#F2F2F2;
+  color-scheme:dark;
+}
+:root[data-s="ember"]{
+  --bg:#0F0B09; --alt:#140F0C; --surface:#1B1411; --ink:#F6EDE6; --mute:#A8978B;
+  --line:#3A2B23; --rule:#261C16; --accent:#FF8A3D; --acc:255 138 61;
+  --btn:#FF8A3D; --btn-ink:#1A0D04; --btn-bd:#FF8A3D; --btn-hov:#FFA566;
+  --card-a:#221914; --card-b:#17100D; --cell:#19120E; --deep:#0C0806;
+  --c-obs:#7BE0A0; --c-est:#F5D04A; --c-rep:#7FB8FF; --c-unk:#A8978B;
+  --cta-bg:#FF8A3D; --cta-ink:#1A0D04; --cta-mute:#4A2205; --fig:#FF8A3D;
+}
+:root[data-s="lagoon"]{
+  --bg:#06100F; --alt:#09171A; --surface:#0E1E21; --ink:#E4F3F1; --mute:#8DABA8;
+  --line:#1F3C3E; --rule:#14292B; --accent:#2EE6C8; --acc:46 230 200;
+  --btn:#2EE6C8; --btn-ink:#04201C; --btn-bd:#2EE6C8; --btn-hov:#6AF2DB;
+  --card-a:#11262A; --card-b:#0B1A1D; --cell:#0C1B1E; --deep:#04100E;
+  --c-obs:#8CE99A; --c-est:#F2B544; --c-rep:#78B7FF; --c-unk:#8DABA8;
+  --cta-bg:#2EE6C8; --cta-ink:#04201C; --cta-mute:#0A3A33; --fig:#2EE6C8;
+}
+:root[data-s="violet"]{
+  --bg:#0B0A12; --alt:#100E19; --surface:#161325; --ink:#EEEBFA; --mute:#9C97B8;
+  --line:#302B4D; --rule:#211D38; --accent:#A78BFA; --acc:167 139 250;
+  --btn:#A78BFA; --btn-ink:#120B2B; --btn-bd:#A78BFA; --btn-hov:#C0AAFF;
+  --card-a:#1D1935; --card-b:#131028; --cell:#141129; --deep:#09080F;
+  --c-obs:#6EE7B7; --c-est:#F2B544; --c-rep:#7CC4FF; --c-unk:#9C97B8;
+  --cta-bg:#A78BFA; --cta-ink:#120B2B; --cta-mute:#2D1A66; --fig:#A78BFA;
+}
+:root[data-s="rose"]{
+  --bg:#100A0C; --alt:#150D10; --surface:#1C1216; --ink:#F8ECEF; --mute:#B09AA1;
+  --line:#3D2830; --rule:#28191F; --accent:#FF5C7C; --acc:255 92 124;
+  --btn:#FF5C7C; --btn-ink:#1F050B; --btn-bd:#FF5C7C; --btn-hov:#FF86A0;
+  --card-a:#241519; --card-b:#190F12; --cell:#1A1014; --deep:#0D0709;
+  --c-obs:#7BE0A0; --c-est:#F5C04A; --c-rep:#7FB8FF; --c-unk:#B09AA1;
+  --cta-bg:#FF5C7C; --cta-ink:#1F050B; --cta-mute:#4B0E1D; --fig:#FF5C7C;
+}
+:root[data-s="gold"]{
+  --bg:#0C0B09; --alt:#11100C; --surface:#181610; --ink:#F4EFE3; --mute:#A39C88;
+  --line:#38331F; --rule:#25221A; --accent:#E8C468; --acc:232 196 104;
+  --btn:#E8C468; --btn-ink:#1B1405; --btn-bd:#E8C468; --btn-hov:#F2D68E;
+  --card-a:#1E1B13; --card-b:#14120D; --cell:#15130E; --deep:#090806;
+  --c-obs:#8BE0A4; --c-est:#F29E4C; --c-rep:#7FB8FF; --c-unk:#A39C88;
+  --cta-bg:#E8C468; --cta-ink:#1B1405; --cta-mute:#4A3A0C; --fig:#E8C468;
+}
+
+/* ===== Base ===== */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--sw-bg);z-index:60}
+img,svg{max-width:100%}
+button{font:inherit;color:inherit}
+h1,h2,h3,p,ul,dl,dd{margin:0}
+ul{padding:0;list-style:none}
+.site{background-color:var(--bg);background-image:var(--bgimg);background-size:var(--bgsize);counter-reset:sheet;overflow-x:clip}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* style switcher (page chrome, same in every style) */
+.sw{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--sw-bg);color:var(--sw-ink);font:500 13px/1.3 system-ui,-apple-system,'Segoe UI',sans-serif}
+.sw .wrap{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.sw .lab{opacity:.65;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+.sw .opts{display:flex;gap:6px;flex-wrap:wrap}
+.sw button{background:transparent;border:1px solid rgba(255,255,255,.28);color:var(--sw-ink);border-radius:999px;padding:6px 13px;cursor:pointer}
+.sw button[aria-pressed="true"]{background:#F2F2F2;color:#111;border-color:#F2F2F2}
+.sw button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.sw .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+.sw button[aria-pressed="true"] .dot{box-shadow:0 0 0 2px #F2F2F2,0 0 0 3px #111}
+.sw .blurb{margin-left:auto;opacity:.78;max-width:46ch}
+
+/* nav */
+.nav{border-bottom:var(--lw) solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:22px;padding-block:18px}
+.brand{display:flex;align-items:center;gap:10px;font:var(--h1w) 1.4rem/1 var(--fd);letter-spacing:var(--h1ls);text-transform:var(--h1tt)}
+.brand svg{width:26px;height:26px}
+.nl{display:flex;gap:6px;margin-left:auto}
+.nl button{background:none;border:0;cursor:pointer;padding:8px 10px;color:var(--mute);font-weight:600;font-size:.92rem}
+.nl button:hover{color:var(--ink)}
+
+/* buttons, chips, forms */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 .98rem/1 var(--fb);padding:15px 24px;border:var(--lw) solid var(--btn-bd);background:var(--btn);color:var(--btn-ink);border-radius:var(--rb);cursor:pointer;white-space:nowrap;transition:background .15s,transform .15s}
+.btn:hover{background:var(--btn-hov)}
+.btn:focus-visible,.nl button:focus-visible,summary:focus-visible,input:focus-visible,.tabs button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{background:var(--soft,var(--rule))}
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 .66rem/1 var(--fm);letter-spacing:.07em;text-transform:uppercase;padding:4px 8px;border:1px solid currentColor;border-radius:var(--rs);white-space:nowrap}
+.chip i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.obs{color:var(--c-obs)}.est{color:var(--c-est)}.rep{color:var(--c-rep)}.unk{color:var(--c-unk)}
+.chip.free{color:var(--c-obs)}.chip.full{color:var(--accent)}
+.af{position:relative;max-width:620px;width:100%}
+.af .row{display:flex;gap:10px}
+.af .field{position:relative;flex:1;min-width:0;display:flex;align-items:center;background:var(--surface);border:var(--lw) solid var(--line);border-radius:var(--rb);color:var(--ink)}
+.af .field .i{margin-left:14px;color:var(--mute)}
+.af input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:500 1rem var(--fb);padding:16px 14px;outline-offset:6px}
+.af input::placeholder{color:var(--mute);opacity:.85}
+.sugg{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:var(--surface);color:var(--ink);border:var(--lw) solid var(--line);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;text-align:left}
+.sugg li{padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:.95rem}
+.sugg li small{color:var(--mute);font-family:var(--fm);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+.sugg li[aria-selected="true"],.sugg li:hover{background:var(--btn);color:var(--btn-ink)}
+.sugg li[aria-selected="true"] small,.sugg li:hover small{color:inherit}
+.msg{min-height:1.4em;margin-top:10px;font-size:.9rem;color:var(--mute)}
+.try{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--mute)}
+.try button{background:transparent;border:1px dashed var(--line);border-radius:var(--rs);color:var(--ink);padding:6px 11px;cursor:pointer;font-size:.85rem}
+.try button:hover{border-style:solid;background:var(--surface)}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(32px,5vw,72px);align-items:center;padding-block:clamp(44px,7vw,92px)}
+.kick{display:flex;align-items:center;gap:12px;font:600 .74rem/1.2 var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+h1{font:var(--h1w) var(--h1)/var(--h1lh) var(--fd);letter-spacing:var(--h1ls);text-transform:var(--h1tt);text-wrap:balance}
+h1 em{font-style:italic;color:var(--accent)}
+.lede{font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--mute);max-width:56ch;margin:20px 0 28px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:26px;font-size:.85rem;color:var(--mute)}
+.hero-copy,.hero-card{min-width:0}
+.hero-card{position:relative}
+
+/* report preview card */
+.rc{background:var(--surface);border:var(--lw) solid var(--line);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;color:var(--ink)}
+.rc-bar{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px var(--pad);border-bottom:var(--lw) solid var(--rule);font:500 .72rem var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--mute);flex-wrap:wrap}
+.rc-id{padding:18px var(--pad) 6px}
+.rc-id h3{font:var(--h1w) 1.7rem/1.1 var(--fd);letter-spacing:var(--h1ls);text-transform:var(--h1tt)}
+.rc-id p{color:var(--mute);font-size:.92rem}
+.fig{display:block;width:100%;max-width:460px;margin-inline:auto;height:auto;padding:6px var(--pad) 0}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);margin:14px var(--pad) 0;border:var(--lw) solid var(--rule);border-radius:var(--rs)}
+.tiles div{background:var(--surface);padding:10px 12px;display:flex;flex-direction:column;gap:5px;align-items:flex-start;min-width:0}
+.tiles dt{font:500 .68rem var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.tiles dd{font:700 1.08rem/1.2 var(--fb);font-variant-numeric:tabular-nums}
+.rows{padding:12px var(--pad) 0}
+.rows li{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--rule);font-size:.92rem}
+.rows li:first-child{border-top:0}
+.rows .t{flex:1;min-width:0}
+.rows .ok{color:var(--c-obs)}
+.rows .lk{color:var(--accent)}
+.bl{display:flex;gap:6px;width:34%;filter:blur(4.5px);opacity:.7;user-select:none}
+.bl i{display:block;height:11px;border-radius:3px;background:var(--ink);flex:1}
+.bl i:nth-child(2){flex:.6}.bl i:nth-child(3){flex:.35}
+.rc-foot{padding:16px var(--pad) var(--pad);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.rc-foot small{color:var(--mute);font-size:.8rem}
+
+/* sections */
+.sec{padding-block:clamp(56px,8vw,108px);border-top:var(--lw) solid var(--rule)}
+.sec.alt{background:var(--alt)}
+.head{max-width:760px;margin-bottom:clamp(28px,4vw,48px)}
+.head .kick{margin-bottom:14px}
+h2{font:var(--h1w) var(--h2)/1.06 var(--fd);letter-spacing:var(--h1ls);text-transform:var(--h1tt);text-wrap:balance}
+.head .lede{margin:16px 0 0}
+h3{font:700 1.18rem/1.25 var(--fb)}
+.card,.step,.panel,.plan,.sample,.f{background:var(--surface);border:var(--lw) solid var(--line);border-radius:var(--r);padding:var(--pad);box-shadow:var(--sh)}
+.card p,.step p,.f p,.sample p{color:var(--mute);font-size:.95rem;margin-top:8px}
+.ic{display:grid;place-items:center;width:44px;height:44px;border:var(--lw) solid var(--line);border-radius:var(--rs);margin-bottom:16px;color:var(--accent)}
+.ic .i{width:22px;height:22px}
+
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.step .n{display:block;font:var(--h1w) 2.6rem/1 var(--fd);color:var(--accent);margin-bottom:14px;letter-spacing:var(--h1ls)}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel h3{margin:14px 0 14px;font-size:1.3rem}
+.ticks li{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--rule)}
+.ticks li:first-child{border-top:0}
+.ticks .i{margin-top:2px;color:var(--c-obs)}
+.panel.full .ticks .i{color:var(--accent)}
+.ticks small{display:block;color:var(--mute);font-size:.88rem;margin-top:2px}
+.ticks b{font-weight:600}
+
+.cards4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.card .q{font:italic 500 1rem/1.4 var(--fd);color:var(--ink);margin:10px 0 14px}
+.card ul li{display:flex;gap:9px;font-size:.9rem;color:var(--mute);padding:5px 0}
+.card ul li::before{content:"";width:6px;height:6px;margin-top:.55em;border-radius:50%;background:var(--accent);flex:none}
+
+.feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+
+.tabs{display:inline-flex;gap:0;border:var(--lw) solid var(--line);border-radius:var(--rb);overflow:hidden;margin-bottom:26px}
+.tabs button{background:transparent;border:0;padding:11px 22px;font-weight:700;cursor:pointer;color:var(--ink)}
+.tabs button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink)}
+.cat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.grp{background:var(--surface);border:var(--lw) solid var(--line);border-radius:var(--r);padding:var(--pad);box-shadow:var(--sh)}
+.grp h4{margin:0 0 8px;font:700 .8rem var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:flex;justify-content:space-between}
+.grp h4 span{color:var(--mute)}
+.grp li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--rule);font-size:.9rem}
+.grp li:first-of-type{border-top:0}
+.grp li>span:first-child{min-width:0}
+
+.samples{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sample{display:flex;flex-direction:column;gap:14px;padding:0;overflow:hidden}
+.sample .sfig{background:var(--alt);border-bottom:var(--lw) solid var(--line);padding:14px}
+.sample .sfig svg{display:block;width:100%;height:auto}
+.sample .sb{padding:0 var(--pad) var(--pad);display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.sample .tag{font:600 .7rem var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.sample .btn{margin-top:10px}
+
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:880px}
+.plan .cap{font:700 .78rem var(--fm);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.plan .price{font:var(--h1w) 3.4rem/1 var(--fd);margin:12px 0 18px;letter-spacing:var(--h1ls)}
+.plan .price small{font:500 1rem var(--fb);color:var(--mute);letter-spacing:0}
+.plan .btn{margin-top:20px;width:100%}
+.plan.pick{outline:var(--lw) solid var(--accent);outline-offset:4px}
+.prop{font:700 .66rem var(--fm);letter-spacing:.1em;text-transform:uppercase;border:1px dashed var(--mute);color:var(--mute);padding:3px 7px;margin-left:8px;border-radius:var(--rs);vertical-align:middle}
+.note{margin-top:18px;color:var(--mute);font-size:.9rem;max-width:68ch}
+
+.srcs{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;font-size:.9rem;color:var(--mute)}
+.srcs li{padding:6px 0;border-top:1px solid var(--rule)}
+
+.faq{max-width:820px}
+details{border-top:var(--lw) solid var(--line)}
+details:last-child{border-bottom:var(--lw) solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;padding:20px 4px;font:700 1.08rem/1.35 var(--fb)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:400 1.6rem/1 var(--fm);color:var(--accent);flex:none}
+details[open] summary::after{content:"\2212"}
+details p{padding:0 4px 22px;color:var(--mute);max-width:66ch}
+
+.cta{background:var(--cta-bg);color:var(--cta-ink);padding-block:clamp(56px,8vw,100px)}
+.cta .wrap{display:grid;gap:26px;justify-items:start}
+.cta h2{color:var(--cta-ink);max-width:16ch}
+.cta p{color:var(--cta-mute);max-width:52ch;font-size:1.1rem}
+.cta .af .field{border-color:var(--cta-ink)}
+.cta .msg{color:var(--cta-mute)}
+.cta .btn{background:var(--cta-ink);color:var(--cta-bg);border-color:var(--cta-ink)}
+.cta .btn:hover{opacity:.88}
+
+footer{padding-block:34px 44px;color:var(--mute);font-size:.85rem;border-top:var(--lw) solid var(--line)}
+footer .wrap{display:grid;gap:10px}
+footer b{color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:var(--rs);padding:12px 18px;font:600 .92rem var(--fb);max-width:min(560px,calc(100vw - 32px));z-index:70;transition:opacity .2s,transform .2s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===================== 2. MIDNIGHT ===================== */
+.nav{border-bottom-color:var(--rule)}
+.brand{font-family:var(--fm);font-size:1.05rem;letter-spacing:.02em;font-weight:500}
+.kick{color:var(--accent)}
+.kick::before{content:"//";opacity:.7}
+h1 em{font-style:normal;color:var(--accent)}
+.site{background-attachment:scroll}
+.rc{background:linear-gradient(180deg,var(--card-a),var(--card-b))}
+.tiles div{background:var(--cell)}
+.tiles dd{font-family:var(--fm);font-weight:500}
+.sec{border-top-color:var(--rule)}
+.step{background:linear-gradient(180deg,var(--surface),transparent);border-color:var(--rule);box-shadow:none}
+.step .n{font-family:var(--fm);font-weight:500;font-size:1rem;letter-spacing:.1em;color:var(--accent);margin-bottom:22px}
+.step .n::before{content:"STEP "}
+.card,.f,.panel,.plan,.grp,.sample{border-color:var(--rule);box-shadow:none}
+.panel.full,.plan.pick{border-color:rgb(var(--acc) / .5);box-shadow:var(--sh)}
+.plan.pick{outline:0}
+.ic{border-color:var(--rule);background:rgb(var(--acc) / .08)}
+.feat{grid-template-columns:repeat(6,minmax(0,1fr))}
+.f{grid-column:span 2}
+.f:nth-child(1){grid-column:span 4;background:radial-gradient(500px 220px at 100% 0,rgb(var(--acc) / .12),transparent 70%),var(--surface)}
+.f:nth-child(7){grid-column:span 4}
+.f:nth-child(8),.f:nth-child(9){grid-column:span 3}
+.f:nth-child(1) h3{font-size:1.5rem}
+.tabs{background:var(--surface);border-color:var(--rule)}
+.btn{font-weight:700}
+.plan .price,.step .n,.tiles dd{font-variant-numeric:tabular-nums}
+.cta{background:var(--cta-bg)}
+.cta .btn{background:var(--deep);color:var(--accent);border-color:var(--deep)}
+.cta .field{background:var(--deep);color:var(--ink)}
+.cta .field input{color:var(--ink)}
+.cta .field input::placeholder{color:var(--mute)}
+.cta .field .i{color:var(--mute)}
+
+
+/* ===== Responsive ===== */
+@media (max-width:1020px){
+  .steps,.cards4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feat,.cat{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feat{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .f,.f:nth-child(n){grid-column:auto}
+}
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr}
+  .nl{display:none}
+  .nav .btn{margin-left:auto}
+  .two,.samples,.plans{grid-template-columns:1fr}
+  .sw .blurb{display:none}
+}
+@media (max-width:580px){
+  .steps,.cards4,.feat,.cat,.feat{grid-template-columns:1fr}
+  .af .row{flex-direction:column}
+  .af .btn{width:100%}
+  .srcs{grid-template-columns:1fr}
+  .tiles{grid-template-columns:1fr 1fr}
+  .nav .btn{padding:12px 16px;font-size:.9rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="win" width="14" height="14" patternUnits="userSpaceOnUse"><rect x="3" y="3" width="7" height="8" fill="none" stroke="currentColor" stroke-width="1"/></pattern>
+  </defs>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-build" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-5h4v5"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="7.5" cy="8.5" r="1.2"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 5h12l-2 4 2 4H5"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 15L15 3l6 6L9 21 3 15zM7 11l2 2M10 8l2 2M13 5l2 2"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="4"/><path d="M8 14h2M14 14h2M8 18h2M14 18h2"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6V3zM14 3v5h5M9 13h7M9 17h7"/></symbol>
+  <symbol id="i-gap" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 4v16M6 20h12M5 7h14M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="m-house" viewBox="0 0 320 150">
+    <polygon points="38,120 58,24 272,16 296,112" fill="var(--fig-fill)" stroke="var(--fig)" stroke-width="1.6" stroke-dasharray="5 3"/>
+    <polygon points="96,50 214,44 218,90 99,95" fill="none" stroke="var(--fig)" stroke-width="1.6"/>
+    <path d="M96,50 L155,26 L214,44" fill="none" stroke="var(--fig)" stroke-width="1.6"/>
+    <path d="M22,134 H312" stroke="var(--fig)" stroke-width="5"/>
+    <path d="M42,143 H292M42,139 v8M292,139 v8" stroke="var(--fig)" stroke-width="1"/>
+    <text x="167" y="112" text-anchor="middle" style="font:10px var(--fm);fill:var(--fig)">about 447 m² · measured from the parcel outline</text>
+  </symbol>
+  <symbol id="m-flat" viewBox="0 0 320 150">
+    <rect x="96" y="10" width="86" height="132" fill="var(--fig-fill)" stroke="var(--fig)" stroke-width="1.6"/>
+    <rect x="96" y="10" width="86" height="132" fill="url(#win)" style="color:var(--fig)"/>
+    <rect x="132" y="116" width="14" height="26" fill="var(--fig)"/>
+    <rect x="196" y="44" width="62" height="98" fill="none" stroke="var(--fig)" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="196" y="44" width="62" height="98" fill="url(#win)" style="color:var(--fig)" opacity=".6"/>
+    <path d="M22,142 H312" stroke="var(--fig)" stroke-width="4"/>
+    <text x="194" y="30" style="font:10px var(--fm);fill:var(--fig)">733 flats in the tower</text>
+  </symbol>
+  <symbol id="m-brand" viewBox="0 0 26 26"><polygon points="3,21 6,5 22,3 24,18" fill="none" stroke="var(--accent)" stroke-width="2.2"/><rect x="9" y="9" width="8" height="6" fill="var(--accent)"/></symbol>
+</svg>
+
+<div class="sw" id="sw">
+  <div class="wrap">
+    <span class="lab">Midnight palette</span>
+    <div class="opts" role="group" aria-label="Choose a colour palette" id="swopts"></div>
+    <span class="blurb" id="swblurb"></span>
+  </div>
+</div>
+
+<div class="site" id="site">
+  <header class="nav">
+    <div class="wrap">
+      <div class="brand"><svg><use href="#m-brand"/></svg>VicProp</div>
+      <nav class="nl" aria-label="Sections">
+        <button type="button" data-go="what">How it works</button>
+        <button type="button" data-go="who">Who it is for</button>
+        <button type="button" data-go="features">Features</button>
+        <button type="button" data-go="samples">Samples</button>
+        <button type="button" data-go="pricing">Pricing</button>
+      </nav>
+      <button class="btn" type="button" data-go="top">Try an address</button>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-copy">
+        <div class="kick">Property reports for Victoria</div>
+        <h1>Check an <em>address</em> before you commit to it.</h1>
+        <p class="lede">Type a Victorian address and get a plain-English report on the land, the rent, the price, the suburb and the planning rules. For flats it also covers the building. Most of it is free.</p>
+        <form class="af" autocomplete="off" novalidate>
+          <label class="vh" for="a1">Property address</label>
+          <div class="row">
+            <div class="field">
+              <svg class="i"><use href="#i-search"/></svg>
+              <input id="a1" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" placeholder="Start typing, for example 14 Lucinda Lane">
+              <ul class="sugg" role="listbox" hidden></ul>
+            </div>
+            <button class="btn" type="submit">Generate report</button>
+          </div>
+          <div class="msg" role="status"></div>
+          <div class="try"><span>Try a real address:</span>
+            <button type="button" data-pick="0">14 Lucinda Lane, Cranbourne North</button>
+            <button type="button" data-pick="1">310/628 Flinders St, Docklands</button>
+          </div>
+        </form>
+        <div class="legend"><span>Every figure wears a label:</span>
+          <span class="chip obs"><i></i>Observed</span><span class="chip est"><i></i>Estimated</span><span class="chip rep"><i></i>Reported</span><span class="chip unk"><i></i>Unknown</span>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <aside class="rc" aria-label="Preview of a report">
+          <div class="rc-bar"><span class="chip obs"><i></i>Matched to property</span><span>House · free preview</span></div>
+          <div class="rc-id"><h3>14 Lucinda Lane</h3><p>Cranbourne North, Victoria</p></div>
+          <svg class="fig" viewBox="0 0 320 150" role="img" aria-label="Drawing of a house block with the building outline"><use href="#m-house"/></svg>
+          <dl class="tiles">
+            <div><dt>Bed · bath · car</dt><dd>3 · 2 · 2</dd><span class="chip rep"><i></i>Reported</span></div>
+            <div><dt>Block</dt><dd>447 m²</dd><span class="chip obs"><i></i>Observed</span></div>
+            <div><dt>Floor area</dt><dd>138 m²</dd><span class="chip rep"><i></i>Reported</span></div>
+            <div><dt>Built</dt><dd>2016</dd><span class="chip rep"><i></i>Reported</span></div>
+          </dl>
+          <ul class="rows">
+            <li><svg class="i ok"><use href="#i-check"/></svg><span class="t">What does it rent for?</span><span class="chip free"><i></i>Free</span></li>
+            <li><svg class="i ok"><use href="#i-check"/></svg><span class="t">Which schools is it zoned for?</span><span class="chip free"><i></i>Free</span></li>
+            <li><svg class="i lk"><use href="#i-lock"/></svg><span class="t">What has it sold for?</span><span class="bl" aria-hidden="true"><i></i><i></i><i></i></span></li>
+            <li><svg class="i lk"><use href="#i-lock"/></svg><span class="t">Where else could you invest?</span><span class="bl" aria-hidden="true"><i></i><i></i><i></i></span></li>
+          </ul>
+          <div class="rc-foot"><button class="btn" type="button" data-demo="That button opens checkout in the full site. This page is the homepage only.">Unlock the full report · $24</button><small>Locked sections stay blurred until you pay.</small></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="what">
+    <div class="wrap">
+      <div class="head"><div class="kick">What it is</div><h2>One address in. One report out.</h2>
+        <p class="lede">Buying property means pulling facts from a dozen places: the title, the council, the census, the rental data, the building. VicProp does that for one address and writes the answers in plain English, with the source and date beside every figure.</p></div>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><h3>Type an address</h3><p>We match it to the national address file, so a flat is a flat in a named building and a house is a single property.</p></div>
+        <div class="step"><span class="n">2</span><h3>We build the report</h3><p>Land, rent, price, schools, transport, risks and planning come from government datasets, joined to your address.</p></div>
+        <div class="step"><span class="n">3</span><h3>Read the free sections</h3><p>Open the free part straight away. The valuable sections show what they cover and stay blurred.</p></div>
+        <div class="step"><span class="n">4</span><h3>Unlock the rest</h3><p>Pay once for this address, or subscribe if you check many. You get every section and a PDF.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="get">
+    <div class="wrap">
+      <div class="head"><div class="kick">What you get</div><h2>The basics are free. The decisions are in the full report.</h2>
+        <p class="lede">The free part answers what the property is and what the area is like. The full report adds what the market and the building say about it.</p></div>
+      <div class="two">
+        <div class="panel"><span class="chip free"><i></i>Free</span><h3>Every address</h3>
+          <ul class="ticks">
+            <li><svg class="i"><use href="#i-check"/></svg><span>What the property is<small>Type, rooms, build year, block size measured from the parcel outline</small></span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>What it rents for and what it is worth<small>Suburb medians by bedroom, with the year-on-year change</small></span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>Living there<small>Schools it is zoned for, transport, shops, parks and clinics nearby</small></span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>Risks and rules<small>Flood, bushfire and heritage checks, and the planning zone explained</small></span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>What to ask next<small>Questions to put to the agent, the vendor or the owners corporation</small></span></li>
+          </ul></div>
+        <div class="panel full"><span class="chip full"><i></i>Full report</span><h3>Unlock for one address</h3>
+          <ul class="ticks">
+            <li><svg class="i"><use href="#i-lock"/></svg><span>What it has sold for<small>Sale history of the house and recent sales on the same street</small></span></li>
+            <li><svg class="i"><use href="#i-lock"/></svg><span>The building, for flats<small>How many flats, and who already operates short stays in it</small></span></li>
+            <li><svg class="i"><use href="#i-lock"/></svg><span>What adds or takes away value<small>Effect of bedrooms, bathrooms, car space and floor on price</small></span></li>
+            <li><svg class="i"><use href="#i-lock"/></svg><span>New supply and suburb conditions<small>Apartments coming nearby, and a rating tested on past Victorian prices</small></span></li>
+            <li><svg class="i"><use href="#i-lock"/></svg><span>Where else you could invest<small>Compare suburbs on growth, yield and price</small></span></li>
+            <li><svg class="i"><use href="#i-lock"/></svg><span>A4 PDF to keep and share</span></li>
+          </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="who">
+    <div class="wrap">
+      <div class="head"><div class="kick">Who it is for</div><h2>For anyone about to put money into a Victorian property.</h2></div>
+      <div class="cards4">
+        <div class="card"><div class="ic"><svg class="i"><use href="#i-tag"/></svg></div><h3>Investors</h3><p class="q">"Is this price fair, and what will it rent for?"</p><ul><li>Rent and price medians side by side</li><li>Gross yield worked out for you</li><li>A calculator you set with your own numbers</li></ul></div>
+        <div class="card"><div class="ic"><svg class="i"><use href="#i-flag"/></svg></div><h3>Buyer's agents and advisers</h3><p class="q">"I need the facts on this address in front of my client."</p><ul><li>One consistent report for every address</li><li>Sources and dates on every figure</li><li>Your logo on the PDF with Pro</li></ul></div>
+        <div class="card"><div class="ic"><svg class="i"><use href="#i-build"/></svg></div><h3>Short-stay operators</h3><p class="q">"Is anyone already running this building, and are short stays allowed?"</p><ul><li>Flats counted per building</li><li>Short-stay listings active in the building</li><li>Rules shown, and what we could not confirm marked Unknown</li></ul></div>
+        <div class="card"><div class="ic"><svg class="i"><use href="#i-home"/></svg></div><h3>People buying a home to live in</h3><p class="q">"What is the area like, and what should I ask before I sign?"</p><ul><li>Schools, transport and what is nearby</li><li>Flood, bushfire and heritage checks</li><li>Planning rules in plain English</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="features">
+    <div class="wrap">
+      <div class="head"><div class="kick">Features</div><h2>Built to be checked, not just read.</h2></div>
+      <div class="feat">
+        <div class="f"><div class="ic"><svg class="i"><use href="#i-scale"/></svg></div><h3>Every figure has a label</h3><p>Observed means it came from a dataset. Estimated means we worked it out. Reported means a public property page said so and we did not check the title. Unknown means we could not find out.</p></div>
+        <div class="f"><div class="ic"><svg class="i"><use href="#i-ruler"/></svg></div><h3>Land measured, not guessed</h3><p>Block size comes from the parcel outline. For 14 Lucinda Lane we measured about 447 m² and listings report 448 m².</p></div>
+        <div class="f"><div class="ic"><svg class="i"><use href="#i-build"/></svg></div><h3>Down to the building</h3><p>The national address file lists every flat. Docklands East Tower has 733, so you can see how big the building is before you buy one.</p></div>
+        <div class="f"><div class="ic"><svg class="i"><use href="#i-calc"/></svg></div><h3>Short-stay only when it pays</h3><p>The Airbnb section appears only when estimated income beats a normal lease by at least 40%. Otherwise the report says why it is left out.</p></div>
+        <div class="f"><div class="ic"><svg class="i"><use href="#i-map"/></svg></div><h3>A rating that states its limits</h3><p>The conditions rating is tested on Victorian unit suburbs: a top-fifth suburb grew faster than a bottom-fifth one 74% to 80% of the time. It is not a price forecast, and it is not shown where it was not tested.</p></div>
+        <div class="f"><div class="ic"><svg class="i"><use href="#i-gap"/></svg></div><h3>Gaps stay visible</h3><p>If a source is missing for your address the report says what is missing and what to ask. It never fills a hole with a guess.</p></div>
+        <div class="f"><div class="ic"><svg class="i"><use href="#i-chart"/></svg></div><h3>A return calculator you control</h3><p>Set price, rent, costs and growth yourself. It is labelled an illustration, never a forecast.</p></div>
+        <div class="f"><div class="ic"><svg class="i"><use href="#i-doc"/></svg></div><h3>An A4 PDF</h3><p>Every section open, sources listed, ready to share with a partner, lender or client.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="sections">
+    <div class="wrap">
+      <div class="head"><div class="kick">Sections</div><h2>What is in the report.</h2>
+        <p class="lede">A house report has 20 sections and a flat report has 23. Free sections open straight away. The rest are marked Full report.</p></div>
+      <div class="tabs" role="group" aria-label="Report type"><button type="button" aria-pressed="true" data-cat="house">House · 20 sections</button><button type="button" aria-pressed="false" data-cat="apt">Flat · 23 sections</button></div>
+      <div class="cat" id="cat"></div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="samples">
+    <div class="wrap">
+      <div class="head"><div class="kick">Sample reports</div><h2>Open a real one.</h2>
+        <p class="lede">Both samples are built from public data for real Victorian addresses. Free sections are readable and paid ones are blurred, just as you would see them.</p></div>
+      <div class="samples">
+        <article class="sample"><div class="sfig"><svg viewBox="0 0 320 150" role="img" aria-label="Drawing of a house block"><use href="#m-house"/></svg></div>
+          <div class="sb"><span class="tag">House · 20 sections</span><h3>14 Lucinda Lane, Cranbourne North</h3><p>3 bed, 2 bath, 2 car on a 447 m² block, built 2016. The sale history is the full-report part.</p>
+            <button class="btn alt" type="button" data-demo="Opening the sample is the next screen. This round is homepage styles only.">Open the sample <svg class="i"><use href="#i-arrow"/></svg></button></div></article>
+        <article class="sample"><div class="sfig"><svg viewBox="0 0 320 150" role="img" aria-label="Drawing of a tower with one flat marked"><use href="#m-flat"/></svg></div>
+          <div class="sb"><span class="tag">Flat · 23 sections</span><h3>310/628 Flinders St, Docklands</h3><p>A flat in Docklands East Tower, one of 733. Includes the building and the new apartments coming nearby.</p>
+            <button class="btn alt" type="button" data-demo="Opening the sample is the next screen. This round is homepage styles only.">Open the sample <svg class="i"><use href="#i-arrow"/></svg></button></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pricing">
+    <div class="wrap">
+      <div class="head"><div class="kick">Pricing <span class="prop">Proposed</span></div><h2>Pay for one address, or for all of them.</h2>
+        <p class="lede">Prices are in Australian dollars and include GST. Research on similar tools found individuals pay up to about $30 for a one-off report and professionals $99 to $500 a month.</p></div>
+      <div class="plans">
+        <div class="plan pick"><div class="cap">One report</div><div class="price">$24 <small>once</small></div>
+          <ul class="ticks"><li><svg class="i"><use href="#i-check"/></svg>All sections for one address</li><li><svg class="i"><use href="#i-check"/></svg>A4 PDF to keep and share</li><li><svg class="i"><use href="#i-check"/></svg>Re-open it for 30 days</li></ul>
+          <button class="btn" type="button" data-go="top">Find an address</button></div>
+        <div class="plan"><div class="cap">Pro</div><div class="price">$99 <small>a month</small></div>
+          <ul class="ticks"><li><svg class="i"><use href="#i-check"/></svg>Every address, every section</li><li><svg class="i"><use href="#i-check"/></svg>Your logo on the PDF</li><li><svg class="i"><use href="#i-check"/></svg>Screener across all suburbs</li></ul>
+          <button class="btn alt" type="button" data-demo="Pro sign-up is part of checkout, which is not in this round.">Start Pro</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="data">
+    <div class="wrap">
+      <div class="head"><div class="kick">Data and limits</div><h2>Where it comes from, and what it cannot do.</h2></div>
+      <div class="two">
+        <div class="panel"><h3>Sources</h3>
+          <ul class="srcs"><li>Geoscape G-NAF addresses</li><li>Valuer-General Victoria sale prices</li><li>Homes Victoria rents</li><li>ABS Census 2021</li><li>Crime Statistics Agency Victoria</li><li>Vicmap property and planning</li><li>Public Transport Victoria timetables</li><li>OpenStreetMap contributors</li></ul></div>
+        <div class="panel"><h3>Limits we state</h3>
+          <ul class="ticks">
+            <li><svg class="i"><use href="#i-gap"/></svg><span>Victoria only for now.</span></li>
+            <li><svg class="i"><use href="#i-gap"/></svg><span>The conditions rating is tested on Victorian unit suburbs, and shown only there.</span></li>
+            <li><svg class="i"><use href="#i-gap"/></svg><span>Rooms, floor area and the sales of one house come from public property pages. They are marked Reported and are not checked against the title.</span></li>
+            <li><svg class="i"><use href="#i-gap"/></svg><span>General information only. It is not financial, legal or valuation advice.</span></li>
+          </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="wrap">
+      <div class="head"><div class="kick">Questions</div><h2>Before you try it.</h2></div>
+      <div class="faq">
+        <details><summary>What do I get without paying?</summary><p>The free sections: what the property is, rent, price, schools, transport, what is nearby, risks, planning and the questions to ask. Locked sections show what they cover and stay blurred until you unlock them.</p></details>
+        <details><summary>Which addresses work?</summary><p>Victorian addresses. Other states are not covered yet.</p></details>
+        <details><summary>Is the conditions rating a price forecast?</summary><p>No. It describes a suburb on three Census markers and was tested on past Victorian unit prices. We do not predict prices.</p></details>
+        <details><summary>Where do the sale prices of one house come from?</summary><p>Suburb medians come from the Valuer-General. Sales of an individual house come from public property pages found for that address. They are marked Reported, with the link and date, and are not checked against the title register.</p></details>
+        <details><summary>Why is there no Airbnb section in my report?</summary><p>We show it only when estimated short-stay income is at least 40% above the long-term rent for the same home. Most houses do not clear that, so the report leaves it out and says so.</p></details>
+        <details><summary>Is this financial advice?</summary><p>No. It is general information from public data. Talk to a licensed adviser, a conveyancer and a building inspector before you buy.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="try">
+    <div class="wrap">
+      <h2>Put in an address and see what you get.</h2>
+      <p>The free sections open straight away. You only pay if you want the blurred ones.</p>
+      <form class="af" autocomplete="off" novalidate>
+        <label class="vh" for="a2">Property address</label>
+        <div class="row">
+          <div class="field">
+            <svg class="i"><use href="#i-search"/></svg>
+            <input id="a2" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" placeholder="Start typing, for example 310/628 Flinders St">
+            <ul class="sugg" role="listbox" hidden></ul>
+          </div>
+          <button class="btn" type="submit">Generate report</button>
+        </div>
+        <div class="msg" role="status"></div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div><b>VicProp</b> is a working name. Prices and wording on this page are proposals.</div>
+      <div>General information only, not financial, legal or valuation advice. Contains data from Geoscape, the Victorian Government (Vicmap, Valuer-General, Homes Victoria, Crime Statistics Agency, Public Transport Victoria) and the Australian Bureau of Statistics, used under Creative Commons Attribution licences, and OpenStreetMap contributors (ODbL).</div>
+    </div>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var STY=[
+    {id:"lime",n:"1 · Lime (current)",b:"Electric lime on blue-black. The one you saw.",c:"#C7F23B"},
+    {id:"ember",n:"2 · Ember",b:"Orange on warm charcoal. Energetic, a little retro.",c:"#FF8A3D"},
+    {id:"lagoon",n:"3 · Lagoon",b:"Aqua on deep green-blue. Calm, trustworthy, data-first.",c:"#2EE6C8"},
+    {id:"violet",n:"4 · Violet",b:"Soft violet on ink. Modern software, a bit premium.",c:"#A78BFA"},
+    {id:"rose",n:"5 · Rose",b:"Coral pink on dark plum. Warm and human, less techy.",c:"#FF5C7C"},
+    {id:"gold",n:"6 · Champagne",b:"Muted gold on black. Quiet, expensive, advisory.",c:"#E8C468"}
+  ];
+  var ADDR=[
+    {a:"14 Lucinda Lane, Cranbourne North VIC",t:"House"},
+    {a:"310/628 Flinders St, Docklands VIC",t:"Flat"}
+  ];
+  var CATALOG={
+    house:[["The property",[["What is this property?"],["Where is it?"],["How big is the block?"],["What does it rent for?"],["What is it worth?"],["What has it sold for?",1]]],
+      ["Living here",[["What is the suburb known for?"],["Who lives here?"],["Which schools is it zoned for?"],["How do you get around?"],["What is nearby day to day?"],["What risks and rules apply to the land?"]]],
+      ["The investment case",[["What would the return be?"]]],
+      ["The market",[["How have prices moved?"],["How does the suburb compare with nearby ones?"],["What does the suburb profile look like?"],["Where else could you invest?",1]]],
+      ["Planning and rules",[["What does the planning say?"]]],
+      ["Decide",[["What should you ask next?"],["Where did all this come from?"]]]],
+    apt:[["The property",[["What is this property?"],["Where is it?"],["How big is the block?"],["What does it rent for?"],["What is it worth?"]]],
+      ["Living here",[["What is the suburb known for?"],["Who lives here?"],["Which schools is it zoned for?"],["How do you get around?"],["What is nearby day to day?"],["What risks and rules apply to the land?"]]],
+      ["The investment case",[["What makes it worth more or less?",1],["What would the return be?"],["Could it work as an Airbnb?",1]]],
+      ["The market",[["How have prices moved?"],["What new apartments are coming?",1],["How does the suburb compare with nearby ones?"],["How favourable are the suburb's conditions?",1],["Where else could you invest?",1]]],
+      ["The building and the rules",[["What do we know about the building?",1],["What does the planning say?"]]],
+      ["Decide",[["What should you ask next?"],["Where did all this come from?"]]]]
+  };
+  var root=document.documentElement;
+  function $(s,r){return (r||document).querySelector(s)}
+  function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+  /* toast */
+  var tt,toast=$("#toast");
+  function say(m){toast.textContent=m;toast.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove("on")},4200)}
+
+  /* style switcher */
+  var opts=$("#swopts"),blurb=$("#swblurb");
+  STY.forEach(function(s){var b=document.createElement("button");b.type="button";var dot=document.createElement("span");dot.className="dot";dot.style.background=s.c;b.appendChild(dot);b.appendChild(document.createTextNode(s.n));b.setAttribute("data-id",s.id);b.setAttribute("aria-pressed","false");opts.appendChild(b)});
+  function apply(id){
+    var s=STY.filter(function(x){return x.id===id})[0]||STY[0];
+    root.setAttribute("data-s",s.id);
+    $$("button",opts).forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-id")===s.id?"true":"false")});
+    blurb.textContent=s.b;
+  }
+  function fromHash(){var h=(location.hash||"").replace("#","");apply(h)}
+  opts.addEventListener("click",function(e){
+    var b=e.target.closest("button");if(!b)return;
+    var id=b.getAttribute("data-id");
+    try{location.hash=id}catch(x){}
+    apply(id);window.scrollTo(0,0);
+  });
+  window.addEventListener("hashchange",fromHash);
+  document.addEventListener("keydown",function(e){
+    if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName))return;
+    if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;
+    var cur=STY.map(function(x){return x.id}).indexOf(root.getAttribute("data-s"));
+    var nx=(cur+(e.key==="ArrowRight"?1:STY.length-1))%STY.length;
+    try{location.hash=STY[nx].id}catch(x){}
+    apply(STY[nx].id);
+  });
+  fromHash();
+
+  /* scrolling */
+  function go(id){var el=id==="top"?$("#top"):document.getElementById(id);if(!el)return;
+    var off=($("#sw").offsetHeight||0)+4;
+    var y=el.getBoundingClientRect().top+window.pageYOffset-off;
+    window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+    if(id==="top"){var i=$("#a1");setTimeout(function(){try{i.focus({preventScroll:true})}catch(x){}},350)}
+  }
+  document.addEventListener("click",function(e){
+    var g=e.target.closest("[data-go]");if(g){e.preventDefault();go(g.getAttribute("data-go"));return}
+    var d=e.target.closest("[data-demo]");if(d){e.preventDefault();say(d.getAttribute("data-demo"))}
+  });
+
+  /* address forms */
+  $$(".af").forEach(function(f){
+    var inp=$("input",f),list=$(".sugg",f),msg=$(".msg",f),sel=-1,cur=[];
+    function close(){list.hidden=true;inp.setAttribute("aria-expanded","false");sel=-1}
+    function render(){
+      var q=inp.value.trim().toLowerCase();
+      cur=ADDR.filter(function(a){return !q||a.a.toLowerCase().indexOf(q)>-1||q.split(/\s+/).every(function(w){return a.a.toLowerCase().indexOf(w)>-1})});
+      if(!cur.length){close();return}
+      list.innerHTML=cur.map(function(a,i){return '<li role="option" data-i="'+i+'" aria-selected="false"><span>'+a.a+'</span><small>'+a.t+'</small></li>'}).join("");
+      list.hidden=false;inp.setAttribute("aria-expanded","true");sel=-1;
+    }
+    function mark(){$$("li",list).forEach(function(li,i){li.setAttribute("aria-selected",i===sel?"true":"false")})}
+    function pick(a){inp.value=a.a;close();msg.textContent="Matched: "+a.a+" ("+a.t.toLowerCase()+"). In the full site the report starts generating here.";}
+    inp.addEventListener("input",function(){msg.textContent="";render()});
+    inp.addEventListener("focus",render);
+    inp.addEventListener("keydown",function(e){
+      if(e.key==="ArrowDown"){e.preventDefault();if(list.hidden)render();sel=Math.min(cur.length-1,sel+1);mark()}
+      else if(e.key==="ArrowUp"){e.preventDefault();sel=Math.max(0,sel-1);mark()}
+      else if(e.key==="Enter"&&sel>-1){e.preventDefault();pick(cur[sel])}
+      else if(e.key==="Escape"){close()}
+    });
+    list.addEventListener("mousedown",function(e){var li=e.target.closest("li");if(li){e.preventDefault();pick(cur[+li.getAttribute("data-i")])}});
+    document.addEventListener("click",function(e){if(!f.contains(e.target))close()});
+    f.addEventListener("submit",function(e){
+      e.preventDefault();
+      var q=inp.value.trim().toLowerCase();
+      var m=ADDR.filter(function(a){return q&&(a.a.toLowerCase().indexOf(q)>-1||q.indexOf("lucinda")>-1&&a.t==="House"||q.indexOf("flinders")>-1&&a.t==="Flat")})[0];
+      if(m)pick(m);
+      else if(!q)msg.textContent="Type a Victorian address to start.";
+      else msg.textContent="This mockup has data for two addresses only. Pick one of the suggestions.";
+      close();
+    });
+    $$("[data-pick]",f).forEach(function(b){b.addEventListener("click",function(){pick(ADDR[+b.getAttribute("data-pick")])})});
+  });
+
+  /* section catalogue */
+  var cat=$("#cat");
+  function drawCat(k){
+    cat.innerHTML=CATALOG[k].map(function(g){
+      return '<div class="grp"><h4>'+g[0]+'<span>'+g[1].length+'</span></h4><ul>'+g[1].map(function(s){
+        return '<li><span>'+s[0]+'</span>'+(s[1]?'<span class="chip full"><i></i>Full report</span>':'<span class="chip free"><i></i>Free</span>')+'</li>';
+      }).join("")+'</ul></div>';
+    }).join("");
+  }
+  drawCat("house");
+  $$(".tabs button").forEach(function(b){b.addEventListener("click",function(){
+    $$(".tabs button").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});
+    drawCat(b.getAttribute("data-cat"));
+  })});
+})();
+</script>

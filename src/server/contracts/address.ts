@@ -55,15 +55,24 @@ export const ResolvedAddress = z.object({
 });
 export type ResolvedAddress = z.infer<typeof ResolvedAddress>;
 
-/** Entitlement is wired for anonymous and user principals only (no login or payments yet). */
+/** An address a `one` purchase has unlocked, until `expires_at` (ISO 8601 UTC). */
+export const UnlockedAddress = z.object({ gnaf_pid: z.string(), expires_at: z.string() });
+export type UnlockedAddress = z.infer<typeof UnlockedAddress>;
+
+/**
+ * Anonymous, or a user holding paid purchases (a guest identified by the signed cookie; there is no login).
+ * Only entitlements() reads the plan, the unlocked addresses and the expiries.
+ */
 export const Principal = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("anonymous") }),
   z.object({
     kind: z.literal("user"),
     user_id: z.string(),
     org_id: z.string().optional(),
-    /** Read only by entitlements(). "none" = signed in, no paid plan. */
-    plan: z.enum(["none", "individual", "pro"]).default("none"),
+    /** "pro" = every address until plan_expires_at. "one" = only the addresses in `unlocked`. "none" = signed in, nothing paid. */
+    plan: z.enum(["none", "one", "pro"]).default("none"),
+    plan_expires_at: z.string().optional(),
+    unlocked: z.array(UnlockedAddress).optional(),
   }),
 ]);
 export type Principal = z.infer<typeof Principal>;

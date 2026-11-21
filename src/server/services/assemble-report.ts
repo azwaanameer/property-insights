@@ -4,6 +4,7 @@ import { ReportModel } from "../contracts/report";
 import type { Db } from "../db";
 import { LAYERS } from "../layers";
 import type { LayerDef } from "../layers/types";
+import { listCurrentDatasets } from "../repos/datasets";
 import { listLayerConfig, listSources } from "../repos/source";
 import { runLayers, type RightsContext } from "./layer-runner";
 
@@ -19,10 +20,11 @@ export interface AssembleInput {
 }
 
 export async function loadRights(db: Db): Promise<RightsContext> {
-  const [sources, config] = await Promise.all([listSources(db), listLayerConfig(db)]);
+  const [sources, config, datasets] = await Promise.all([listSources(db), listLayerConfig(db), listCurrentDatasets(db)]);
   return {
     sources: new Map(sources.map((s) => [s.source_id, s])),
     config: new Map(config.map((c) => [c.layer_id, c])),
+    datasets: new Set(datasets.map((d) => d.source_id)),
   };
 }
 

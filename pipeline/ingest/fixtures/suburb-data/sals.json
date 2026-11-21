@@ -1,0 +1,80 @@
+[
+ {
+  "sal_code": "20766",
+  "name": "Docklands",
+  "raw_name": "Docklands",
+  "area_sqkm": 3.148
+ },
+ {
+  "sal_code": "21640",
+  "name": "Melbourne",
+  "raw_name": "Melbourne",
+  "area_sqkm": 6.5866
+ },
+ {
+  "sal_code": "22315",
+  "name": "Southbank",
+  "raw_name": "Southbank",
+  "area_sqkm": 1.564
+ },
+ {
+  "sal_code": "20495",
+  "name": "Carlton",
+  "raw_name": "Carlton (Vic.)",
+  "area_sqkm": 1.7728
+ },
+ {
+  "sal_code": "22107",
+  "name": "Port Melbourne",
+  "raw_name": "Port Melbourne",
+  "area_sqkm": 9.6687
+ },
+ {
+  "sal_code": "22310",
+  "name": "South Melbourne",
+  "raw_name": "South Melbourne",
+  "area_sqkm": 2.1899
+ },
+ {
+  "sal_code": "22757",
+  "name": "West Melbourne",
+  "raw_name": "West Melbourne",
+  "area_sqkm": 6.5822
+ },
+ {
+  "sal_code": "21966",
+  "name": "North Melbourne",
+  "raw_name": "North Melbourne",
+  "area_sqkm": 2.3554
+ },
+ {
+  "sal_code": "22343",
+  "name": "St Kilda",
+  "raw_name": "St Kilda (Vic.)",
+  "area_sqkm": 3.1785
+ },
+ {
+  "sal_code": "22038",
+  "name": "Parkville",
+  "raw_name": "Parkville (Vic.)",
+  "area_sqkm": 3.9981
+ },
+ {
+  "sal_code": "20830",
+  "name": "East Melbourne",
+  "raw_name": "East Melbourne",
+  "area_sqkm": 1.8557
+ },
+ {
+  "sal_code": "22474",
+  "name": "Taylors Lakes",
+  "raw_name": "Taylors Lakes",
+  "area_sqkm": 7.4755
+ },
+ {
+  "sal_code": "22313",
+  "name": "South Wharf",
+  "raw_name": "South Wharf",
+  "area_sqkm": 0.2902
+ }
+]

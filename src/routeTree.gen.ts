@@ -10,15 +10,42 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DoneRouteImport } from './routes/done'
+import { Route as CheckoutGnafPidRouteImport } from './routes/checkout.$gnafPid'
+import { Route as ReportGnafPidRouteImport } from './routes/report.$gnafPid'
+import { Route as ApiV1CheckoutRouteImport } from './routes/api/v1/checkout'
 import { Route as ApiV1CoverageRouteImport } from './routes/api/v1/coverage'
 import { Route as ApiV1AddressGnafPidRouteImport } from './routes/api/v1/address/$gnafPid'
 import { Route as ApiV1AddressResolveRouteImport } from './routes/api/v1/address/resolve'
 import { Route as ApiV1AddressSuggestRouteImport } from './routes/api/v1/address/suggest'
+import { Route as ApiV1DevUnlockRouteImport } from './routes/api/v1/dev/unlock'
+import { Route as ApiV1PurchasesMeRouteImport } from './routes/api/v1/purchases/me'
+import { Route as ApiV1WebhooksStripeRouteImport } from './routes/api/v1/webhooks/stripe'
 import { Route as ApiV1PropertyGnafPidReportRouteImport } from './routes/api/v1/property/$gnafPid/report'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoneRoute = DoneRouteImport.update({
+  id: '/done',
+  path: '/done',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutGnafPidRoute = CheckoutGnafPidRouteImport.update({
+  id: '/checkout/$gnafPid',
+  path: '/checkout/$gnafPid',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportGnafPidRoute = ReportGnafPidRouteImport.update({
+  id: '/report/$gnafPid',
+  path: '/report/$gnafPid',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1CheckoutRoute = ApiV1CheckoutRouteImport.update({
+  id: '/api/v1/checkout',
+  path: '/api/v1/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiV1CoverageRoute = ApiV1CoverageRouteImport.update({
@@ -41,6 +68,21 @@ const ApiV1AddressSuggestRoute = ApiV1AddressSuggestRouteImport.update({
   path: '/api/v1/address/suggest',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1DevUnlockRoute = ApiV1DevUnlockRouteImport.update({
+  id: '/api/v1/dev/unlock',
+  path: '/api/v1/dev/unlock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1PurchasesMeRoute = ApiV1PurchasesMeRouteImport.update({
+  id: '/api/v1/purchases/me',
+  path: '/api/v1/purchases/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1WebhooksStripeRoute = ApiV1WebhooksStripeRouteImport.update({
+  id: '/api/v1/webhooks/stripe',
+  path: '/api/v1/webhooks/stripe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiV1PropertyGnafPidReportRoute =
   ApiV1PropertyGnafPidReportRouteImport.update({
     id: '/api/v1/property/$gnafPid/report',
@@ -50,62 +92,111 @@ const ApiV1PropertyGnafPidReportRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/done': typeof DoneRoute
+  '/checkout/$gnafPid': typeof CheckoutGnafPidRoute
+  '/report/$gnafPid': typeof ReportGnafPidRoute
+  '/api/v1/checkout': typeof ApiV1CheckoutRoute
   '/api/v1/coverage': typeof ApiV1CoverageRoute
   '/api/v1/address/$gnafPid': typeof ApiV1AddressGnafPidRoute
   '/api/v1/address/resolve': typeof ApiV1AddressResolveRoute
   '/api/v1/address/suggest': typeof ApiV1AddressSuggestRoute
+  '/api/v1/dev/unlock': typeof ApiV1DevUnlockRoute
+  '/api/v1/purchases/me': typeof ApiV1PurchasesMeRoute
+  '/api/v1/webhooks/stripe': typeof ApiV1WebhooksStripeRoute
   '/api/v1/property/$gnafPid/report': typeof ApiV1PropertyGnafPidReportRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/done': typeof DoneRoute
+  '/checkout/$gnafPid': typeof CheckoutGnafPidRoute
+  '/report/$gnafPid': typeof ReportGnafPidRoute
+  '/api/v1/checkout': typeof ApiV1CheckoutRoute
   '/api/v1/coverage': typeof ApiV1CoverageRoute
   '/api/v1/address/$gnafPid': typeof ApiV1AddressGnafPidRoute
   '/api/v1/address/resolve': typeof ApiV1AddressResolveRoute
   '/api/v1/address/suggest': typeof ApiV1AddressSuggestRoute
+  '/api/v1/dev/unlock': typeof ApiV1DevUnlockRoute
+  '/api/v1/purchases/me': typeof ApiV1PurchasesMeRoute
+  '/api/v1/webhooks/stripe': typeof ApiV1WebhooksStripeRoute
   '/api/v1/property/$gnafPid/report': typeof ApiV1PropertyGnafPidReportRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/done': typeof DoneRoute
+  '/checkout/$gnafPid': typeof CheckoutGnafPidRoute
+  '/report/$gnafPid': typeof ReportGnafPidRoute
+  '/api/v1/checkout': typeof ApiV1CheckoutRoute
   '/api/v1/coverage': typeof ApiV1CoverageRoute
   '/api/v1/address/$gnafPid': typeof ApiV1AddressGnafPidRoute
   '/api/v1/address/resolve': typeof ApiV1AddressResolveRoute
   '/api/v1/address/suggest': typeof ApiV1AddressSuggestRoute
+  '/api/v1/dev/unlock': typeof ApiV1DevUnlockRoute
+  '/api/v1/purchases/me': typeof ApiV1PurchasesMeRoute
+  '/api/v1/webhooks/stripe': typeof ApiV1WebhooksStripeRoute
   '/api/v1/property/$gnafPid/report': typeof ApiV1PropertyGnafPidReportRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/done'
+    | '/checkout/$gnafPid'
+    | '/report/$gnafPid'
+    | '/api/v1/checkout'
     | '/api/v1/coverage'
     | '/api/v1/address/$gnafPid'
     | '/api/v1/address/resolve'
     | '/api/v1/address/suggest'
+    | '/api/v1/dev/unlock'
+    | '/api/v1/purchases/me'
+    | '/api/v1/webhooks/stripe'
     | '/api/v1/property/$gnafPid/report'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/done'
+    | '/checkout/$gnafPid'
+    | '/report/$gnafPid'
+    | '/api/v1/checkout'
     | '/api/v1/coverage'
     | '/api/v1/address/$gnafPid'
     | '/api/v1/address/resolve'
     | '/api/v1/address/suggest'
+    | '/api/v1/dev/unlock'
+    | '/api/v1/purchases/me'
+    | '/api/v1/webhooks/stripe'
     | '/api/v1/property/$gnafPid/report'
   id:
     | '__root__'
     | '/'
+    | '/done'
+    | '/checkout/$gnafPid'
+    | '/report/$gnafPid'
+    | '/api/v1/checkout'
     | '/api/v1/coverage'
     | '/api/v1/address/$gnafPid'
     | '/api/v1/address/resolve'
     | '/api/v1/address/suggest'
+    | '/api/v1/dev/unlock'
+    | '/api/v1/purchases/me'
+    | '/api/v1/webhooks/stripe'
     | '/api/v1/property/$gnafPid/report'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DoneRoute: typeof DoneRoute
+  CheckoutGnafPidRoute: typeof CheckoutGnafPidRoute
+  ReportGnafPidRoute: typeof ReportGnafPidRoute
+  ApiV1CheckoutRoute: typeof ApiV1CheckoutRoute
   ApiV1CoverageRoute: typeof ApiV1CoverageRoute
   ApiV1AddressGnafPidRoute: typeof ApiV1AddressGnafPidRoute
   ApiV1AddressResolveRoute: typeof ApiV1AddressResolveRoute
   ApiV1AddressSuggestRoute: typeof ApiV1AddressSuggestRoute
+  ApiV1DevUnlockRoute: typeof ApiV1DevUnlockRoute
+  ApiV1PurchasesMeRoute: typeof ApiV1PurchasesMeRoute
+  ApiV1WebhooksStripeRoute: typeof ApiV1WebhooksStripeRoute
   ApiV1PropertyGnafPidReportRoute: typeof ApiV1PropertyGnafPidReportRoute
 }
 
@@ -116,6 +207,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/done': {
+      id: '/done'
+      path: '/done'
+      fullPath: '/done'
+      preLoaderRoute: typeof DoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/$gnafPid': {
+      id: '/checkout/$gnafPid'
+      path: '/checkout/$gnafPid'
+      fullPath: '/checkout/$gnafPid'
+      preLoaderRoute: typeof CheckoutGnafPidRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report/$gnafPid': {
+      id: '/report/$gnafPid'
+      path: '/report/$gnafPid'
+      fullPath: '/report/$gnafPid'
+      preLoaderRoute: typeof ReportGnafPidRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/checkout': {
+      id: '/api/v1/checkout'
+      path: '/api/v1/checkout'
+      fullPath: '/api/v1/checkout'
+      preLoaderRoute: typeof ApiV1CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/v1/coverage': {
@@ -146,6 +265,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1AddressSuggestRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/dev/unlock': {
+      id: '/api/v1/dev/unlock'
+      path: '/api/v1/dev/unlock'
+      fullPath: '/api/v1/dev/unlock'
+      preLoaderRoute: typeof ApiV1DevUnlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/purchases/me': {
+      id: '/api/v1/purchases/me'
+      path: '/api/v1/purchases/me'
+      fullPath: '/api/v1/purchases/me'
+      preLoaderRoute: typeof ApiV1PurchasesMeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/webhooks/stripe': {
+      id: '/api/v1/webhooks/stripe'
+      path: '/api/v1/webhooks/stripe'
+      fullPath: '/api/v1/webhooks/stripe'
+      preLoaderRoute: typeof ApiV1WebhooksStripeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/v1/property/$gnafPid/report': {
       id: '/api/v1/property/$gnafPid/report'
       path: '/api/v1/property/$gnafPid/report'
@@ -158,10 +298,17 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DoneRoute: DoneRoute,
+  CheckoutGnafPidRoute: CheckoutGnafPidRoute,
+  ReportGnafPidRoute: ReportGnafPidRoute,
+  ApiV1CheckoutRoute: ApiV1CheckoutRoute,
   ApiV1CoverageRoute: ApiV1CoverageRoute,
   ApiV1AddressGnafPidRoute: ApiV1AddressGnafPidRoute,
   ApiV1AddressResolveRoute: ApiV1AddressResolveRoute,
   ApiV1AddressSuggestRoute: ApiV1AddressSuggestRoute,
+  ApiV1DevUnlockRoute: ApiV1DevUnlockRoute,
+  ApiV1PurchasesMeRoute: ApiV1PurchasesMeRoute,
+  ApiV1WebhooksStripeRoute: ApiV1WebhooksStripeRoute,
   ApiV1PropertyGnafPidReportRoute: ApiV1PropertyGnafPidReportRoute,
 }
 export const routeTree = rootRouteImport

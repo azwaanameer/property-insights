@@ -12,6 +12,8 @@ import { entitlements } from "./entitlements";
 export interface RightsContext {
   sources: Map<string, SourceRow>;
   config: Map<string, LayerConfigRow>;
+  /** Source ids that currently have a published dataset (a src_dataset_current row). */
+  datasets: Set<string>;
 }
 
 /** `reason` is safe for public responses. `detail` (source ids, rights status) goes to the structured log only. */
@@ -21,9 +23,12 @@ export const NOT_AVAILABLE = "Not available yet";
 
 /**
  * AD-4: a layer is on only if it is enabled, its tier agrees with layer_config, and every source it lists is cleared.
- * A missing source row counts as not cleared.
+ * A missing source row counts as not cleared. AD-7: and every dataset the layer reads must be published.
  */
-export function rightsGate(layer: Pick<LayerDef, "layer_id" | "source_ids"> & { tier?: LayerTier }, rights: RightsContext): GateResult {
+export function rightsGate(
+  layer: Pick<LayerDef, "layer_id" | "source_ids"> & { tier?: LayerTier; dataset_ids?: string[] },
+  rights: RightsContext,
+): GateResult {
   const config = rights.config.get(layer.layer_id);
   if (!config || !config.enabled) return { ok: false, reason: NOT_AVAILABLE, detail: "layer is not enabled in layer_config" };
   if (layer.tier && config.tier !== layer.tier) {
@@ -36,6 +41,9 @@ export function rightsGate(layer: Pick<LayerDef, "layer_id" | "source_ids"> & { 
   if (unclear.length > 0) {
     return { ok: false, reason: NOT_AVAILABLE, detail: `rights not cleared: ${unclear.map((s) => `${s.id} (${s.status})`).join(", ")}` };
   }
+  // AD-7: a layer whose dataset has never been published has nothing to read. not_covered, never run.
+  const missing = (layer.dataset_ids ?? []).filter((id) => !rights.datasets.has(id));
+  if (missing.length > 0) return { ok: false, reason: NOT_AVAILABLE, detail: `no published dataset: ${missing.join(", ")}` };
   return { ok: true };
 }
 
@@ -73,7 +81,7 @@ export async function runLayer(layer: LayerDef, input: RunLayersInput): Promise<
     return LayerResult.parse({ ...base, status: "not_covered", figures: [], payload: {}, message: gate.reason });
   }
 
-  if (entitlements(principal, layer) === "locked") {
+  if (entitlements(principal, layer, { gnaf_pid: address.gnaf_pid }) === "locked") {
     return LayerResult.parse({ ...base, status: "locked", figures: [], payload: {}, teaser: layer.teaser });
   }
 

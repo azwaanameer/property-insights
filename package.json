@@ -6,13 +6,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "dev:node": "node --env-file=.env node_modules/vite/bin/vite.js dev --config vite.config.node.ts",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "db:migrate": "node db/migrate.mjs",
     "pipeline:sal": "node pipeline/ingest/suburbs-sal.mjs",
-    "pipeline:gnaf": "python -I pipeline/ingest/gnaf-extract.py && node pipeline/ingest/gnaf-load.mjs"
+    "pipeline:gnaf": "python -I pipeline/ingest/gnaf-extract.py && node pipeline/ingest/gnaf-load.mjs",
+    "pipeline:vgv": "node pipeline/ingest/vgv-medians.mjs",
+    "pipeline:rents": "node pipeline/ingest/homes-vic-rents.mjs",
+    "pipeline:census": "node pipeline/ingest/census-sal.mjs",
+    "pipeline:seifa": "node pipeline/ingest/seifa-sal.mjs",
+    "pipeline:neighbours": "node pipeline/ingest/locality-neighbours.mjs",
+    "pipeline:suburb-data": "npm run pipeline:vgv && npm run pipeline:rents && npm run pipeline:census && npm run pipeline:seifa && npm run pipeline:neighbours"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

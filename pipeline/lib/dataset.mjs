@@ -11,6 +11,18 @@ export async function createDatasetVersion(db, { source_id, retrieved_at, file_s
   return rows[0].id;
 }
 
+// Every table a pipeline loads under a dataset_version_id. A failed run deletes its own rows from all of them.
+const LOADED_TABLES = [
+  "ref_address",
+  "ref_building",
+  "ref_suburb",
+  "series_price",
+  "series_rent",
+  "fact_suburb_marker",
+  "ref_suburb_neighbour",
+  "src_dataset_unmatched",
+];
+
 /** Mark a loading version failed and delete the rows it loaded, so a failed run leaves nothing behind. */
 export async function markFailed(db, datasetVersionId) {
   const done = await db.query(
@@ -18,7 +30,7 @@ export async function markFailed(db, datasetVersionId) {
     [datasetVersionId],
   );
   if (done.length === 0) return;
-  for (const table of ["ref_address", "ref_building", "ref_suburb"]) {
+  for (const table of LOADED_TABLES) {
     await db.query(`DELETE FROM ${table} WHERE dataset_version_id = $1`, [datasetVersionId]);
   }
 }

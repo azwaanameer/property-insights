@@ -7,6 +7,17 @@ export const ErrorCode = z.enum([
   "address_not_found",
   "not_covered",
   "not_configured",
+  /** 503: no payment provider is set up. */
+  "payments_not_configured",
+  /** 409: no paid layer is enabled and cleared for the address, so there is nothing to sell. */
+  "nothing_to_unlock",
+  /** 502: the payment provider refused or could not be reached. */
+  "payment_failed",
+  /** 409: the buyer already has access to this address (an active one-report purchase or an active Pro plan). */
+  "already_entitled",
+  /** 409: a webhook for a purchase we cannot find yet. Non-2xx so the provider sends it again. */
+  "event_unmatched",
+  "not_found",
   "internal_error",
 ]);
 export type ErrorCode = z.infer<typeof ErrorCode>;
