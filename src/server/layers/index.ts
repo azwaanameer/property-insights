@@ -3,6 +3,7 @@
 import { L01Property } from "./L01-property";
 import { L02Rent } from "./L02-rent";
 import { L03Price } from "./L03-price";
+import { L04Drivers } from "./L04-drivers";
 import { L05Return } from "./L05-return";
 import { L08Supply } from "./L08-supply";
 import { L10Screener } from "./L10-screener";
@@ -17,6 +18,7 @@ import { L17Schools } from "./L17-schools";
 import { L18Safety } from "./L18-safety";
 import { L19Photos } from "./L19-photos";
 import { L20Places } from "./L20-places";
+import { L21Sales } from "./L21-sales";
 import type { LayerDef } from "./types";
 
 export const LAYERS: LayerDef[] = [
@@ -24,6 +26,8 @@ export const LAYERS: LayerDef[] = [
   L19Photos,
   L02Rent,
   L03Price,
+  L21Sales,
+  L04Drivers,
   L16Transport,
   L20Places,
   L17Schools,

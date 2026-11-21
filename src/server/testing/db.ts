@@ -19,6 +19,9 @@ import { runComData } from "../../../pipeline/ingest/com-buildings.mjs";
 import { runCrime } from "../../../pipeline/ingest/crime.mjs";
 import { CRIME_OPTIONS, crimeFixtureDir } from "../../../pipeline/ingest/fixtures/crime.mjs";
 import { runPlaces } from "../../../pipeline/ingest/osm-places.mjs";
+import { runSold } from "../../../pipeline/ingest/rp-sold.mjs";
+import { runPriceDrivers } from "../../../pipeline/derive/price-drivers.mjs";
+import { DRIVER_OPTIONS, SOLD_AS_OF, SOLD_OPTIONS, SOLD_TEXTS } from "../../../pipeline/ingest/fixtures/sold.mjs";
 import { PLACES_EXPECT, placesFixtureDir } from "../../../pipeline/ingest/fixtures/places.mjs";
 import { COM_AS_OF, COM_TEXTS } from "../../../pipeline/ingest/fixtures/com.mjs";
 import { SCHOOL_AS_OF, SCHOOL_LOCATIONS_TEXT, SCHOOL_ZONE_TEXTS } from "../../../pipeline/ingest/fixtures/schools.mjs";
@@ -49,7 +52,7 @@ export async function createLoadedTestDb() {
   return t;
 }
 
-export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating" | "transit" | "schools" | "com" | "crime" | "places";
+export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating" | "transit" | "schools" | "com" | "crime" | "places" | "sold" | "drivers";
 
 /** The fixture transport feed is extracted once per test file (it runs python), then loaded into each database. */
 let fixtureStops: Promise<string> | undefined;
@@ -89,5 +92,11 @@ export async function createSuburbDataTestDb(opts: { omit?: SuburbDataset[] } = 
   if (!omit.has("crime")) await runCrime(t.db, { dir: await crimeFixtureDir(), ...CRIME_OPTIONS });
   // Batch 3: nearby places, a tiny OpenStreetMap excerpt through the real extractor and loader (tests that need exact places replace it with setPlaces).
   if (!omit.has("places")) await runPlaces(t.db, { dir: await placesFixtureDir(), expect: PLACES_EXPECT });
+  // Batch 3: reported sales (an excerpt of the real harvest files through the real loader, matched to the fixture G-NAF buildings) and the price-driver
+  // model fitted on them. The model needs the sales, so omitting "sold" omits both.
+  if (!omit.has("sold")) {
+    await runSold(t.db, { texts: SOLD_TEXTS, as_of: SOLD_AS_OF, ...SOLD_OPTIONS });
+    if (!omit.has("drivers")) await runPriceDrivers(t.db, DRIVER_OPTIONS);
+  }
   return t;
 }

@@ -97,11 +97,12 @@ describe("photos and credits", () => {
     for (const c of PHOTO_CREDITS) expect(existsSync(new URL(`../../public/img/${c.file}`, import.meta.url)), c.file).toBe(true);
     for (const m of html.matchAll(/src="\/img\/([a-z]+\.jpg)"/g)) expect(PHOTO_CREDITS.some((c) => c.file === m[1]), m[1]).toBe(true);
   });
-  it("the footer data line lists only the sources the built layers use (transport, school zones, the City of Melbourne, recorded crime, OpenStreetMap places and street photos now ship)", () => {
+  it("the footer data line lists only the sources the built layers use (transport, school zones, the City of Melbourne, recorded crime, OpenStreetMap places, street photos and reported sales now ship)", () => {
     const footer = renderToStaticMarkup(<SiteFooter />);
     expect(footer).toContain("Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education, the City of Melbourne and the Crime Statistics Agency, used under Creative Commons Attribution licences.");
     expect(footer).toContain("Place data © OpenStreetMap contributors (ODbL).");
     expect(footer).toContain("Street and neighbourhood photos from Mapillary and Wikimedia Commons contributors, credited on each photo.");
+    expect(footer).toContain("Recent sales as reported on realestate.com.au listings, retrieved by VicProp.");
     for (const gone of ["Vicmap"]) expect(footer).not.toContain(gone);
   });
   it("the footer credits every photo with author and licence", () => {

@@ -288,6 +288,11 @@ tr.divrow th { font-weight: 700; color: var(--accent); background: rgb(var(--acc
 .smap svg { width: 100%; height: auto; max-width: 340px; background: var(--cell); border: 1px solid var(--rule); border-radius: var(--rs); }
 .smap figcaption { color: var(--mute); font-size: 0.82rem; display: grid; gap: 8px; align-content: start; }
 .smap figcaption b { color: var(--ink); }
+/* Reported recent sales (L21) and price drivers (L04): listing links read as links; the wide label columns do not squeeze to nothing */
+[data-panel="sales"] td a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+[data-panel="sales"] td:nth-child(6) { min-width: 12ch; }
+[data-panel="sales"] td:last-child { min-width: 10ch; }
+[data-panel="drivers"] tbody th { min-width: 14rem; }
 .smap .ring { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 4; }
 .smap .ringlbl, .smap .north, .smap .ptlbl { font: 400 9px var(--fm); fill: var(--mute); }
 .smap .ptlbl { fill: var(--ink); paint-order: stroke; stroke: var(--cell); stroke-width: 3px; }

@@ -1,6 +1,7 @@
 import type { LayerResult } from "../../server/contracts/layer";
 import { PROFILE_HEADING, REPORT, SECTION_QUESTIONS } from "../../site/copy";
 import { FigureTile } from "./FigureTile";
+import { DriversPanel } from "./DriversPanel";
 import { LockCard } from "./LockCard";
 import { BuildingPanel, SchoolsPanel, SupplyPanel, TransportPanel } from "./LocationPanels";
 import { AttributionList, ScreenerTable } from "./NearbyPanels";
@@ -8,6 +9,7 @@ import { PhotosPanel, PlacesPanel } from "./PhotosPanel";
 import { QuestionsList } from "./QuestionsList";
 import { RatingPanel } from "./RatingPanel";
 import { SafetyPanel } from "./SafetyPanel";
+import { SalesPanel } from "./SalesPanel";
 import { ReturnCalculator } from "./ReturnCalculator";
 import { CompareTable, HistoryTable } from "./tables";
 
@@ -33,6 +35,8 @@ function Extras({ layer }: { layer: LayerResult }) {
   if (layer.layer_id === "L13-questions") return <QuestionsList payload={layer.payload} />;
   if (layer.layer_id === "L19-photos") return <PhotosPanel payload={layer.payload} />;
   if (layer.layer_id === "L20-places") return <PlacesPanel payload={layer.payload} />;
+  if (layer.layer_id === "L21-sales") return <SalesPanel payload={layer.payload} />;
+  if (layer.layer_id === "L04-drivers") return <DriversPanel payload={layer.payload} />;
   if (layer.layer_id === "L16-transport") return <TransportPanel payload={layer.payload} />;
   if (layer.layer_id === "L17-schools") return <SchoolsPanel payload={layer.payload} />;
   if (layer.layer_id === "L18-safety") return <SafetyPanel payload={layer.payload} />;

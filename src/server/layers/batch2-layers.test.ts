@@ -209,8 +209,10 @@ describe("a Docklands unit: every new section answers from real data", () => {
     expect(ids).not.toContain("vicprop_registry");
     for (const s of sources) {
       expect(s.attribution_text.length, s.source_id).toBeGreaterThan(10);
-      // Everything is CC BY except OpenStreetMap (nearby places, ODbL 1.0), which the Docklands report now cites from the loaded excerpt.
-      expect(s.licence, s.source_id).toContain(s.source_id === "openstreetmap" ? "ODbL" : "CC BY");
+      // Everything is CC BY except OpenStreetMap (nearby places, ODbL 1.0) and the two sold-listings sources (the owner's ruling of 2026-11-21),
+      // which the Docklands report cites from the loaded excerpts.
+      const expected = s.source_id === "openstreetmap" ? "ODbL" : s.source_id === "rp_sold_listings" || s.source_id === "rp_sold_model" ? "listing data" : "CC BY";
+      expect(s.licence, s.source_id).toContain(s.source_id === "rp_sold_model" ? "rp_sold_listings" : expected);
       expect(s.used_by.length, s.source_id).toBeGreaterThan(0);
     }
     expect(sources.find((s) => s.source_id === "openstreetmap")).toMatchObject({ used_by: ["L20-places"], as_of: "2026-11-20" });

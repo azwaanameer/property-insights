@@ -32,6 +32,9 @@ const LOADED_TABLES = [
   "fact_crime_lga",
   "fact_crime_note",
   "ref_place",
+  "fact_reported_sale",
+  "derived_price_driver",
+  "derived_layout_median",
   "src_dataset_unmatched",
 ];
 

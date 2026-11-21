@@ -52,12 +52,12 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `pipeline/ingest/rp-sold.mjs`, `pipeline/derive/price-drivers.mjs`, fixtures, tests (loader, derive model against a hand-checked fixture with a known OLS answer), real-file test skipped when absent, `package.json` scripts
-- [ ] `db/migrations/...sold_dataset.sql`, pinned lists, web-lookup spec renumber
-- [ ] `src/server/repos/sale.ts`, `drivers.ts`, `L21-sales`, `L04-drivers`, registry, L14 credit
-- [ ] Render panels, `pine.css`, `copy.ts`, render tests (credit and link on every sale, "association not cause" present, no valuation wording)
-- [ ] Run the loader and derive on the real local files with `--pglite` (no Neon) and report: rows loaded, rows used by the model, the driver table, the layout medians for Docklands; check that 14 Lucinda Lane (house, Cranbourne North) and the Docklands unit give the expected gap or table
-- [ ] Layer tests for every matrix row; keep all existing tests passing; `RUNBOOK.md` section 13, `deferred-work.md`, Implementation Notes; do NOT touch Neon, Cloudflare or the network; do not commit
+- [x] `pipeline/ingest/rp-sold.mjs`, `pipeline/derive/price-drivers.mjs`, fixtures, tests (loader, derive model against a hand-checked fixture with a known OLS answer), real-file test skipped when absent, `package.json` scripts
+- [x] `db/migrations/...sold_dataset.sql`, pinned lists, web-lookup spec renumber
+- [x] `src/server/repos/sale.ts`, `drivers.ts`, `L21-sales`, `L04-drivers`, registry, L14 credit
+- [x] Render panels, `pine.css`, `copy.ts`, render tests (credit and link on every sale, "association not cause" present, no valuation wording)
+- [x] Run the loader and derive on the real local files with `--pglite` (no Neon) and report: rows loaded, rows used by the model, the driver table, the layout medians for Docklands; check that 14 Lucinda Lane (house, Cranbourne North) and the Docklands unit give the expected gap or table
+- [x] Layer tests for every matrix row; keep all existing tests passing; `RUNBOOK.md` section 13, `deferred-work.md`, Implementation Notes; do NOT touch Neon, Cloudflare or the network; do not commit
 
 **Acceptance Criteria:**
 - Given the Docklands unit and a loaded dataset, when the report loads, then L21 lists recent sales from the same building each with date, price, link and the "as reported" label, and L04 shows effects with standard errors, n and the association-not-cause note.
@@ -66,6 +66,23 @@ context:
 - Given `npm test` (PowerShell), `npx tsc --noEmit` and `npm run build`, then all pass.
 
 ## Implementation Notes
+
+**Built.** Migration `0011_sold_dataset.sql` (0010 was present, so 0011 is the next free number; `spec-reported-web-lookup.md` now says 0012): sources `rp_sold_listings` (cleared, the owner's licence line and credit as the spec words them) and `rp_sold_model`, tables `fact_reported_sale`, `derived_price_driver`, `derived_layout_median`, layers `L21-sales` and `L04-drivers` (free, enabled). Pipeline `pipeline/lib/sold.mjs` (price, floor, date and address parsing; the price and floor parsing is the script's), `pipeline/ingest/rp-sold.mjs` (loader, G-NAF building match, publish checks, `--pglite`, script `pipeline:sold`) and `pipeline/derive/price-drivers.mjs` (OLS with suburb fixed effects, layout medians, publish checks, `--pglite`, script `pipeline:drivers`); schemas `ReportedSaleRow`, `PriceDriverRow`, `LayoutMedianRow`; the three tables in `LOADED_TABLES`. Serve side `repos/sale.ts`, `repos/drivers.ts`, `layers/shared/sold.ts`, `L21-sales`, `L04-drivers` (registry: L21 right after L03, L04 right after L21), L14 credit (both sources listed as adapted), `SalesPanel.tsx`, `DriversPanel.tsx`, `ReportSection`, `pine.css`, `copy.ts` (headings, source names, section names, footer credit line), `format.ts` (an `effect` key is signed). Fixtures `pipeline/ingest/fixtures/sold.mjs` and `fixtures/sold/` (373 real sales, agent fields replaced by placeholders), `createSuburbDataTestDb` loads and fits them (`sold`, `drivers`). Tests: `sold.test.mjs`, `rp-sold.test.mjs`, `price-drivers.test.mjs` (a hand-worked OLS case and synthetic sales with known effects), `rp-sold.real.test.mjs` (skipped without the data files), `sold-layers.test.ts` (every matrix row), `sold.test.tsx`, the migration test, the pinned lists. RUNBOOK section 13 and `deferred-work.md` updated. 907 tests pass, `npx tsc --noEmit` and `npm run build` pass.
+
+**Real run (local, no Neon, no network).** `node pipeline/ingest/rp-sold.mjs --pglite`: 5,698 sales loaded of 5,700 (2 dropped for a price under $50,000), 26 suburbs, sold 2025-03-03 to 2026-11-21, harvest date 2026-11-21. `node pipeline/derive/price-drivers.mjs --pglite`: 1,634 of 3,387 apartment sales used in 20 suburbs, R-squared 0.703, unexplained spread about 19%; 2 bed vs 1 bed +32.1% (SE 1.3), 3 bed +101.1% (2.4), 2+ baths +19.6% (1.3), car space +21.2% (1.4), floors 10-19 +0.1% (1.5), 20-29 +1.7% (2.1), 30+ +9.0% (2.6), Docklands +9.3% (2.4) against Melbourne CBD. Docklands layout medians (at least 20 sales): 1 bed 1 bath no car $370,000 (28), 1 bed 1 bath car $420,000 (23), 2 bed 1 bath car $565,000 (31), 2 bed 2+ bath car $698,000 (47). With the real G-NAF extract filtered to these suburbs and loaded in memory: 3,484 of 5,698 sales matched to a building (2,898 of 3,329 apartment sales with a unit number). The Docklands unit (GAVIC720519114): L21 lists 8 of 11 sales at 628 Flinders Street (newest 17 Sep 2026, $760,000) and L04 shows the table above. 14 Lucinda Lane, Cranbourne North: both sections are gaps naming the 26 suburbs. A Reservoir house (14 Elizabeth Court): L21 lists its one street sale, L04 is the house gap.
+
+**Decisions made without asking.**
+- The derived model is published under its own source `rp_sold_model` (the pointer is one per source and the derive step must not move the sales pointer), so the migration adds two sources, not one. Both are cleared on the same ruling; L04 lists both.
+- No "Reported" chip: the contract's chip set (Observed, Estimated, Unknown, Conflict) does not call for it and AD-11 calls it "a labelled kind of Estimated", so each sale and model figure is Estimated and carries the words "as reported on realestate.com.au". Nothing enumerating the chip set changed.
+- "The 26 suburbs" are the 6 CRM suburbs of `rp_harvest.json` plus the 20 suburbs of `rp_sold_harvest.json` that have Victorian rows (6 more in that file have none). The spec's "about 3,300 sales" is the apartment-like count (3,394); the files hold 5,700 sales.
+- The six CRM suburbs' SAL codes are a constant in the loader (from `data/rp_suburb_priority.json`); the dataset date is the newest harvest date, so the 900 inner-suburb sales retrieved on 2026-11-11 show 2026-11-21 (deferred).
+- The model's "used X of Y" counts apartment, unit and flat sales as Y; a suburb needs 20 usable sales to carry a suburb effect (the same bar as layout medians), and the reference suburb is Melbourne CBD. The standard error is the script's (log scale), not the delta method, and the section says so.
+- Layout medians use every apartment sale with a price in range (no unit number needed), the effects only those with one; the two statements of sample size say which.
+- A house's same-street sales are houses, townhouses and villas only (an apartment on the street is not a comparable); an apartment's building sales are apartment, unit, flat and studio.
+- A missing dataset is a gap (the layers list no `dataset_ids`, as L18 and L20 do), not the rights gate's `not_covered`, so the matrix's wording "Reported sales are not loaded." holds.
+- `LOADED_TABLES` also holds the two derived tables; `src/server/testing/db.ts` loads the fixture sales and model for every test database (`sold`, `drivers` can be omitted).
+
+**Not done / for the orchestrator.** Migration 0011 on Neon, the sales load and the model derive on Neon (`node --env-file=.env pipeline/ingest/rp-sold.mjs`, then `node --env-file=.env pipeline/derive/price-drivers.mjs`; G-NAF must be published first), `npm run build` and `npx wrangler deploy`, then the browser check on GAVIC720519114 and 14 Lucinda Lane at 1200 px and 390 px. Nothing was committed, and nothing touched Neon, Cloudflare or the network.
 
 ## Spec Change Log
 

@@ -14,12 +14,12 @@ afterAll(() => close());
 
 describe("migrations", () => {
   it("apply once, record themselves, and are idempotent", async () => {
-    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql", "0009_photos_places.sql", "0010_places_dataset.sql"]);
+    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql", "0009_photos_places.sql", "0010_places_dataset.sql", "0011_sold_dataset.sql"]);
     expect(await applyMigrations(db)).toEqual([]);
   });
 
   it("create every table the spec lists", async () => {
-    const want = ["src_source", "src_dataset_version", "src_dataset_current", "ref_suburb", "ref_building", "ref_address", "series_price", "series_rent", "derived_rating", "market_validation", "layer_config", "fact_suburb_marker", "ref_suburb_neighbour", "src_dataset_unmatched", "app_user", "app_org", "app_subscription", "app_report", "app_lookup_log", "app_purchase", "app_webhook_event", "vendor_cache", "ref_transit_stop", "ref_school_zone", "ref_school", "ref_com_building", "ref_com_building_match", "fact_supply_project", "fact_crime_suburb", "fact_crime_lga", "fact_crime_note", "ref_place"];
+    const want = ["src_source", "src_dataset_version", "src_dataset_current", "ref_suburb", "ref_building", "ref_address", "series_price", "series_rent", "derived_rating", "market_validation", "layer_config", "fact_suburb_marker", "ref_suburb_neighbour", "src_dataset_unmatched", "app_user", "app_org", "app_subscription", "app_report", "app_lookup_log", "app_purchase", "app_webhook_event", "vendor_cache", "ref_transit_stop", "ref_school_zone", "ref_school", "ref_com_building", "ref_com_building_match", "fact_supply_project", "fact_crime_suburb", "fact_crime_lga", "fact_crime_note", "ref_place", "fact_reported_sale", "derived_price_driver", "derived_layout_median"];
     const have = new Set((await db.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")).map((r) => r.table_name));
     for (const t of want) expect(have.has(t), t).toBe(true);
   });
@@ -180,6 +180,57 @@ describe("migrations", () => {
     await expect(db.query("INSERT INTO ref_place (dataset_version_id, osm_id, category, name, lat, lon) VALUES ($1, 'node/1', 'food', NULL, -37.8, 144.9)", [v.id])).rejects.toThrow();
     await expect(db.query("INSERT INTO ref_place (dataset_version_id, osm_id, category, name, lat, lon) VALUES ($1, 'node/2', 'shopping', NULL, -37.8, 144.9)", [v.id])).rejects.toThrow();
     await db.query("DELETE FROM ref_place WHERE dataset_version_id = $1", [v.id]);
+    await db.query("DELETE FROM src_dataset_version WHERE dataset_version_id = $1", [v.id]);
+  });
+
+  it("0011 adds the two cleared sold-listings sources (with the owner's ruling and the credit), the three tables, and switches on L21 and L04 as free layers", async () => {
+    const [src] = await db.query("SELECT licence, rights_status, attribution_text, max_cache_days, display_scope, notes FROM src_source WHERE source_id = 'rp_sold_listings'");
+    expect(src).toMatchObject({
+      licence: "Third-party listing data (realestate.com.au via RapidAPI realty-in-au); reuse ruled acceptable by the owner 2026-11-21",
+      rights_status: "cleared",
+      attribution_text: "Recent sales as reported on realestate.com.au listings, retrieved by VicProp.",
+      max_cache_days: null,
+      display_scope: "public",
+    });
+    expect(src.notes).toMatch(/never as a Victorian title record/);
+    expect(src.notes).toMatch(/no listing text, photos, agent, agency or phone is stored/i);
+    const [model] = await db.query("SELECT rights_status, licence FROM src_source WHERE source_id = 'rp_sold_model'");
+    expect(model).toMatchObject({ rights_status: "cleared" });
+    expect(model.licence).toContain("rp_sold_listings");
+    // The older blocked row for the live RapidAPI route is untouched: nothing here calls the site at request time.
+    expect((await db.query("SELECT rights_status FROM src_source WHERE source_id = 'rea_rapidapi'"))[0].rights_status).toBe("blocked");
+
+    const layers = await db.query("SELECT layer_id, tier, enabled, source_ids FROM layer_config WHERE layer_id IN ('L21-sales', 'L04-drivers') ORDER BY layer_id");
+    expect(layers.map((r) => [r.layer_id, r.tier, r.enabled])).toEqual([["L04-drivers", "free", true], ["L21-sales", "free", true]]);
+    expect([...layers[0].source_ids].sort()).toEqual(["gnaf", "rp_sold_listings", "rp_sold_model"]);
+    expect([...layers[1].source_ids].sort()).toEqual(["gnaf", "rp_sold_listings"]);
+    // AD-4 fails closed: with the source pending the rights trigger refuses to switch the layer on again.
+    await db.query("UPDATE src_source SET rights_status = 'pending' WHERE source_id = 'rp_sold_listings'");
+    await expect(db.query("UPDATE layer_config SET enabled = true, updated_at = now() WHERE layer_id = 'L21-sales'")).rejects.toThrow(/not cleared: .*rp_sold_listings/);
+    await db.query("UPDATE src_source SET rights_status = 'cleared' WHERE source_id = 'rp_sold_listings'");
+
+    const pk = async (table) =>
+      (await db.query(`SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE i.indrelid = '${table}'::regclass AND i.indisprimary ORDER BY a.attname`)).map((r) => r.attname);
+    expect(await pk("fact_reported_sale")).toEqual(["dataset_version_id", "listing_id"]);
+    expect(await pk("derived_price_driver")).toEqual(["dataset_version_id", "driver"]);
+    expect(await pk("derived_layout_median")).toEqual(["baths", "beds", "dataset_version_id", "has_car", "sal_code"]);
+    // No agent, agency or phone column can exist in any of the three tables.
+    const cols = (await db.query("SELECT column_name FROM information_schema.columns WHERE table_name IN ('fact_reported_sale', 'derived_price_driver', 'derived_layout_median')")).map((r) => r.column_name);
+    expect(cols.filter((c) => /agent|agency|phone|title|description/i.test(c))).toEqual([]);
+
+    const [v] = await db.query("INSERT INTO src_dataset_version (source_id, retrieved_at, row_count, licence_snapshot, as_of) VALUES ('rp_sold_listings', now(), 0, 'x', '2026-11-21') RETURNING dataset_version_id::text AS id");
+    const ins = (id, building, match) =>
+      db.query(
+        `INSERT INTO fact_reported_sale (dataset_version_id, listing_id, address_text, suburb, suburb_key, postcode, harvest_suburb, price_aud, property_type, sold_on, url, building_id, match_type)
+         VALUES ($1, $2, '1/1 A Street', 'Docklands', 'docklands', '3008', 'Docklands', 500000, 'apartment', '2026-11-01', 'property-apartment-vic-docklands-1', $3, $4)`,
+        [v.id, id, building, match],
+      );
+    await ins("100001", "GAVIC1000001", "exact_street_number");
+    await expect(ins("100001", null, null)).rejects.toThrow(); // one listing id once per dataset version
+    await expect(ins("100002", "GAVIC1000001", null)).rejects.toThrow(); // a building id needs its match type
+    await expect(ins("100003", null, "exact_street_number")).rejects.toThrow();
+    await expect(ins("100004", "GAVIC1000001", "guess")).rejects.toThrow();
+    await db.query("DELETE FROM fact_reported_sale WHERE dataset_version_id = $1", [v.id]);
     await db.query("DELETE FROM src_dataset_version WHERE dataset_version_id = $1", [v.id]);
   });
 

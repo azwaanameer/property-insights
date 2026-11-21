@@ -95,5 +95,5 @@ export function formatMelbourneDate(timestamp: string | null | undefined): strin
 
 /** A figure's value as text. Rates that describe change carry a sign. */
 export function formatFigure(f: Pick<Figure, "key" | "value" | "unit">): string {
-  return formatValue(f.value, f.unit, { signed: /change|cagr/.test(f.key) });
+  return formatValue(f.value, f.unit, { signed: /change|cagr|effect/.test(f.key) });
 }

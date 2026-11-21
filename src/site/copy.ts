@@ -309,7 +309,7 @@ export const FOOTER = {
   disclaimer:
     "General information only. Not financial, legal, planning or valuation advice. Some details come from public listings and are not checked against the title.",
   // Only the sources the built layers use. Add a source here when a layer that uses it ships.
-  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education, the City of Melbourne and the Crime Statistics Agency, used under Creative Commons Attribution licences. Place data © OpenStreetMap contributors (ODbL). Street and neighbourhood photos from Mapillary and Wikimedia Commons contributors, credited on each photo.",
+  data: "Contains data from Geoscape G-NAF, Valuer-General Victoria, Homes Victoria, the Australian Bureau of Statistics, Public Transport Victoria, the Victorian Department of Education, the City of Melbourne and the Crime Statistics Agency, used under Creative Commons Attribution licences. Place data © OpenStreetMap contributors (ODbL). Street and neighbourhood photos from Mapillary and Wikimedia Commons contributors, credited on each photo. Recent sales as reported on realestate.com.au listings, retrieved by VicProp.",
 };
 
 // ----- Report page -----
@@ -319,6 +319,8 @@ export const SECTION_QUESTIONS: Record<string, string> = {
   "L01-property": "What is this property?",
   "L02-rent": "What does it rent for?",
   "L03-price": "What is it worth?",
+  "L21-sales": "What have nearby homes sold for?",
+  "L04-drivers": "What makes it worth more or less?",
   "L05-return": "What could it return?",
   "L07-history": "How have prices moved?",
   "L09-suburb-compare": "How does the suburb compare with nearby ones?",
@@ -356,6 +358,8 @@ export const SOURCE_NAMES: Record<string, string> = {
   mapillary: "Mapillary contributors",
   wikimedia_commons: "Wikimedia Commons",
   openstreetmap: "OpenStreetMap contributors",
+  rp_sold_listings: "Sales reported on realestate.com.au",
+  rp_sold_model: "VicProp price-driver model",
   vicprop_registry: "VicProp",
 };
 
@@ -494,6 +498,34 @@ export const CRIME = {
   scopeLabel: "About these figures",
 };
 
+/** The reported recent sales (L21). Every sale is as reported by realestate.com.au: not verified, not a title record. */
+export const SALES = {
+  buildingCaption: "Recent sales in this building, as reported",
+  streetCaption: "Recent sales on this street, as reported",
+  head: { sold: "Sold", price: "Price", beds: "Beds", baths: "Baths", car: "Car", address: "Address", listing: "Listing" },
+  notListed: "Not listed",
+  linkText: "Reported on realestate.com.au",
+  linkTitle: "Opens the listing page on realestate.com.au. Not verified by VicProp.",
+  reportedLabel: "As reported by realestate.com.au, not verified, not a Victorian title record.",
+  notesLabel: "About these sales",
+  showing: (shown: number, total: number) => (shown < total ? `Showing the ${shown} most recent of ${total}.` : `${total} ${total === 1 ? "sale" : "sales"}.`),
+  dataset: (from: string, to: string, suburbs: number, harvested: string) => `Sales in the dataset were sold ${from} to ${to} across ${suburbs} suburbs; the listings were retrieved on ${harvested}.`,
+};
+
+/** The price drivers (L04). Associations in past sales, never causes. */
+export const DRIVERS = {
+  driversCaption: "What apartment sale prices differ by, all else equal",
+  driversHead: { driver: "Characteristic", effect: "Difference in sale price", se: "Standard error", sales: "Sales with it" },
+  suburbCaption: "This suburb against the reference suburb",
+  suburbReference: (name: string) => `${name} is the reference suburb: every other suburb is measured against it, so it has no difference of its own.`,
+  suburbThin: (name: string) => `${name} has too few usable apartment sales for the model to give it a difference of its own.`,
+  layoutsCaption: (suburb: string) => `Middle reported sale price by layout in ${suburb}`,
+  layoutsHead: { layout: "Layout", median: "Middle sale price", sales: "Sales" },
+  association: "Association, not cause",
+  notesLabel: "About these figures",
+  windowLine: (used: string, total: string, from: string, to: string) => `Based on ${used} of ${total} apartment sales, sold ${from} to ${to}.`,
+};
+
 /** The street and neighbourhood photos (L19). Every image shows who took it, its licence and where it came from. */
 export const PHOTOS = {
   streetHeading: "The street",
@@ -530,6 +562,8 @@ export const LAYER_NAMES: Record<string, string> = {
   "L01-property": "Property",
   "L02-rent": "Rent",
   "L03-price": "Price",
+  "L21-sales": "Reported sales",
+  "L04-drivers": "Price drivers",
   "L16-transport": "Transport",
   "L17-schools": "Schools",
   "L18-safety": "Recorded crime",

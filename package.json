@@ -25,6 +25,8 @@
     "pipeline:com": "node pipeline/ingest/com-buildings.mjs",
     "pipeline:places": "uv run --no-project --with osmium python -I pipeline/ingest/osm-places-extract.py && node pipeline/ingest/osm-places.mjs",
     "pipeline:crime": "python -I pipeline/ingest/crime-extract.py && node pipeline/ingest/crime.mjs",
+    "pipeline:sold": "node pipeline/ingest/rp-sold.mjs",
+    "pipeline:drivers": "node pipeline/derive/price-drivers.mjs",
     "pipeline:suburb-data": "npm run pipeline:vgv && npm run pipeline:rents && npm run pipeline:census && npm run pipeline:seifa && npm run pipeline:neighbours && npm run pipeline:rating"
   },
   "dependencies": {

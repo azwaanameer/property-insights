@@ -270,3 +270,63 @@ export const PlacesManifest = z.object({
   counts: z.record(z.number().int().nonnegative()),
   counts_by_tag: z.record(z.number().int().nonnegative()),
 });
+
+// ---------------------------------------------------------------- reported sales and the price-driver model (L21, L04)
+
+/** The price range a reported sale may have (publish check and schema agree): below $50,000 or above $20,000,000 is not a dwelling sale. */
+export const SOLD_PRICE_RANGE = [50_000, 20_000_000];
+
+/**
+ * One sale as a listing site reported it. Only the listed property fields exist here: the harvest files also carry agent, agency and phone
+ * fields, and the loader never reads them. `url` is the listing's path on realestate.com.au (the report links to the site plus this).
+ */
+export const ReportedSaleRow = z.object({
+  listing_id: z.string().regex(/^\d{5,12}$/, "listing id is digits"),
+  address_text: z.string().trim().min(3),
+  street_key: z.string().min(1).nullable(),
+  unit_no: z.string().min(1).nullable(),
+  street_no: z.string().min(1).nullable(),
+  suburb: z.string().trim().min(1),
+  suburb_key: z.string().min(1),
+  postcode: z.string().regex(/^3\d{3}$/, "a Victorian postcode"),
+  harvest_suburb: z.string().trim().min(1),
+  sal_code: SalCode,
+  lat: VicLat.nullable(),
+  lon: VicLon.nullable(),
+  price_aud: z.number().int().min(SOLD_PRICE_RANGE[0]).max(SOLD_PRICE_RANGE[1]),
+  bed: z.number().int().min(0).max(100).nullable(),
+  bath: z.number().int().min(0).max(100).nullable(),
+  park: z.number().int().min(0).max(100).nullable(),
+  property_type: z.string().trim().min(1).max(40),
+  sold_on: IsoDate,
+  url: z.string().regex(/^property-[a-z0-9+ -]+$/, "a listing path on realestate.com.au"),
+  building_id: z.string().regex(/^GA[A-Z]{2,3}_?\d{4,}$/).nullable(),
+  match_type: z.enum(["exact_street_number"]).nullable(),
+});
+
+/** One effect of the price-driver model, in percent. A suburb row has its sal_code and name; the reference suburb has effect 0. */
+export const PriceDriverRow = z.object({
+  driver: z.string().min(1),
+  sal_code: SalCode.nullable(),
+  suburb_name: z.string().min(1).nullable(),
+  is_reference: z.boolean(),
+  effect_pct: z.number().finite(),
+  se_pct: z.number().finite().min(0),
+  n_used: z.number().int().min(1),
+  n_total: z.number().int().min(1),
+  n_group: z.number().int().min(0),
+  window_from: IsoDate,
+  window_to: IsoDate,
+  r_squared: z.number().finite().min(0).max(1),
+  residual_pct: z.number().finite().min(0),
+});
+
+/** The median reported sale price of one layout in one suburb, kept only where the suburb has at least 20 sales of it (the loader and the publish check hold the threshold). */
+export const LayoutMedianRow = z.object({
+  sal_code: SalCode,
+  beds: z.number().int().min(1).max(3),
+  baths: z.number().int().min(1).max(2),
+  has_car: z.boolean(),
+  median_price: z.number().int().min(SOLD_PRICE_RANGE[0]).max(SOLD_PRICE_RANGE[1]),
+  n: z.number().int().min(1),
+});

@@ -31,10 +31,10 @@ export function licenceUrl(licence: string): string | null {
 /**
  * Sources VicProp always transforms before showing: stops grouped into stations, zones tested against the address, schools filtered to open
  * ones, council records matched to addresses, a conditions rating derived from Census shares, neighbours matched to suburbs by name, and crime
- * counts added up by suburb and rates worked out for Victoria.
+ * counts added up by suburb and rates worked out for Victoria, and reported sales cleaned and matched to buildings and fitted into a price-driver model.
  * Any source behind an Estimated figure is also credited as adapted.
  */
-export const ADAPTED_SOURCES = new Set(["gtfs_vic", "vic_school_zones_2026", "vic_school_locations_2026", "com_open_data", "gnaf_neighbours", "conditions_rating", "csa_crime_incidents"]);
+export const ADAPTED_SOURCES = new Set(["gtfs_vic", "vic_school_zones_2026", "vic_school_locations_2026", "com_open_data", "gnaf_neighbours", "conditions_rating", "csa_crime_incidents", "rp_sold_listings", "rp_sold_model"]);
 
 export interface Citation {
   layers: string[];
