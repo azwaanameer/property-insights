@@ -190,13 +190,28 @@
   evidence: RUNBOOK section 12.
 - source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
   summary: The public Overpass endpoint has fair-use limits and no service level; with steady traffic, move to a paid or self-hosted Overpass or a periodic OpenStreetMap extract loaded as a dataset.
-  evidence: spec Design Notes; the layer already tolerates the vendor being down.
+  evidence: spec Design Notes; the layer already tolerates the vendor being down. RESOLVED 2026-11-21 by spec-report-batch-3-places-from-osm-extract.md: places are a loaded OpenStreetMap extract and the Overpass adapter is removed.
 - source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
   summary: OpenStreetMap place counts stop at 400 elements (the query limit) and say so when reached; in the densest areas the counts are understated.
-  evidence: parseOverpass `truncated` flag and the section note.
+  evidence: parseOverpass `truncated` flag and the section note. RESOLVED 2026-11-21: the loaded extract has no element limit; the flag and note are removed.
 - source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
   summary: The marketing catalogue (`CATALOGUE` in `src/site/copy.ts`) and its 18, 2, 5 counts do not list the street photos section; 'What is nearby day to day?' already stands for the places section.
   evidence: left alone: the spec names no site-catalogue change and the home test pins the counts.
 - source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-photos-places.md`
   summary: A Wikimedia photo whose author field is empty is dropped unless it is public domain or CC0; some valid CC BY photos with the author only in the description are therefore skipped.
   evidence: `parseWikimedia` credit rule (a credit is required for CC BY and CC BY-SA).
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-places-from-osm-extract.md`
+  summary: The OpenStreetMap places are as old as the Geofabrik file (2026-11-20 today) and are refreshed by hand: download a newer `australia-YYMMDD.osm.pbf` into `data/raw/vic/osm/` and run the two steps in RUNBOOK section 12. A scheduled refresh (weekly files exist) and an "as of" line in the section would keep it fresh.
+  evidence: `as_of` is stored on the dataset version and on every L20 figure; nothing schedules the load.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-places-from-osm-extract.md`
+  summary: Geofabrik publishes no Victoria-only file, so the extractor keeps the Victoria bounding box (lon 140.9 to 150.1, lat -39.3 to -33.9), which also holds southern New South Wales (for example Wagga Wagga) and a corner of South Australia's border. Harmless for a Victorian address (a place across the border is a real nearby place) but the row counts are not "Victoria only". Dropping rows outside the Victorian boundary would need the state border polygon (not loaded).
+  evidence: first rows of the real `places.jsonl` include lat -35.18, lon 147.36 (Wagga Wagga area); manifest counts 45,746 rows.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-places-from-osm-extract.md`
+  summary: A multipolygon relation tagged only on its outer way (the old tagging style, with no leisure or amenity tag on the relation itself) is not picked up, and a way or relation takes its centroid (which can lie outside a concave park); a very large park is one point, so a person can be nearer its edge than the figure says. The section already says distances go to the place's centre point.
+  evidence: `with_areas(tag_filter)` in `pipeline/ingest/osm-places-extract.py`; `SCOPE_NOTES` in L20.
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-places-from-osm-extract.md`
+  summary: Old `vendor_cache` rows with vendor `openstreetmap` (written by the removed Overpass adapter, if any ran) are no longer read and expire within 30 days; they can be deleted by hand.
+  evidence: `DELETE FROM vendor_cache WHERE vendor = 'openstreetmap';` (RUNBOOK section 12).
+- source_spec: `_bmad-output/implementation-artifacts/spec-report-batch-3-places-from-osm-extract.md`
+  summary: L20 lists no `dataset_ids`, so a missing places dataset is the gap "Nearby places are not loaded." (the spec's matrix) rather than the rights gate's `not_covered`; the spec's Code Map also asked for `dataset_ids: ["openstreetmap"]`. Decide which wording the owner wants once the dataset is live; the crime layer made the same choice.
+  evidence: `src/server/layers/L20-places/index.ts`; spec I/O matrix row "Dataset not loaded".

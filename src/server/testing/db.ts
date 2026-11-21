@@ -18,6 +18,8 @@ import { runSchoolZones } from "../../../pipeline/ingest/school-zones.mjs";
 import { runComData } from "../../../pipeline/ingest/com-buildings.mjs";
 import { runCrime } from "../../../pipeline/ingest/crime.mjs";
 import { CRIME_OPTIONS, crimeFixtureDir } from "../../../pipeline/ingest/fixtures/crime.mjs";
+import { runPlaces } from "../../../pipeline/ingest/osm-places.mjs";
+import { PLACES_EXPECT, placesFixtureDir } from "../../../pipeline/ingest/fixtures/places.mjs";
 import { COM_AS_OF, COM_TEXTS } from "../../../pipeline/ingest/fixtures/com.mjs";
 import { SCHOOL_AS_OF, SCHOOL_LOCATIONS_TEXT, SCHOOL_ZONE_TEXTS } from "../../../pipeline/ingest/fixtures/schools.mjs";
 import { mkdtemp } from "node:fs/promises";
@@ -47,7 +49,7 @@ export async function createLoadedTestDb() {
   return t;
 }
 
-export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating" | "transit" | "schools" | "com" | "crime";
+export type SuburbDataset = "vgv" | "rents" | "census" | "seifa" | "neighbours" | "rating" | "transit" | "schools" | "com" | "crime" | "places";
 
 /** The fixture transport feed is extracted once per test file (it runs python), then loaded into each database. */
 let fixtureStops: Promise<string> | undefined;
@@ -85,5 +87,7 @@ export async function createSuburbDataTestDb(opts: { omit?: SuburbDataset[] } = 
   if (!omit.has("com")) await runComData(t.db, { texts: COM_TEXTS, as_of: COM_AS_OF, minimumBuildings: 20, minimumProjects: 20, minimumMatches: 1 });
   // Batch 3: recorded crime, a real excerpt of the Crime Statistics Agency workbook through the real extractor and loader.
   if (!omit.has("crime")) await runCrime(t.db, { dir: await crimeFixtureDir(), ...CRIME_OPTIONS });
+  // Batch 3: nearby places, a tiny OpenStreetMap excerpt through the real extractor and loader (tests that need exact places replace it with setPlaces).
+  if (!omit.has("places")) await runPlaces(t.db, { dir: await placesFixtureDir(), expect: PLACES_EXPECT });
   return t;
 }

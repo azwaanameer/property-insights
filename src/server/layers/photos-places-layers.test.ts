@@ -1,18 +1,19 @@
-// L19 Photos and L20 Nearby places, run on the Docklands fixture address with fake vendor adapters (no network). One test per row of the
-// spec's I/O matrix, plus the rights, ordering, wording and attribution checks.
+// L19 Photos (fake vendor adapters, no network) and L20 Nearby places (places loaded into ref_place), run on the Docklands fixture address.
+// One test per row of the specs' I/O matrices, plus the rights, ordering, wording and attribution checks.
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { ANONYMOUS, type ResolvedAddress } from "../contracts/address";
 import type { LayerResult } from "../contracts/layer";
 import { assembleReport } from "../services/assemble-report";
 import { resolveQuery } from "../services/resolve-address";
 import { createSuburbDataTestDb, type TestDb } from "../testing/db";
-import { fakeVendors, moved, ok, osmPlace, placeImage, streetImage } from "../testing/fake-vendors";
+import { fakeVendors, moved, ok, placeImage, streetImage } from "../testing/fake-vendors";
+import { clearPlaces, osmPlace, setPlaces } from "../testing/places";
 import { createVendors } from "../vendors";
 import type { VendorAdapters } from "../vendors/types";
 import { LAYERS } from "./index";
 import { L14Attribution } from "./L14-attribution";
 import { L19Photos, MAX_PLACE_IMAGES, MAX_STREET_IMAGES, NO_PHOTOS_MESSAGE, OLD_STREET_NOTE, pickStreetImages, UNAVAILABLE_MESSAGE as PHOTOS_UNAVAILABLE } from "./L19-photos";
-import { L20Places, NOTHING_MESSAGE, OSM_CREDIT, UNAVAILABLE_MESSAGE as PLACES_UNAVAILABLE, UNNAMED } from "./L20-places";
+import { L20Places, NOT_LOADED_MESSAGE, NOTHING_MESSAGE, OSM_CREDIT, UNNAMED, VICTORIA_ONLY_MESSAGE } from "./L20-places";
 import { NO_COORDINATES_MESSAGE } from "./shared/location";
 import { UNAVAILABLE_VENDORS } from "../vendors/types";
 
@@ -158,10 +159,13 @@ describe("L20 nearby places", () => {
     osmPlace({ osm_id: "node/5", category: "food", name: "Named Cafe", ...at(300, 0) }),
     osmPlace({ osm_id: "node/6", category: "parks", name: "Little Park", ...at(0, 500) }),
   ];
+  const runPlaces = async (places = makePlaces(), over: Partial<ResolvedAddress> = {}) => {
+    await setPlaces(db, places, "2026-11-20");
+    return run(L20Places, fakeVendors(), over);
+  };
 
-  it("gives each category's nearest place (name, straight-line metres) and counts within 400 m and 800 m", async () => {
-    const places = makePlaces();
-    const out = await run(L20Places, fakeVendors({ places: async () => ok({ places, truncated: false }) }));
+  it("gives each category's nearest place (name, straight-line metres) and counts within 400 m and 800 m, as of the extract date", async () => {
+    const out = await runPlaces();
     expect(out.status).toBe("ok");
     const cats = Object.fromEntries((out.payload.categories as { key: string; nearest: { name: string | null; distance_m: number } | null; within_400: number; within_800: number }[]).map((c) => [c.key, c]));
     expect(cats.groceries.nearest).toMatchObject({ name: "Corner Grocer" });
@@ -173,19 +177,26 @@ describe("L20 nearby places", () => {
     expect(cats.medical.nearest).toBeNull();
     expect(cats.library.nearest).toBeNull();
     const f = Object.fromEntries(out.figures.map((x) => [x.key, x]));
-    expect(f.nearest_groceries).toMatchObject({ unit: "metres", chip: "Estimated", source_ids: ["openstreetmap"], as_of: "2026-11-21" });
+    expect(f.nearest_groceries).toMatchObject({ unit: "metres", chip: "Estimated", source_ids: ["openstreetmap"], as_of: "2026-11-20" });
     expect(f.nearest_groceries.note).toContain("Corner Grocer");
     expect(f.nearest_groceries.note).toContain("Straight-line distance");
     expect(f.nearest_medical).toMatchObject({ value: null, chip: "Unknown" });
     expect(out.payload.straight_line).toBe(true);
     expect(out.payload.credit).toEqual(OSM_CREDIT);
+    expect(out.payload.meta).toMatchObject({ as_of: "2026-11-20" });
     expect(OSM_CREDIT.text).toBe("© OpenStreetMap contributors");
     expect(OSM_CREDIT.url).toBe("https://www.openstreetmap.org/copyright");
   });
 
+  it("reads the loaded table and makes no outside call: it answers even when every vendor would fail", async () => {
+    await setPlaces(db, makePlaces());
+    const out = await L20Places.run({ db, address, request_id: "t", vendors: UNAVAILABLE_VENDORS });
+    expect(out.status).toBe("ok");
+  });
+
   it("counts a place without a name but never lists it by name", async () => {
     const places = makePlaces();
-    const out = await run(L20Places, fakeVendors({ places: async () => ok({ places: [places[3], places[4]], truncated: false }) }));
+    const out = await runPlaces([places[3], places[4]]);
     const food = (out.payload.categories as { key: string; nearest: { name: string | null }; within_400: number }[]).find((c) => c.key === "food")!;
     expect(food.nearest.name).toBeNull();
     expect(food.within_400).toBe(2);
@@ -195,29 +206,48 @@ describe("L20 nearby places", () => {
   });
 
   it("has no rating, review, score or walkability wording anywhere in the section", async () => {
-    const places = makePlaces();
-    const out = await run(L20Places, fakeVendors({ places: async () => ok({ places, truncated: true }) }));
+    const out = await runPlaces();
     const text = [...strings(out.payload), ...out.figures.flatMap((f) => [f.label, f.note ?? ""])].join(" ");
     expect(text).not.toMatch(/\b(rating|rated|review|reviews|stars?|score|scored|walk ?score|walkability|best|top[- ]rated)\b/i);
-    expect(out.payload.notes).toContain("OpenStreetMap returned the most places this search allows, so the counts may be understated.");
+  });
+
+  it("a category with nothing within 800 m shows none for that category only, and the others are unaffected", async () => {
+    const out = await runPlaces();
+    const f = Object.fromEntries(out.figures.map((x) => [x.key, x]));
+    expect(f.nearest_library).toMatchObject({ value: null, chip: "Unknown" });
+    expect(f.nearest_library.note).toContain("None listed in OpenStreetMap within 800 m of this address.");
+    expect(f.nearest_groceries.value).not.toBeNull();
   });
 
   it("when nothing is listed within 800 m it is a gap, never an invented list", async () => {
     const places = makePlaces();
-    const out = await run(L20Places, fakeVendors({ places: async () => ok({ places: [places[2]], truncated: false }) }));
+    const out = await runPlaces([places[2]]);
     expect(out).toMatchObject({ status: "gap", message: NOTHING_MESSAGE, figures: [] });
   });
 
-  it("with the vendor down it is the gap 'Nearby places are not available right now.'", async () => {
-    expect(await run(L20Places, UNAVAILABLE_VENDORS)).toMatchObject({ status: "gap", message: PLACES_UNAVAILABLE });
-    expect(PLACES_UNAVAILABLE).toBe("Nearby places are not available right now.");
+  it("an address outside Victoria is a gap with a plain message", async () => {
+    const out = await runPlaces(makePlaces(), { state: "NSW" });
+    expect(out).toMatchObject({ status: "gap", message: VICTORIA_ONLY_MESSAGE, figures: [] });
   });
 
-  it("an address with no coordinates is a gap and the vendor is never asked", async () => {
-    const spy = vi.fn();
-    const out = await run(L20Places, fakeVendors({ places: spy }), { lat: null, lon: null });
+  it("an address with no coordinates is a gap", async () => {
+    const out = await runPlaces(makePlaces(), { lat: null, lon: null });
     expect(out).toMatchObject({ status: "gap", message: NO_COORDINATES_MESSAGE });
-    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it("with no places dataset published it is the gap 'Nearby places are not loaded.' (not an error)", async () => {
+    await clearPlaces(db);
+    const out = await run(L20Places, fakeVendors());
+    expect(out).toMatchObject({ status: "gap", message: NOT_LOADED_MESSAGE, figures: [] });
+    expect(NOT_LOADED_MESSAGE).toBe("Nearby places are not loaded.");
+  });
+
+  it("reads only the current dataset version: an older version's places are never shown", async () => {
+    await setPlaces(db, [osmPlace({ osm_id: "node/90", category: "library", name: "Old Library", ...at(60, 0) })], "2026-01-01");
+    const out = await runPlaces([osmPlace({ osm_id: "node/91", category: "food", name: "New Cafe", ...at(60, 0) })]);
+    const text = strings(out.payload).join(" ");
+    expect(text).toContain("New Cafe");
+    expect(text).not.toContain("Old Library");
   });
 });
 
@@ -240,18 +270,20 @@ describe("in the assembled report", () => {
   it("a vendor that times out turns only its sections into gaps; every other section still renders", async () => {
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const never = () => new Promise<Response>(() => undefined);
+    await setPlaces(db, [osmPlace({ osm_id: "node/1", category: "food", ...at(50, 0) })]);
     const layers = await report(createVendors({ db, env: { MAPILLARY_ACCESS_TOKEN: "t" }, fetch: never, timeout_ms: 40 }));
     expect(layers["L19-photos"]).toMatchObject({ status: "gap", message: PHOTOS_UNAVAILABLE });
-    expect(layers["L20-places"]).toMatchObject({ status: "gap", message: PLACES_UNAVAILABLE });
+    // Places come from the loaded table, so a vendor that hangs does not touch them.
+    expect(layers["L20-places"].status).toBe("ok");
     for (const id of ["L01-property", "L16-transport", "L17-schools", "L14-attribution"]) expect(layers[id].status, id).toBe("ok");
     vi.restoreAllMocks();
   });
 
   it("a vendor method that throws is an error section for that layer only", async () => {
-    const boom = fakeVendors({ places: async () => { throw new Error("boom"); } });
+    const boom = fakeVendors({ streetImages: async () => { throw new Error("boom"); } });
     vi.spyOn(console, "error").mockImplementation(() => undefined);
     const layers = await report(boom);
-    expect(layers["L20-places"].status).toBe("error");
+    expect(layers["L19-photos"].status).toBe("error");
     expect(layers["L01-property"].status).toBe("ok");
     vi.restoreAllMocks();
   });
@@ -260,8 +292,8 @@ describe("in the assembled report", () => {
     const vendors = fakeVendors({
       streetImages: async () => ok([streetImage({ id: "a", captured_at: yearsAgo(0, 1), ...at(10, 0) })]),
       placeImages: async () => ok([placeImage({ title: "A.jpg", ...at(50, 0) })]),
-      places: async () => ok({ places: [osmPlace({ osm_id: "node/1", category: "food", ...at(50, 0) })], truncated: false }),
     });
+    await setPlaces(db, [osmPlace({ osm_id: "node/1", category: "food", ...at(50, 0) })]);
     const full = await report(vendors);
     const sources = (full["L14-attribution"].payload.sources as { source_id: string; attribution_text: string; licence_url: string | null; credit_url: string | null; used_by: string[] }[]);
     const by = Object.fromEntries(sources.map((s) => [s.source_id, s]));
@@ -269,20 +301,23 @@ describe("in the assembled report", () => {
     expect(by.mapillary).toMatchObject({ attribution_text: "Photos: Mapillary contributors, CC BY-SA 4.0", licence_url: "https://creativecommons.org/licenses/by-sa/4.0/", used_by: ["L19-photos"] });
     expect(by.wikimedia_commons).toMatchObject({ attribution_text: "Images from Wikimedia Commons; each image carries its own author and licence", licence_url: null });
 
+    await clearPlaces(db);
     const empty = await report(fakeVendors());
     const ids = ((empty["L14-attribution"].payload.sources ?? []) as { source_id: string }[]).map((s) => s.source_id);
     for (const id of ["openstreetmap", "mapillary", "wikimedia_commons"]) expect(ids).not.toContain(id);
   });
 
   it("the rights gate fails closed: a pending source makes the layer not_covered and it never runs", async () => {
+    await setPlaces(db, [osmPlace({ osm_id: "node/1", category: "food", ...at(50, 0) })]);
     await db.query("UPDATE src_source SET rights_status = 'pending' WHERE source_id = 'openstreetmap'");
+    const spy = vi.spyOn(L20Places, "run");
     try {
-      const spy = vi.fn();
-      const layers = await report(fakeVendors({ places: spy }));
+      const layers = await report(fakeVendors());
       expect(layers["L20-places"].status).toBe("not_covered");
       expect(spy).not.toHaveBeenCalled();
       expect(layers["L19-photos"].status).not.toBe("not_covered");
     } finally {
+      spy.mockRestore();
       await db.query("UPDATE src_source SET rights_status = 'cleared' WHERE source_id = 'openstreetmap'");
     }
   });

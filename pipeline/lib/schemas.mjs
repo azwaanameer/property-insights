@@ -245,3 +245,28 @@ export const CrimeManifest = z.object({
   years: z.array(z.number().int()).min(1),
   table03_totals: z.record(z.number().int().nonnegative()),
 });
+
+// ---------------------------------------------------------------- OpenStreetMap places (L20)
+export const PLACE_CATEGORIES = ["groceries", "food", "parks", "medical", "fitness", "library"];
+/** Victoria's bounding box, the same one osm-places-extract.py keeps and the loader checks (VicLat and VicLon above). */
+export const VIC_BOX = { lon_min: 140.9, lon_max: 150.1, lat_min: -39.3, lat_max: -33.9 };
+
+/** One place with one point (a way or relation took its centroid). `name` is null when the element has no name tag. */
+export const PlaceRow = z.object({
+  osm_id: z.string().regex(/^(node|way|relation)\/\d+$/, "osm_id is node/N, way/N or relation/N"),
+  category: z.enum(PLACE_CATEGORIES),
+  name: z.string().trim().min(1).nullable(),
+  lat: VicLat,
+  lon: VicLon,
+});
+
+export const PlacesManifest = z.object({
+  source: z.literal("openstreetmap"),
+  source_file: z.string().min(1),
+  as_of: IsoDate,
+  retrieved_at: z.string(),
+  file_sha256: z.string().regex(/^[0-9a-f]{64}$/),
+  row_count: z.number().int().nonnegative(),
+  counts: z.record(z.number().int().nonnegative()),
+  counts_by_tag: z.record(z.number().int().nonnegative()),
+});

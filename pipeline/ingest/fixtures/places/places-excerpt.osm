@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="VicProp places fixture">
+<node id="1" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.824" lon="144.949"><tag k="shop" v="supermarket"/><tag k="name" v="Dock Grocer"/></node>
+<node id="2" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8225" lon="144.95"><tag k="shop" v="convenience"/></node>
+<node id="3" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8231" lon="144.9492"><tag k="amenity" v="cafe"/><tag k="name" v="Harbour Cafe"/></node>
+<node id="4" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8228" lon="144.9488"><tag k="amenity" v="cafe"/></node>
+<node id="5" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.826" lon="144.95"><tag k="amenity" v="restaurant"/><tag k="name" v="Bay Dining"/></node>
+<node id="6" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8235" lon="144.947"><tag k="amenity" v="pharmacy"/><tag k="name" v="Dock Pharmacy"/></node>
+<node id="7" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.83" lon="144.949"><tag k="amenity" v="doctors"/><tag k="name" v="Dock Medical"/></node>
+<node id="8" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.82" lon="144.949"><tag k="amenity" v="gym"/><tag k="name" v="Dock Gym"/></node>
+<node id="9" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.817" lon="144.949"><tag k="amenity" v="library"/><tag k="name" v="Dock Library"/></node>
+<node id="10" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.825" lon="144.948"><tag k="leisure" v="playground"/><tag k="name" v="Dock Playground"/></node>
+<node id="11" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8229" lon="144.9491"><tag k="shop" v="clothes"/><tag k="name" v="Dock Threads"/></node>
+<node id="12" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8232" lon="144.9493"><tag k="amenity" v="cafe"/><tag k="shop" v="bakery"/><tag k="name" v="Dock Bakery Cafe"/></node>
+<node id="13" version="1" timestamp="2026-11-20T00:00:00Z" lat="-33.87" lon="151.2"><tag k="amenity" v="cafe"/><tag k="name" v="Sydney Cafe"/></node>
+<node id="14" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8136" lon="144.9631"><tag k="amenity" v="cafe"/><tag k="name" v="CBD Cafe"/></node>
+<node id="15" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.814" lon="144.9635"><tag k="leisure" v="fitness_centre"/><tag k="name" v="CBD Fitness"/></node>
+<node id="16" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.81" lon="144.956"><tag k="amenity" v="hospital"/><tag k="name" v="Fixture Hospital"/></node>
+<node id="17" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8222" lon="144.9495"><tag k="amenity" v="restaurant"/><tag k="name" v="   "/></node>
+<node id="18" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.9" lon="145.0"><tag k="shop" v="supermarket"/><tag k="name" v="Far Away Market"/></node>
+<node id="19" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8227" lon="144.9487"><tag k="amenity" v="clinic"/><tag k="name" v="Dock Clinic"/></node>
+<node id="20" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8233" lon="144.9489"><tag k="shop" v="greengrocer"/><tag k="name" v="Dock Greens"/></node>
+<node id="100" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8215" lon="144.947"/>
+<node id="101" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8215" lon="144.948"/>
+<node id="102" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8205" lon="144.948"/>
+<node id="103" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8205" lon="144.947"/>
+<node id="110" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8236" lon="144.9484"/>
+<node id="111" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8236" lon="144.9486"/>
+<node id="112" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8232" lon="144.9486"/>
+<node id="113" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8232" lon="144.9484"/>
+<node id="120" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8244" lon="144.9498"/>
+<node id="121" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8244" lon="144.9502"/>
+<node id="122" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8242" lon="144.9502"/>
+<node id="123" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8242" lon="144.9498"/>
+<node id="130" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.826" lon="144.944"/>
+<node id="131" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.826" lon="144.946"/>
+<node id="132" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.824" lon="144.946"/>
+<node id="133" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.824" lon="144.944"/>
+<node id="140" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8255" lon="144.9445"/>
+<node id="141" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8255" lon="144.9455"/>
+<node id="142" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8245" lon="144.9455"/>
+<node id="143" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8245" lon="144.9445"/>
+<node id="150" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.819" lon="144.95"/>
+<node id="151" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.819" lon="144.951"/>
+<node id="152" version="1" timestamp="2026-11-20T00:00:00Z" lat="-37.8194" lon="144.952"/>
+<way id="201" version="1" timestamp="2026-11-20T00:00:00Z"><nd ref="100"/><nd ref="101"/><nd ref="102"/><nd ref="103"/><nd ref="100"/><tag k="leisure" v="park"/><tag k="name" v="Dock Park"/></way>
+<way id="202" version="1" timestamp="2026-11-20T00:00:00Z"><nd ref="150"/><nd ref="151"/><nd ref="152"/><tag k="amenity" v="gym"/><tag k="name" v="Open Way Gym"/></way>
+<way id="203" version="1" timestamp="2026-11-20T00:00:00Z"><nd ref="110"/><nd ref="111"/><nd ref="112"/><nd ref="113"/><nd ref="110"/><tag k="building" v="yes"/></way>
+<way id="204" version="1" timestamp="2026-11-20T00:00:00Z"><nd ref="120"/><nd ref="121"/><nd ref="122"/><nd ref="123"/><nd ref="120"/><tag k="shop" v="supermarket"/><tag k="name" v="Way Market"/></way>
+<way id="205" version="1" timestamp="2026-11-20T00:00:00Z"><nd ref="130"/><nd ref="131"/><nd ref="132"/><nd ref="133"/><nd ref="130"/></way>
+<way id="206" version="1" timestamp="2026-11-20T00:00:00Z"><nd ref="140"/><nd ref="141"/><nd ref="142"/><nd ref="143"/><nd ref="140"/></way>
+<relation id="301" version="1" timestamp="2026-11-20T00:00:00Z"><member type="way" ref="205" role="outer"/><member type="way" ref="206" role="inner"/><tag k="type" v="multipolygon"/><tag k="leisure" v="park"/><tag k="name" v="Dock Reserve"/></relation>
+</osm>

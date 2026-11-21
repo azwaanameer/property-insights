@@ -1,4 +1,4 @@
-// The street photos (L19) and nearby places (L20) sections rendered to HTML from a real assembled report with fake vendor adapters.
+// The street photos (L19, fake vendor adapters) and nearby places (L20, places loaded into ref_place) sections rendered to HTML from a real assembled report.
 // Every image shows its author, licence and source link, and an image without a credit is never drawn.
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -7,7 +7,8 @@ import type { ReportModel } from "../../server/contracts/report";
 import { assembleReport } from "../../server/services/assemble-report";
 import { resolveQuery } from "../../server/services/resolve-address";
 import { createSuburbDataTestDb, type TestDb } from "../../server/testing/db";
-import { fakeVendors, moved, ok, osmPlace, placeImage, streetImage, UNAVAILABLE_VENDORS } from "../../server/testing/fake-vendors";
+import { fakeVendors, moved, ok, placeImage, streetImage, UNAVAILABLE_VENDORS } from "../../server/testing/fake-vendors";
+import { clearPlaces, osmPlace, setPlaces } from "../../server/testing/places";
 import type { VendorAdapters } from "../../server/vendors/types";
 import { ReportView } from "./ReportView";
 import { PhotosPanel, PlacesPanel } from "./PhotosPanel";
@@ -42,15 +43,13 @@ const withData = (): VendorAdapters =>
         streetImage({ id: "s2", compass_angle: 190, captured_at: recent(), creator: "bob", ...moved(lat, lon, -10, 0) }),
       ]),
     placeImages: async () => ok([placeImage({ title: "Flinders_Street.jpg", author: "Jane & Co", ...moved(lat, lon, 200, 0) })]),
-    places: async () =>
-      ok({
-        places: [
-          osmPlace({ osm_id: "node/1", category: "groceries", name: "Corner Grocer", ...moved(lat, lon, 120, 0) }),
-          osmPlace({ osm_id: "node/2", category: "food", name: null, ...moved(lat, lon, 60, 0) }),
-        ],
-        truncated: false,
-      }),
   });
+
+const loadPlaces = () =>
+  setPlaces(db, [
+    osmPlace({ osm_id: "node/1", category: "groceries", name: "Corner Grocer", ...moved(lat, lon, 120, 0) }),
+    osmPlace({ osm_id: "node/2", category: "food", name: null, ...moved(lat, lon, 60, 0) }),
+  ]);
 
 describe("the photos section", () => {
   let out: string;
@@ -107,12 +106,14 @@ describe("the photos section", () => {
 
 describe("the photos section when the vendors fail", () => {
   it("is a gap with the plain message and every other section still renders", async () => {
+    await clearPlaces(db);
     const out = html(await model(UNAVAILABLE_VENDORS));
     const s = section(out, "L19-photos");
     expect(s).toContain('data-status="gap"');
     expect(text(s)).toContain("Photos are not available right now.");
     expect(s).not.toContain("<img");
     expect(section(out, "L20-places")).toContain('data-status="gap"');
+    expect(text(section(out, "L20-places"))).toContain("Nearby places are not loaded.");
     for (const id of ["L01-property", "L16-transport", "L17-schools", "L14-attribution"]) expect(section(out, id)).toContain('data-status="ok"');
   });
 
@@ -126,6 +127,7 @@ describe("the nearby places section", () => {
   let out: string;
   let s: string;
   beforeAll(async () => {
+    await loadPlaces();
     out = html(await model(withData()));
     s = section(out, "L20-places");
   });

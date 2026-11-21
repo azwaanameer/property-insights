@@ -14,12 +14,12 @@ afterAll(() => close());
 
 describe("migrations", () => {
   it("apply once, record themselves, and are idempotent", async () => {
-    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql", "0009_photos_places.sql"]);
+    expect(await applyMigrations(db)).toEqual(["0001_core.sql", "0002_seed.sql", "0003_clear_gnaf.sql", "0004_vic_suburb_layers.sql", "0005_purchases.sql", "0006_return_rating_questions.sql", "0007_batch2_layers.sql", "0008_crime.sql", "0009_photos_places.sql", "0010_places_dataset.sql"]);
     expect(await applyMigrations(db)).toEqual([]);
   });
 
   it("create every table the spec lists", async () => {
-    const want = ["src_source", "src_dataset_version", "src_dataset_current", "ref_suburb", "ref_building", "ref_address", "series_price", "series_rent", "derived_rating", "market_validation", "layer_config", "fact_suburb_marker", "ref_suburb_neighbour", "src_dataset_unmatched", "app_user", "app_org", "app_subscription", "app_report", "app_lookup_log", "app_purchase", "app_webhook_event", "vendor_cache", "ref_transit_stop", "ref_school_zone", "ref_school", "ref_com_building", "ref_com_building_match", "fact_supply_project", "fact_crime_suburb", "fact_crime_lga", "fact_crime_note"];
+    const want = ["src_source", "src_dataset_version", "src_dataset_current", "ref_suburb", "ref_building", "ref_address", "series_price", "series_rent", "derived_rating", "market_validation", "layer_config", "fact_suburb_marker", "ref_suburb_neighbour", "src_dataset_unmatched", "app_user", "app_org", "app_subscription", "app_report", "app_lookup_log", "app_purchase", "app_webhook_event", "vendor_cache", "ref_transit_stop", "ref_school_zone", "ref_school", "ref_com_building", "ref_com_building_match", "fact_supply_project", "fact_crime_suburb", "fact_crime_lga", "fact_crime_note", "ref_place"];
     const have = new Set((await db.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")).map((r) => r.table_name));
     for (const t of want) expect(have.has(t), t).toBe(true);
   });
@@ -142,7 +142,9 @@ describe("migrations", () => {
     expect(by.mapillary).toMatchObject({ licence: "CC BY-SA 4.0", attribution_text: "Photos: Mapillary contributors, CC BY-SA 4.0" });
     expect(by.wikimedia_commons.attribution_text).toBe("Images from Wikimedia Commons; each image carries its own author and licence");
     expect(by.mapillary.max_cache_days).toBeLessThanOrEqual(7);
-    for (const r of rows) expect(r.max_cache_days).toBeLessThanOrEqual(30);
+    // 0010 turned OpenStreetMap into a loaded dataset (no cache lifetime); the two live vendors keep theirs.
+    for (const r of rows.filter((x) => x.source_id !== "openstreetmap")) expect(r.max_cache_days).toBeLessThanOrEqual(30);
+    expect(by.openstreetmap.max_cache_days).toBeNull();
     const l = await db.query("SELECT layer_id, tier, enabled, source_ids FROM layer_config WHERE layer_id IN ('L19-photos','L20-places') ORDER BY layer_id");
     expect(l.map((r) => [r.layer_id, r.tier, r.enabled])).toEqual([["L19-photos", "free", true], ["L20-places", "free", true]]);
     expect([...l[0].source_ids].sort()).toEqual(["gnaf", "mapillary", "wikimedia_commons"]);
@@ -154,6 +156,31 @@ describe("migrations", () => {
     await expect(db.query("UPDATE layer_config SET enabled = true, updated_at = now() WHERE layer_id = 'L20-places'")).rejects.toThrow(/not cleared: .*openstreetmap/);
     await db.query("UPDATE src_source SET rights_status = 'cleared' WHERE source_id = 'openstreetmap'");
     await expect(db.query("INSERT INTO vendor_cache (cache_key, vendor, payload, fetched_at, expires_at) VALUES ('k', 'v', '{}', now(), now() + interval '31 days')")).rejects.toThrow();
+  });
+
+  it("0010 adds ref_place keyed so one osm_id is one row per dataset version, restricts category, and leaves the source cleared with the credit and L20 as it was", async () => {
+    const pk = await db.query(
+      `SELECT a.attname FROM pg_index i JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey)
+       WHERE i.indrelid = 'ref_place'::regclass AND i.indisprimary ORDER BY a.attname`,
+    );
+    expect(pk.map((r) => r.attname)).toEqual(["dataset_version_id", "osm_id"]);
+    const idx = (await db.query("SELECT indexdef FROM pg_indexes WHERE tablename = 'ref_place'")).map((r) => r.indexdef).join(" | ");
+    expect(idx).toContain("(dataset_version_id, lat, lon)");
+    expect(idx).toContain("(dataset_version_id, category)");
+    const [src] = await db.query("SELECT licence, rights_status, attribution_text, max_cache_days, notes FROM src_source WHERE source_id = 'openstreetmap'");
+    expect(src).toMatchObject({ licence: "ODbL 1.0", rights_status: "cleared", attribution_text: "© OpenStreetMap contributors", max_cache_days: null });
+    expect(src.notes).toContain("https://opendatacommons.org/licenses/odbl/1-0/");
+    expect(src.notes).toContain("loaded from the Geofabrik Australia extract");
+    expect(src.notes).not.toMatch(/read live|cached up to/);
+    const [l] = await db.query("SELECT tier, enabled, source_ids FROM layer_config WHERE layer_id = 'L20-places'");
+    expect(l).toMatchObject({ tier: "free", enabled: true });
+    expect([...l.source_ids].sort()).toEqual(["gnaf", "openstreetmap"]);
+    const [v] = await db.query("INSERT INTO src_dataset_version (source_id, retrieved_at, row_count, licence_snapshot, as_of) VALUES ('openstreetmap', now(), 0, 'ODbL 1.0', '2026-11-20') RETURNING dataset_version_id::text AS id");
+    await db.query("INSERT INTO ref_place (dataset_version_id, osm_id, category, name, lat, lon) VALUES ($1, 'node/1', 'food', NULL, -37.8, 144.9)", [v.id]);
+    await expect(db.query("INSERT INTO ref_place (dataset_version_id, osm_id, category, name, lat, lon) VALUES ($1, 'node/1', 'food', NULL, -37.8, 144.9)", [v.id])).rejects.toThrow();
+    await expect(db.query("INSERT INTO ref_place (dataset_version_id, osm_id, category, name, lat, lon) VALUES ($1, 'node/2', 'shopping', NULL, -37.8, 144.9)", [v.id])).rejects.toThrow();
+    await db.query("DELETE FROM ref_place WHERE dataset_version_id = $1", [v.id]);
+    await db.query("DELETE FROM src_dataset_version WHERE dataset_version_id = $1", [v.id]);
   });
 
   it("the dev seed is idempotent on a migrated database", async () => {

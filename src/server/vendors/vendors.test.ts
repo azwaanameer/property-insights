@@ -1,11 +1,10 @@
-// The three vendor adapters and the cache helper, with a fake fetch and an in-process database. No test reaches the network.
+// The two vendor adapters (Mapillary, Wikimedia Commons) and the cache helper, with a fake fetch and an in-process database. No test reaches the network.
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { createTestDb, type TestDb } from "../testing/db";
 import { fakeFetch, json } from "../testing/fake-vendors";
 import { cacheKey, cached, MAX_CACHE_DAYS, USER_AGENT } from "./cache";
 import { createVendors } from "./index";
 import { parseMapillary } from "./mapillary";
-import { categoryOf, parseOverpass } from "./overpass";
 import { parseWikimedia, stripHtml } from "./wikimedia";
 
 let db: TestDb;
@@ -208,66 +207,6 @@ describe("Wikimedia Commons adapter", () => {
   it("stripHtml turns the author markup into plain text", () => {
     expect(stripHtml('<span lang="en">A &amp; B <b>C</b></span>')).toBe("A & B C");
     expect(parseWikimedia({ batchcomplete: "" })).toEqual([]);
-  });
-});
-
-describe("Overpass (OpenStreetMap places) adapter", () => {
-  const body = {
-    elements: [
-      { type: "node", id: 1, lat: -37.8143, lon: 144.9529, tags: { shop: "supermarket", name: "Corner Grocer" } },
-      { type: "way", id: 2, center: { lat: -37.815, lon: 144.954 }, tags: { leisure: "park", name: "Little Park" } },
-      { type: "node", id: 3, lat: -37.8141, lon: 144.9527, tags: { amenity: "cafe" } },
-      { type: "node", id: 4, lat: -37.8141, lon: 144.9527, tags: { amenity: "gym", leisure: "fitness_centre", name: "Gym" } },
-      { type: "node", id: 4, lat: -37.8141, lon: 144.9527, tags: { amenity: "gym", name: "Gym" } },
-      { type: "node", id: 5, lat: -37.8, lon: 144.9, tags: { highway: "bus_stop" } },
-      { type: "way", id: 6, tags: { amenity: "library", name: "No centre" } },
-    ],
-  };
-
-  it("sends the query by POST with the User-Agent, groups elements into categories, takes ways from their centre, and leaves unnamed places without a name", async () => {
-    const f = fakeFetch({ "overpass-api.de": () => json(body) });
-    const r = await createVendors({ db, env: {}, fetch: f }).places(LAT, LON);
-    expect(r.ok).toBe(true);
-    if (!r.ok) return;
-    expect(r.data.truncated).toBe(false);
-    const by = Object.fromEntries(r.data.places.map((p) => [p.osm_id, p]));
-    expect(Object.keys(by).sort()).toEqual(["node/1", "node/3", "node/4", "way/2"]);
-    expect(by["node/1"]).toMatchObject({ category: "groceries", name: "Corner Grocer" });
-    expect(by["way/2"]).toMatchObject({ category: "parks", lat: -37.815, lon: 144.954 });
-    expect(by["node/3"]).toMatchObject({ category: "food", name: null });
-    expect(by["node/4"].category).toBe("fitness");
-    expect(f.calls[0].init?.method).toBe("POST");
-    expect((f.calls[0].init?.headers as Record<string, string>)["user-agent"]).toBe(USER_AGENT);
-    const sent = decodeURIComponent(String(f.calls[0].init?.body).replace(/^data=/, ""));
-    expect(sent).toContain("[out:json][timeout:20]");
-    expect(sent).toContain("around:900");
-    expect(sent).toContain("out center tags 400;");
-    const [row] = await db.query("SELECT vendor, principal_id, EXTRACT(EPOCH FROM (expires_at - fetched_at)) / 86400 AS ttl_days FROM vendor_cache");
-    expect(row).toMatchObject({ vendor: "openstreetmap", principal_id: null });
-    expect(Number(row.ttl_days)).toBe(30);
-  });
-
-  it("flags a result that hit the element limit", () => {
-    const many = { elements: Array.from({ length: 400 }, (_, i) => ({ type: "node", id: i, lat: -37.8, lon: 144.9, tags: { amenity: "cafe" } })) };
-    expect(parseOverpass(many).truncated).toBe(true);
-  });
-
-  it("maps tags to one category and ignores everything else", () => {
-    expect(categoryOf({ shop: "bakery" })).toBe("groceries");
-    expect(categoryOf({ amenity: "restaurant" })).toBe("food");
-    expect(categoryOf({ leisure: "playground" })).toBe("parks");
-    expect(categoryOf({ amenity: "clinic" })).toBe("medical");
-    expect(categoryOf({ amenity: "library" })).toBe("library");
-    expect(categoryOf({ shop: "jewellery" })).toBeNull();
-  });
-
-  it("a timeout, a non-200 answer and bad JSON are unavailable and are not cached", async () => {
-    vi.spyOn(console, "warn").mockImplementation(() => undefined);
-    const never = () => new Promise<Response>(() => undefined);
-    expect(await createVendors({ db, env: {}, fetch: never, timeout_ms: 30 }).places(LAT, LON)).toEqual({ ok: false, reason: "unavailable" });
-    expect(await createVendors({ db, env: {}, fetch: fakeFetch({ overpass: () => json({}, 429) }) }).places(LAT, LON)).toEqual({ ok: false, reason: "unavailable" });
-    expect(await createVendors({ db, env: {}, fetch: fakeFetch({ overpass: () => new Response("oops", { status: 200 }) }) }).places(LAT, LON)).toEqual({ ok: false, reason: "unavailable" });
-    expect(await db.query("SELECT 1 FROM vendor_cache")).toHaveLength(0);
   });
 });
 

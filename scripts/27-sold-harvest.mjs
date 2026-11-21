@@ -12,7 +12,7 @@ const PRIORITY = JSON.parse(readFileSync("data/rp_suburb_priority.json", "utf8")
 const DONE_BEFORE = new Set(["Melbourne", "Southbank", "Docklands", "St Kilda", "South Yarra", "Port Melbourne"]);
 const TARGET_LISTINGS = 225; // about 150 usable sales: a third of listings have no price shown or no unit number
 const MAX_PAGES = 8;
-const RESERVE = 25; // calls left unspent
+const RESERVE = Number(process.env.RP_RESERVE ?? 25); // quota units left unspent (cached pages carry stale counters, so 0 is used to re-read the cache)
 const maxCalls = Number(process.argv[2] ?? 1000);
 
 const out = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : { retrieved: new Date().toISOString().slice(0, 10), suburbs: {} };
@@ -30,6 +30,7 @@ const pick = (x) => ({
   bath: x.generalFeatures?.bathrooms?.value ?? x.features?.general?.bathrooms,
   park: x.generalFeatures?.parkingSpaces?.value ?? x.features?.general?.parkingSpaces,
   dateSold: x.dateSold?.display ?? x.dateSold,
+  url: x.prettyUrl,
 });
 
 let calls = 0;

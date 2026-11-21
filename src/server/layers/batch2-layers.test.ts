@@ -209,9 +209,11 @@ describe("a Docklands unit: every new section answers from real data", () => {
     expect(ids).not.toContain("vicprop_registry");
     for (const s of sources) {
       expect(s.attribution_text.length, s.source_id).toBeGreaterThan(10);
-      expect(s.licence, s.source_id).toContain("CC BY");
+      // Everything is CC BY except OpenStreetMap (nearby places, ODbL 1.0), which the Docklands report now cites from the loaded excerpt.
+      expect(s.licence, s.source_id).toContain(s.source_id === "openstreetmap" ? "ODbL" : "CC BY");
       expect(s.used_by.length, s.source_id).toBeGreaterThan(0);
     }
+    expect(sources.find((s) => s.source_id === "openstreetmap")).toMatchObject({ used_by: ["L20-places"], as_of: "2026-11-20" });
     expect(sources.find((s) => s.source_id === "gtfs_vic")).toMatchObject({ as_of: "2026-11-06", used_by: ["L16-transport"] });
     expect(sources.find((s) => s.source_id === "com_open_data")!.used_by).toEqual(["L11-building", "L08-supply"]);
     expect(sources.find((s) => s.source_id === "vic_school_zones_2026")!.attribution_text).toContain("Department of Education");

@@ -3,7 +3,6 @@ import type { Db } from "../db";
 import type { Env } from "../config";
 import type { FetchFn } from "./cache";
 import { fetchStreetImages } from "./mapillary";
-import { fetchPlaces } from "./overpass";
 import { fetchPlaceImages } from "./wikimedia";
 import type { VendorAdapters } from "./types";
 
@@ -26,6 +25,5 @@ export function createVendors(opts: VendorOptions): VendorAdapters {
   return {
     streetImages: (lat, lon) => fetchStreetImages({ ...common, token, lat, lon }),
     placeImages: (lat, lon) => fetchPlaceImages({ ...common, lat, lon }),
-    places: (lat, lon) => fetchPlaces({ ...common, lat, lon }),
   };
 }

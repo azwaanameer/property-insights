@@ -39,35 +39,15 @@ export interface PlaceImage {
   lon: number | null;
 }
 
-export type PlaceCategoryKey = "groceries" | "food" | "parks" | "medical" | "fitness" | "library";
-
-/** One OpenStreetMap place near a point. `name` is null when the element has no name tag. */
-export interface OsmPlace {
-  osm_id: string;
-  category: PlaceCategoryKey;
-  name: string | null;
-  lat: number;
-  lon: number;
-}
-
-export interface PlacesData {
-  places: OsmPlace[];
-  /** True when Overpass hit the element limit, so counts may be understated. */
-  truncated: boolean;
-}
-
 export interface VendorAdapters {
   /** Mapillary images around the point (the adapter looks wider than the layer needs; the layer filters by true distance). */
   streetImages(lat: number, lon: number): Promise<VendorResult<StreetImage[]>>;
   /** Wikimedia Commons photos around the point. */
   placeImages(lat: number, lon: number): Promise<VendorResult<PlaceImage[]>>;
-  /** OpenStreetMap places around the point. */
-  places(lat: number, lon: number): Promise<VendorResult<PlacesData>>;
 }
 
 /** What a layer sees when no adapters were handed in (tests, or a caller that did not set them up): every call fails, none touches the network. */
 export const UNAVAILABLE_VENDORS: VendorAdapters = {
   streetImages: async () => ({ ok: false, reason: "unavailable" }),
   placeImages: async () => ({ ok: false, reason: "unavailable" }),
-  places: async () => ({ ok: false, reason: "unavailable" }),
 };

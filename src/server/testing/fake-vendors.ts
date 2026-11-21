@@ -1,5 +1,5 @@
 // Test-only: fake vendor adapters and a fake fetch. No test touches the network.
-import { UNAVAILABLE_VENDORS, type OsmPlace, type PlaceImage, type StreetImage, type VendorAdapters, type VendorResult } from "../vendors/types";
+import { UNAVAILABLE_VENDORS, type PlaceImage, type StreetImage, type VendorAdapters, type VendorResult } from "../vendors/types";
 
 export const ok = <T>(data: T, as_of = "2026-11-21"): VendorResult<T> => ({ ok: true, data, as_of, cached: false });
 
@@ -7,7 +7,6 @@ export function fakeVendors(over: Partial<VendorAdapters> = {}): VendorAdapters 
   return {
     streetImages: async () => ok([]),
     placeImages: async () => ok([]),
-    places: async () => ok({ places: [], truncated: false }),
     ...over,
   };
 }
@@ -44,10 +43,6 @@ export function placeImage(over: Partial<PlaceImage> & { title: string }): Place
     lon: null,
     ...over,
   };
-}
-
-export function osmPlace(over: Partial<OsmPlace> & { osm_id: string }): OsmPlace {
-  return { category: "food", name: "Some Place", lat: -37.8, lon: 144.95, ...over };
 }
 
 /** A fake fetch that answers from a list of handlers by URL substring and counts calls. Never touches the network. */
